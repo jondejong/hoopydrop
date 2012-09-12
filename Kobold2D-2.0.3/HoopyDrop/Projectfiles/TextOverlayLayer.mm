@@ -11,6 +11,7 @@
 @implementation TextOverlayLayer {
 	int countTime;
 	double lastUpdateTime;
+	int score;
 }
 
 -(id) init
@@ -82,9 +83,11 @@
 
 }
 
--(void) addToScore: (int) score
+-(void) addToScore: (int) sc
 {
-	
+	CCLabelBMFont *scoreText = (CCLabelBMFont *)[self getChildByTag:1];
+	score += sc;
+	[scoreText setString:[NSString stringWithFormat:@"Score: %i", score]];
 }
 
 @end
