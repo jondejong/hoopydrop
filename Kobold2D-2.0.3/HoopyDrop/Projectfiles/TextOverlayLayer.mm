@@ -37,10 +37,10 @@
 		[CCMenuItemFont setFontSize:28];
 		
 		
-		//		//timer
-		        CCLabelBMFont *timerText = [CCLabelBMFont labelWithString:@"60" fntFile:@"hd-font.fnt"];
+		//timer
+		        CCLabelBMFont *timerText = [CCLabelBMFont labelWithString:@"Score: 60" fntFile:@"hd-font.fnt"];
 				[timerText setTag:1];
-		        timerText.position =  ccp(size.width - (.1*size.width), size.height - (.1*size.height));
+		        timerText.position =  ccp(size.width - (.2*size.width), size.height - (.05*size.height));
 		
 		 
 		countTime = 60;
@@ -68,12 +68,17 @@
 	
 	if (CACurrentMediaTime() - lastUpdateTime >= 1) {
 		countTime--;
-		[timerText setString:[NSString stringWithFormat:@"%i", countTime]];
+		[timerText setString:[NSString stringWithFormat:@"Score: %i", countTime]];
 	}
 	
 	if (countTime == 0)
         [self unschedule: @selector(tick:)];
 
+}
+
+-(void) addToScore: (int) score
+{
+	
 }
 
 @end
