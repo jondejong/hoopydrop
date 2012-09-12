@@ -15,7 +15,7 @@
 // Please read the following page for more information and what negative side effects are associated
 // with the "Locations Specified by Targets" / "Legacy" setting: http://www.kobold2d.com/x/6QAi
 
-//SYMROOT = ~/Kobold2D/build
+SYMROOT = ~/Kobold2D/build
 
 
 

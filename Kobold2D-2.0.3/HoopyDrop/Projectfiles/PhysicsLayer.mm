@@ -245,10 +245,9 @@ const int TILESET_ROWS = 19;
 	// for each body, get its assigned sprite and update the sprite's position
     
     
-    CCLOG(@"DB's: %i", [deletableBodies count]);
     for (uint i = 0; i < [deletableBodies count]; i++)
 	{
-        DeletableBody* db = deletableBodies[i];
+        DeletableBody* db = [deletableBodies objectAtIndex: i];
         if(![db isAlreadyDeleted]) {
             [db markDeleted];
             world->DestroyBody([db body]);
