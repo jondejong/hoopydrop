@@ -31,7 +31,7 @@
         //        [self addChild: fader];
         
 		// add the label as a child to this Layer
-		[self addChild: label];
+		//[self addChild: label];
         
         // Default font size will be 28 points.
 		[CCMenuItemFont setFontSize:28];
