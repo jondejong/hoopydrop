@@ -94,6 +94,9 @@ const int TILESET_ROWS = 19;
         CCSpriteBatchNode* yellowThing = [CCSpriteBatchNode batchNodeWithFile:@"yellow_thing.png" capacity:15];
 		[self addChild:yellowThing z:0 tag:kYellowThingNode];
 		
+        CCSpriteBatchNode* greenThing = [CCSpriteBatchNode batchNodeWithFile:@"green_thing.png" capacity:15];
+		[self addChild:greenThing z:0 tag:kGreenThingNode];
+        
         [self addNewSpriteAt:CGPointMake(screenSize.width / 2, screenSize.height / 2)];
         
 //        [self addYellowThing];
@@ -328,6 +331,55 @@ const int TILESET_ROWS = 19;
 -(void) removeYellowThing: (CCSprite*) sprite {
     CCSpriteBatchNode* yellowThing = (CCSpriteBatchNode*)[self getChildByTag:kYellowThingNode];
     [yellowThing removeChild:sprite cleanup:YES];
+}
+
+-(void) addGreenThing {
+    CGSize screenSize = [CCDirector sharedDirector].winSize;
+    CGPoint pos = CGPointMake(screenSize.width / 1.75, screenSize.height / 1.3);
+    
+    // Create a body definition and set it to be a dynamic body
+	b2BodyDef bodyDef;
+    bodyDef.type = b2_staticBody;
+	
+	// position must be converted to meters
+	bodyDef.position = [self toMeters:pos];
+    
+    CCSpriteBatchNode* greenThing = (CCSpriteBatchNode*)[self getChildByTag:kGreenThingNode];
+    
+	CCSprite* sprite = [CCSprite spriteWithTexture:greenThing.texture];
+	sprite.batchNode = greenThing;
+	sprite.position = pos;
+	[greenThing addChild:sprite];
+	
+	// assign the sprite as userdata so it's easy to get to the sprite when working with the body
+    
+    CollisionHandler* handler = [[GreenThingHandler alloc] init];
+    [handler setSprite:sprite];
+	bodyDef.userData = (__bridge void*)handler;
+    
+    [userDataReferences addObject:handler];
+    
+    b2Body* body = world->CreateBody(&bodyDef);
+    
+    // Define another box shape for our dynamic body.
+    b2CircleShape ballShape;
+    ballShape.m_radius = .35f;
+	
+    // Define the dynamic body fixture.
+    b2FixtureDef fixtureDef;
+    fixtureDef.shape = &ballShape;
+    fixtureDef.density = 1.0f;
+    fixtureDef.friction = 0.3f;
+    fixtureDef.restitution = 0.7f;
+    fixtureDef.isSensor = true;
+    
+    body->CreateFixture(&fixtureDef);
+    
+}
+
+-(void) removeGreenThing: (CCSprite*) sprite {
+    CCSpriteBatchNode* greenThing = (CCSpriteBatchNode*)[self getChildByTag:kGreenThingNode];
+    [greenThing removeChild:sprite cleanup:YES];
 }
 
 

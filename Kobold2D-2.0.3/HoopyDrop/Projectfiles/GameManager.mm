@@ -31,8 +31,12 @@ GameManager* _sharedInstance;
     return self;
 }
 
--(void) removeSpriteFromGame: (CCSprite*) sprite {
+-(void) removeYellowThingGame: (CCSprite*) sprite {
     [physicsLayer removeYellowThing:sprite];
+}
+
+-(void) removeGreenThingGame: (CCSprite*) sprite {
+    [physicsLayer removeGreenThing:sprite];
 }
 
 -(void) markBodyForDeletion: (b2Body*) body {
@@ -59,6 +63,7 @@ GameManager* _sharedInstance;
 	[physicsLayer addChild:textOverlayLayer];
     [[CCDirector sharedDirector] pushScene: physicsLayer];
     [physicsLayer addYellowThing];
+    [physicsLayer addGreenThing];
 }
 
 -(void) handlePause {

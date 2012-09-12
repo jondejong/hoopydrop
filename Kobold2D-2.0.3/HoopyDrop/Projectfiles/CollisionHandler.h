@@ -16,6 +16,5 @@
 
 @end
 
-@interface YellowThingHandler : CollisionHandler
-
-@end
+@interface YellowThingHandler : CollisionHandler @end
+@interface GreenThingHandler : CollisionHandler @end
