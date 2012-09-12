@@ -15,6 +15,7 @@ enum
 {
 	kTagBatchNode,
     kYellowThingNode,
+    kGreenThingNode,
 };
 
 @interface PhysicsLayer : CCScene
@@ -28,5 +29,7 @@ enum
 
 -(void) addYellowThing;
 -(void) removeYellowThing: (CCSprite*) sprite;
+-(void) addGreenThing;
+-(void) removeGreenThing: (CCSprite*) sprite;
 
 @end

@@ -21,7 +21,8 @@
 @property (nonatomic, retain) TextOverlayLayer* textOverlayLayer;
 @property (nonatomic, retain) PhysicsLayer* physicsLayer;
 
--(void) removeSpriteFromGame: (CCSprite*) sprite;
+-(void) removeYellowThingGame: (CCSprite*) sprite;
+-(void) removeGreenThingGame: (CCSprite*) sprite;
 
 -(void) handlePause;
 -(void) handleStart;
