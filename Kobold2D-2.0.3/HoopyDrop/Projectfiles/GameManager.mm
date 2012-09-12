@@ -19,24 +19,28 @@ GameManager* _sharedInstance;
 
 @synthesize textOverlayLayer;
 @synthesize physicsLayer;
+@synthesize pauseLayer;
 
 - (id)init
 {
     self = [super init];
     if (self) {
         _sharedInstance = self;
-        physicsLayer = [PhysicsLayer node];		
-		textOverlayLayer = [TextOverlayLayer node];
+        self.textOverlayLayer = [TextOverlayLayer node];
     }
     return self;
 }
 
--(void) removeYellowThingGame: (CCSprite*) sprite {
+-(void) removeYellowThingFromGame: (CCSprite*) sprite {
     [physicsLayer removeYellowThing:sprite];
 }
 
--(void) removeGreenThingGame: (CCSprite*) sprite {
+-(void) removeGreenThingFromGame: (CCSprite*) sprite {
     [physicsLayer removeGreenThing:sprite];
+}
+
+-(void) removePurpleThingFromGame: (CCSprite*) sprite {
+    [physicsLayer removePurpleThing:sprite];
 }
 
 -(void) markBodyForDeletion: (b2Body*) body {
@@ -55,23 +59,39 @@ GameManager* _sharedInstance;
     return [UIScreen mainScreen].scale > 1;
 }
 
--(void) initGame {
-    
+-(void) handleEnd {
+    [[CCDirector sharedDirector] pushScene:[HDStartLayer node]];
 }
 
 -(void) startGame {
+    self.physicsLayer = [PhysicsLayer node];
+    self.textOverlayLayer = [TextOverlayLayer node];
+    self.pauseLayer = [PauseLayer node];
+    
 	[physicsLayer addChild:textOverlayLayer];
+    [physicsLayer addChild:pauseLayer];
     [[CCDirector sharedDirector] pushScene: physicsLayer];
     [physicsLayer addYellowThing];
     [physicsLayer addGreenThing];
+    [physicsLayer addPurpleThing];
 }
 
 -(void) handlePause {
-    
+    [physicsLayer pauseSchedulerAndActions];
+    [textOverlayLayer pauseSchedulerAndActions];
 }
 
--(void) handleStart {
-    
+-(void) handleUnpause {
+    [physicsLayer resumeSchedulerAndActions];
+    [textOverlayLayer resumeSchedulerAndActions];
+}
+
+-(void) addToScore: (int) points {
+    [textOverlayLayer addToScore:points];
+}
+
+-(int) getScore {
+    return [textOverlayLayer getScore];
 }
 
 @end

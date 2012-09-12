@@ -33,16 +33,28 @@
 @implementation YellowThingHandler
 
 -(void) handleCollision: (b2Body*) body {
-    [[GameManager sharedInstance] removeYellowThingGame: [self sprite]];
+    [[GameManager sharedInstance] removeYellowThingFromGame: [self sprite]];
     [[GameManager sharedInstance] markBodyForDeletion: body];
+    [[GameManager sharedInstance] addToScore:5];
 }
 @end
 
 @implementation GreenThingHandler
 
 -(void) handleCollision: (b2Body*) body {
-    [[GameManager sharedInstance] removeGreenThingGame: [self sprite]];
+    [[GameManager sharedInstance] removeGreenThingFromGame: [self sprite]];
     [[GameManager sharedInstance] markBodyForDeletion: body];
+    [[GameManager sharedInstance] addToScore:10];
+}
+
+@end
+
+@implementation PurpleThingHandler
+
+-(void) handleCollision: (b2Body*) body {
+    [[GameManager sharedInstance] removePurpleThingFromGame: [self sprite]];
+    [[GameManager sharedInstance] markBodyForDeletion: body];
+    [[GameManager sharedInstance] addToScore:15];
 }
 
 @end

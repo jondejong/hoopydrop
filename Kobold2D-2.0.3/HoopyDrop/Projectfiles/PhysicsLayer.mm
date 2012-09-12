@@ -97,9 +97,10 @@ const int TILESET_ROWS = 19;
         CCSpriteBatchNode* greenThing = [CCSpriteBatchNode batchNodeWithFile:@"green_thing.png" capacity:15];
 		[self addChild:greenThing z:0 tag:kGreenThingNode];
         
-        [self addNewSpriteAt:CGPointMake(screenSize.width / 2, screenSize.height / 2)];
+        CCSpriteBatchNode* purpleThing = [CCSpriteBatchNode batchNodeWithFile:@"purple_thing.png" capacity:15];
+		[self addChild:purpleThing z:0 tag:kPurpleThingNode];
         
-//        [self addYellowThing];
+        [self addNewSpriteAt:CGPointMake(screenSize.width / 2, screenSize.height / 2)];
 	
 		[self scheduleUpdate];
 		
@@ -218,19 +219,6 @@ const int TILESET_ROWS = 19;
         //CCLOG(@"acceleration: %f, %f", acceleration.rawX, acceleration.rawY);
         b2Vec2 gravity = 10.0f * b2Vec2(acceleration.rawX, acceleration.rawY);
         world->SetGravity(gravity);
-    }
-    
-    if (input.anyTouchEndedThisFrame)
-    {
-        
-        //            TODO: Handle Pauses :P
-        //            if(paused) {
-        //                paused = false;
-        //                [self resumeSchedulerAndActions];
-        //            } else {
-        //                paused = true;
-        //                [self pauseSchedulerAndActions];
-        //            }
     }
 	
 	
@@ -380,6 +368,55 @@ const int TILESET_ROWS = 19;
 -(void) removeGreenThing: (CCSprite*) sprite {
     CCSpriteBatchNode* greenThing = (CCSpriteBatchNode*)[self getChildByTag:kGreenThingNode];
     [greenThing removeChild:sprite cleanup:YES];
+}
+
+-(void) addPurpleThing {
+    CGSize screenSize = [CCDirector sharedDirector].winSize;
+    CGPoint pos = CGPointMake(screenSize.width / 8, screenSize.height / 7);
+    
+    // Create a body definition and set it to be a dynamic body
+	b2BodyDef bodyDef;
+    bodyDef.type = b2_staticBody;
+	
+	// position must be converted to meters
+	bodyDef.position = [self toMeters:pos];
+    
+    CCSpriteBatchNode* purpleThing = (CCSpriteBatchNode*)[self getChildByTag:kPurpleThingNode];
+    
+	CCSprite* sprite = [CCSprite spriteWithTexture:purpleThing.texture];
+	sprite.batchNode = purpleThing;
+	sprite.position = pos;
+	[purpleThing addChild:sprite];
+	
+	// assign the sprite as userdata so it's easy to get to the sprite when working with the body
+    
+    CollisionHandler* handler = [[PurpleThingHandler alloc] init];
+    [handler setSprite:sprite];
+	bodyDef.userData = (__bridge void*)handler;
+    
+    [userDataReferences addObject:handler];
+    
+    b2Body* body = world->CreateBody(&bodyDef);
+    
+    // Define another box shape for our dynamic body.
+    b2CircleShape ballShape;
+    ballShape.m_radius = .35f;
+	
+    // Define the dynamic body fixture.
+    b2FixtureDef fixtureDef;
+    fixtureDef.shape = &ballShape;
+    fixtureDef.density = 1.0f;
+    fixtureDef.friction = 0.3f;
+    fixtureDef.restitution = 0.7f;
+    fixtureDef.isSensor = true;
+    
+    body->CreateFixture(&fixtureDef);
+}
+
+-(void) removePurpleThing: (CCSprite*) sprite {
+    CCSpriteBatchNode* purpleThing = (CCSpriteBatchNode*)[self getChildByTag:kPurpleThingNode];
+    [purpleThing removeChild:sprite cleanup:YES];
+    
 }
 
 

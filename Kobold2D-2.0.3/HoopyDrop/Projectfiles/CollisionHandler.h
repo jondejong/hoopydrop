@@ -18,3 +18,4 @@
 
 @interface YellowThingHandler : CollisionHandler @end
 @interface GreenThingHandler : CollisionHandler @end
+@interface PurpleThingHandler : CollisionHandler @end

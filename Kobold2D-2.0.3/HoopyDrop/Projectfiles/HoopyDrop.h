@@ -16,19 +16,27 @@
 
 #define DRAW_DEBUG_OUTLINE 0
 
+@interface PauseLayer : CCLayer
+
+@end
+
 @interface GameManager : NSObject
 
 @property (nonatomic, retain) TextOverlayLayer* textOverlayLayer;
 @property (nonatomic, retain) PhysicsLayer* physicsLayer;
+@property (nonatomic, retain) PauseLayer* pauseLayer;
 
--(void) removeYellowThingGame: (CCSprite*) sprite;
--(void) removeGreenThingGame: (CCSprite*) sprite;
+-(void) removeYellowThingFromGame: (CCSprite*) sprite;
+-(void) removeGreenThingFromGame: (CCSprite*) sprite;
+-(void) removePurpleThingFromGame: (CCSprite*) sprite;
 
 -(void) handlePause;
--(void) handleStart;
+-(void) handleUnpause;
 -(void) startGame;
--(void) initGame;
+-(void) handleEnd;
 -(void) markBodyForDeletion: (b2Body*) body;
+-(void) addToScore: (int) points;
+-(int) getScore;
 
 +(GameManager*) sharedInstance;
 +(bool) isRetina;
@@ -48,6 +56,5 @@
 -(bool) isAlreadyDeleted;
 
 @end
-
 
 #endif

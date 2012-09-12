@@ -7,6 +7,7 @@
 //
 
 #import "TextOverlayLayer.h"
+#import "HoopyDrop.h"
 
 @implementation TextOverlayLayer {
 	int countTime;
@@ -19,6 +20,8 @@
 	// always call "super" init
 	// Apple recommends to re-assign "self" with the "super's" return value
 	if( (self=[super init])) {
+        score = 0;
+        
         // create and initialize a Label
 		CCLabelTTF *label = [CCLabelTTF labelWithString:@"Pause" fontName:@"Marker Felt" fontSize:12];
         
@@ -43,13 +46,13 @@
 		[scoreText setTag:1];
 		scoreText.position =  ccp(size.width - (.8*size.width), size.height - (.05*size.height));
 		
-		
 		//timer
-		CCLabelBMFont *timerText = [CCLabelBMFont labelWithString:@"Timer: 60" fntFile:@"hd-font.fnt"];
+        countTime = 10;
+        NSString * timerString = [NSString stringWithFormat:@"Timer: %i", countTime];
+		CCLabelBMFont *timerText = [CCLabelBMFont labelWithString:timerString fntFile:@"hd-font.fnt"];
 		[timerText setTag:2];
 		timerText.position =  ccp(size.width - (.2*size.width), size.height - (.05*size.height));		
-		 
-		countTime = 60;
+		
 		lastUpdateTime = CACurrentMediaTime();
 		
 		[self addChild: scoreText];
@@ -78,8 +81,10 @@
 		[timerText setString:[NSString stringWithFormat:@"Timer: %i", countTime]];
 	}
 	
-	if (countTime == 0)
+	if (countTime == 0) {
         [self unschedule: @selector(tick:)];
+        [[GameManager sharedInstance] handleEnd];
+    }
 
 }
 
@@ -88,6 +93,10 @@
 	CCLabelBMFont *scoreText = (CCLabelBMFont *)[self getChildByTag:1];
 	score += sc;
 	[scoreText setString:[NSString stringWithFormat:@"Score: %i", score]];
+}
+
+-(int) getScore {
+    return score;
 }
 
 @end
