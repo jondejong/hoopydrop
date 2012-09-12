@@ -37,17 +37,23 @@
 		[CCMenuItemFont setFontSize:28];
 		
 		
-		//timer
-		        CCLabelBMFont *timerText = [CCLabelBMFont labelWithString:@"Score: 60" fntFile:@"hd-font.fnt"];
-				[timerText setTag:1];
-		        timerText.position =  ccp(size.width - (.2*size.width), size.height - (.05*size.height));
+		//score
+		CCLabelBMFont *scoreText = [CCLabelBMFont labelWithString:@"Score: 0" fntFile:@"hd-font.fnt"];
+		[scoreText setTag:1];
+		scoreText.position =  ccp(size.width - (.8*size.width), size.height - (.05*size.height));
 		
+		
+		//timer
+		CCLabelBMFont *timerText = [CCLabelBMFont labelWithString:@"Timer: 60" fntFile:@"hd-font.fnt"];
+		[timerText setTag:2];
+		timerText.position =  ccp(size.width - (.2*size.width), size.height - (.05*size.height));		
 		 
 		countTime = 60;
 		lastUpdateTime = CACurrentMediaTime();
 		
-				[self addChild: timerText];
-		        [self schedule: @selector(tick:) interval:1.0];
+		[self addChild: scoreText];
+		[self addChild: timerText];
+	    [self schedule: @selector(tick:) interval:1.0];
 		//
 		//		CCMenuItem *resume = [CCMenuItemFont itemWithString:@"Resume Game" target:self selector:@selector(handleUnpause)];
 		//        CCMenuItem *endGame = [CCMenuItemFont itemWithString:@"End Level" target:self selector:@selector(handleEndLevel)];
@@ -64,11 +70,11 @@
 
 -(void) tick: (ccTime) dt
 {	
-	CCLabelBMFont *timerText = (CCLabelBMFont *)[self getChildByTag:1];
+	CCLabelBMFont *timerText = (CCLabelBMFont *)[self getChildByTag:2];
 	
 	if (CACurrentMediaTime() - lastUpdateTime >= 1) {
 		countTime--;
-		[timerText setString:[NSString stringWithFormat:@"Score: %i", countTime]];
+		[timerText setString:[NSString stringWithFormat:@"Timer: %i", countTime]];
 	}
 	
 	if (countTime == 0)
