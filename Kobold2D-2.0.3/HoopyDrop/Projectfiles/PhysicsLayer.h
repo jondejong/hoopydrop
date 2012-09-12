@@ -26,4 +26,7 @@ enum
 
 @property (nonatomic, retain) NSMutableArray* deletableBodies;
 
+-(void) addYellowThing;
+-(void) removeYellowThing: (CCSprite*) sprite;
+
 @end

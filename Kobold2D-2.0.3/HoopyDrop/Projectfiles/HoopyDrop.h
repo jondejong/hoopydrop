@@ -14,7 +14,7 @@
 #ifndef HOOPY_DROP_H
 #define HOOPY_DROP_H
 
-#define DRAW_DEBUG_OUTLINE 1
+#define DRAW_DEBUG_OUTLINE 0
 
 @interface GameManager : NSObject
 
