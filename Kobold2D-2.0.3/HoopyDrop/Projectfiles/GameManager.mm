@@ -8,6 +8,7 @@
 
 #import "HoopyDrop.h"
 #import "PhysicsLayer.h"
+#import "TextOverlayLayer.h"
 
 @implementation GameManager {
 
@@ -24,7 +25,8 @@ GameManager* _sharedInstance;
     self = [super init];
     if (self) {
         _sharedInstance = self;
-        physicsLayer = [PhysicsLayer node];
+        physicsLayer = [PhysicsLayer node];		
+		textOverlayLayer = [TextOverlayLayer node];
     }
     return self;
 }
@@ -54,6 +56,7 @@ GameManager* _sharedInstance;
 }
 
 -(void) startGame {
+	[physicsLayer addChild:textOverlayLayer];
     [[CCDirector sharedDirector] pushScene: physicsLayer];
     
 }
