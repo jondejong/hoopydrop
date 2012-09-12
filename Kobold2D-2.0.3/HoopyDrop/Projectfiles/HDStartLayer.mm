@@ -26,7 +26,6 @@
 		// add the label as a child to this Layer
 		[self addChild: label];
         isTouchEnabled_ = YES;
-//        [self isTouchEnabled: YES];
     }
     return self;
 }

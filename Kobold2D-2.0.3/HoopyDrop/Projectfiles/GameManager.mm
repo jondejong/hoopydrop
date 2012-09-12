@@ -30,7 +30,11 @@ GameManager* _sharedInstance;
 }
 
 -(void) markBodyForDeletion: (b2Body*) body {
-    [[physicsLayer deletableBodies] addObject:body];
+    
+    DeletableBody* db = [[DeletableBody alloc] init];
+    db.body = body;
+    
+    [[physicsLayer deletableBodies] addObject:db];
 }
 
 +(GameManager*) sharedInstance {

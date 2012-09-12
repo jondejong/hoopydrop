@@ -12,12 +12,33 @@
 @implementation DeletableBody {
     @private
     b2Body* _body;
+    bool deleted;
+}
+
+- (id)init
+{
+    self = [super init];
+    if (self) {
+        deleted = false;
+    }
+    return self;
 }
 
 -(b2Body*) body {
-    body
+    return _body;
 }
--(void) setBody: (b2Body*) body;
+
+-(void) setBody: (b2Body*) body {
+    _body = body;
+}
+
+-(void) markDeleted {
+    deleted = true;
+}
+
+-(bool) isAlreadyDeleted {
+    return deleted;
+}
 
 
 

@@ -41,6 +41,8 @@
 
 -(b2Body*) body;
 -(void) setBody: (b2Body*) body;
+-(void) markDeleted;
+-(bool) isAlreadyDeleted;
 
 @end
 
