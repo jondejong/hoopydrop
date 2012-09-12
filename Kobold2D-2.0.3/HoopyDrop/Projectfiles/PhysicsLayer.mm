@@ -35,6 +35,8 @@ const int TILESET_ROWS = 19;
     NSMutableArray* userDataReferences;
 }
 
+@synthesize deletableBodies;
+
 -(id) init
 {
 	if ((self = [super init]))
@@ -43,6 +45,7 @@ const int TILESET_ROWS = 19;
         
         paused = false;
         userDataReferences = [NSMutableArray arrayWithCapacity: 10];
+        self.deletableBodies = [NSMutableArray arrayWithCapacity:10];
 
 		glClearColor(0.1f, 0.0f, 0.2f, 1.0f);
 		

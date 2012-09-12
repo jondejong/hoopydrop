@@ -11,23 +11,26 @@
 
 @implementation GameManager {
 
+    
 }
 
 GameManager* _sharedInstance;
 
 @synthesize textOverlayLayer;
+@synthesize physicsLayer;
 
 - (id)init
 {
     self = [super init];
     if (self) {
         _sharedInstance = self;
+        physicsLayer = [PhysicsLayer node];
     }
     return self;
 }
 
 -(void) markBodyForDeletion: (b2Body*) body {
-    
+    [[physicsLayer deletableBodies] addObject:body];
 }
 
 +(GameManager*) sharedInstance {
@@ -43,7 +46,7 @@ GameManager* _sharedInstance;
 }
 
 -(void) startGame {
-    [[CCDirector sharedDirector] pushScene: [PhysicsLayer node]];
+    [[CCDirector sharedDirector] pushScene: physicsLayer];
     
 }
 

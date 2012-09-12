@@ -17,11 +17,13 @@ enum
     kYellowThingNode,
 };
 
-@interface PhysicsLayer : CCLayer
+@interface PhysicsLayer : CCScene
 {
 	b2World* world;
 	ContactListener* contactListener;
 	GLESDebugDraw* debugDraw;
 }
+
+@property (nonatomic, retain) NSMutableArray* deletableBodies;
 
 @end

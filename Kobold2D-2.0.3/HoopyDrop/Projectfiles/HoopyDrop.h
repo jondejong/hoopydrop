@@ -9,6 +9,7 @@
 #import <Foundation/Foundation.h>
 #import "TextOverlayLayer.h"
 #import "Box2D.h"
+#import "PhysicsLayer.h"
 
 #ifndef HOOPY_DROP_H
 #define HOOPY_DROP_H
@@ -18,6 +19,7 @@
 @interface GameManager : NSObject
 
 @property (nonatomic, retain) TextOverlayLayer* textOverlayLayer;
+@property (nonatomic, retain) PhysicsLayer* physicsLayer;
 
 -(void) handlePause;
 -(void) handleStart;
@@ -34,5 +36,13 @@
 @interface HDStartLayer : CCLayer
 
 @end
+
+@interface DeletableBody : NSObject
+
+-(b2Body*) body;
+-(void) setBody: (b2Body*) body;
+
+@end
+
 
 #endif
