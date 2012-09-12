@@ -196,7 +196,7 @@ const int TILESET_ROWS = 19;
 	// assign the sprite as userdata so it's easy to get to the sprite when working with the body
     CCSprite* sprite = [self addRandomSpriteAt:pos];
     CollisionHandler* handler = [[CollisionHandler alloc] init];
-    handler.sprite = sprite;
+    [handler setSprite:sprite];
 	bodyDef.userData = (__bridge void*)handler;
     [userDataReferences addObject:handler];
 	b2Body* body = world->CreateBody(&bodyDef);
@@ -292,7 +292,7 @@ const int TILESET_ROWS = 19;
 	// assign the sprite as userdata so it's easy to get to the sprite when working with the body
     
     CollisionHandler* handler = [[YellowThingHandler alloc] init];
-    handler.sprite = sprite;
+    [handler setSprite:sprite];
 	bodyDef.userData = (__bridge void*)handler;
     
     [userDataReferences addObject:handler];

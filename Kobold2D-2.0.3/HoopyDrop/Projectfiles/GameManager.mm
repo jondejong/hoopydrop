@@ -29,6 +29,10 @@ GameManager* _sharedInstance;
     return self;
 }
 
+-(void) removeSpriteFromGame: (CCSprite*) sprite {
+    [physicsLayer removeChild:sprite cleanup:true];
+}
+
 -(void) markBodyForDeletion: (b2Body*) body {
     
     DeletableBody* db = [[DeletableBody alloc] init];

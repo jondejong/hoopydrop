@@ -10,8 +10,8 @@
 
 @interface CollisionHandler : CCNode
 
-@property (nonatomic, retain) CCSprite * sprite;
-
+-(CCSprite*) sprite;
+-(void) setSprite: (CCSprite*) sprite;
 -(void) handleCollision: (b2Body*) body;
 
 @end

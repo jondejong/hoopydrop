@@ -15,6 +15,9 @@
 		C26773CA16003B72008B2135 /* yellow_thing.png in Resources */ = {isa = PBXBuildFile; fileRef = C26773C816003B72008B2135 /* yellow_thing.png */; };
 		C26773CB16003B72008B2135 /* yellow_thing-hd.png in Resources */ = {isa = PBXBuildFile; fileRef = C26773C916003B72008B2135 /* yellow_thing-hd.png */; };
 		C26773CE16004144008B2135 /* CollisionHandler.mm in Sources */ = {isa = PBXBuildFile; fileRef = C26773CD16004144008B2135 /* CollisionHandler.mm */; };
+		C26773D1160051A4008B2135 /* DeletableBody.mm in Sources */ = {isa = PBXBuildFile; fileRef = C26773D0160051A4008B2135 /* DeletableBody.mm */; };
+		C26773D416005729008B2135 /* hd-font.fnt in Resources */ = {isa = PBXBuildFile; fileRef = C26773D216005729008B2135 /* hd-font.fnt */; };
+		C26773D516005729008B2135 /* hd-font.png in Resources */ = {isa = PBXBuildFile; fileRef = C26773D316005729008B2135 /* hd-font.png */; };
 		DC193EB813B692D100500B56 /* GLES-Render.mm in Sources */ = {isa = PBXBuildFile; fileRef = DC193EB313B6872600500B56 /* GLES-Render.mm */; };
 		DC193EBC13B6956F00500B56 /* ContactListener.mm in Sources */ = {isa = PBXBuildFile; fileRef = DC193EBB13B6956F00500B56 /* ContactListener.mm */; };
 		DC26D6BE14B9E4D500B6002E /* fps_images-hd.png in Resources */ = {isa = PBXBuildFile; fileRef = DC26D6BD14B9E4D500B6002E /* fps_images-hd.png */; };
@@ -57,6 +60,9 @@
 		C26773C916003B72008B2135 /* yellow_thing-hd.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "yellow_thing-hd.png"; sourceTree = "<group>"; };
 		C26773CC16004144008B2135 /* CollisionHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CollisionHandler.h; sourceTree = "<group>"; };
 		C26773CD16004144008B2135 /* CollisionHandler.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = CollisionHandler.mm; sourceTree = "<group>"; };
+		C26773D0160051A4008B2135 /* DeletableBody.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = DeletableBody.mm; sourceTree = "<group>"; };
+		C26773D216005729008B2135 /* hd-font.fnt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "hd-font.fnt"; sourceTree = "<group>"; };
+		C26773D316005729008B2135 /* hd-font.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "hd-font.png"; sourceTree = "<group>"; };
 		DC193EB213B6872600500B56 /* GLES-Render.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "GLES-Render.h"; sourceTree = "<group>"; };
 		DC193EB313B6872600500B56 /* GLES-Render.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = "GLES-Render.mm"; sourceTree = "<group>"; };
 		DC193EBA13B6956F00500B56 /* ContactListener.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ContactListener.h; sourceTree = "<group>"; };
@@ -240,6 +246,7 @@
 				C26773C116001FBA008B2135 /* HDStartLayer.mm */,
 				C26773CC16004144008B2135 /* CollisionHandler.h */,
 				C26773CD16004144008B2135 /* CollisionHandler.mm */,
+				C26773D0160051A4008B2135 /* DeletableBody.mm */,
 			);
 			path = Projectfiles;
 			sourceTree = "<group>";
@@ -247,6 +254,8 @@
 		DCC1A39413A94F1A005BD75D /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				C26773D216005729008B2135 /* hd-font.fnt */,
+				C26773D316005729008B2135 /* hd-font.png */,
 				C26773C816003B72008B2135 /* yellow_thing.png */,
 				C26773C916003B72008B2135 /* yellow_thing-hd.png */,
 				C26773C416002E7E008B2135 /* goodball.png */,
@@ -346,6 +355,8 @@
 				C26773C716002E7E008B2135 /* goodball-hd.png in Resources */,
 				C26773CA16003B72008B2135 /* yellow_thing.png in Resources */,
 				C26773CB16003B72008B2135 /* yellow_thing-hd.png in Resources */,
+				C26773D416005729008B2135 /* hd-font.fnt in Resources */,
+				C26773D516005729008B2135 /* hd-font.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -366,6 +377,7 @@
 				C206D98E16001D7200CAA726 /* GameManager.mm in Sources */,
 				C26773C216001FBA008B2135 /* HDStartLayer.mm in Sources */,
 				C26773CE16004144008B2135 /* CollisionHandler.mm in Sources */,
+				C26773D1160051A4008B2135 /* DeletableBody.mm in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

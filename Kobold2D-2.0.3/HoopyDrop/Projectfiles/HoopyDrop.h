@@ -14,12 +14,14 @@
 #ifndef HOOPY_DROP_H
 #define HOOPY_DROP_H
 
-#define DRAW_DEBUG_OUTLINE 0
+#define DRAW_DEBUG_OUTLINE 1
 
 @interface GameManager : NSObject
 
 @property (nonatomic, retain) TextOverlayLayer* textOverlayLayer;
 @property (nonatomic, retain) PhysicsLayer* physicsLayer;
+
+-(void) removeSpriteFromGame: (CCSprite*) sprite;
 
 -(void) handlePause;
 -(void) handleStart;
