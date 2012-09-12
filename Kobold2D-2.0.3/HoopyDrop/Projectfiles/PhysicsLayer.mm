@@ -96,7 +96,7 @@ const int TILESET_ROWS = 19;
 		
         [self addNewSpriteAt:CGPointMake(screenSize.width / 2, screenSize.height / 2)];
         
-        [self addYellowThing];
+//        [self addYellowThing];
 	
 		[self scheduleUpdate];
 		
@@ -240,6 +240,17 @@ const int TILESET_ROWS = 19;
 	world->Step(timeStep, velocityIterations, positionIterations);
 	
 	// for each body, get its assigned sprite and update the sprite's position
+    
+    
+    CCLOG(@"DB's: %i", [deletableBodies count]);
+    for (uint i = 0; i < [deletableBodies count]; i++)
+	{
+        DeletableBody* db = deletableBodies[i];
+        if(![db isAlreadyDeleted]) {
+            [db markDeleted];
+            world->DestroyBody([db body]);
+        }
+    }
 
 	for (b2Body* body = world->GetBodyList(); body != nil; body = body->GetNext())
 	{
@@ -313,6 +324,11 @@ const int TILESET_ROWS = 19;
     
     body->CreateFixture(&fixtureDef);
 	
+}
+
+-(void) removeYellowThing: (CCSprite*) sprite {
+    CCSpriteBatchNode* yellowThing = (CCSpriteBatchNode*)[self getChildByTag:kYellowThingNode];
+    [yellowThing removeChild:sprite cleanup:YES];
 }
 
 

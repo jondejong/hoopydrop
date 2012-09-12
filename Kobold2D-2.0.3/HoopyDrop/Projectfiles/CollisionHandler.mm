@@ -11,9 +11,11 @@
 #import "HoopyDrop.h"
 #import "cocos2d.h"
 
-@implementation CollisionHandler
-
-CCSprite* _sprite;
+@implementation CollisionHandler {
+    @private
+    CCSprite* _sprite;
+    
+}
 
 -(void) handleCollision: (b2Body*) body {
     
@@ -31,7 +33,7 @@ CCSprite* _sprite;
 @implementation YellowThingHandler
 
 -(void) handleCollision: (b2Body*) body {
-    [[GameManager sharedInstance] removeSpriteFromGame:_sprite];
+    [[GameManager sharedInstance] removeSpriteFromGame: [self sprite]];
     [[GameManager sharedInstance] markBodyForDeletion: body];
 }
 
