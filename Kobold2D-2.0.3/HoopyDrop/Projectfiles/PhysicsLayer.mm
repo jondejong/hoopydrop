@@ -33,9 +33,16 @@ const int TILESET_ROWS = 19;
     @private
     bool paused;
     NSMutableArray* userDataReferences;
+    double lastYellowPoint;
+    double lastPurplePoint;
+    double lastGreenPoint;
 }
 
 @synthesize deletableBodies;
+
+@synthesize existingGreens;
+@synthesize existingPurples;
+@synthesize existingYellows;
 
 -(id) init
 {
@@ -43,9 +50,17 @@ const int TILESET_ROWS = 19;
 	{
 		CCLOG(@"%@ init", NSStringFromClass([self class]));
         
+        lastGreenPoint = 0.0;
+        lastPurplePoint = 0.0;
+        lastYellowPoint = 0.0;
+        
         paused = false;
         userDataReferences = [NSMutableArray arrayWithCapacity: 10];
+        
         self.deletableBodies = [NSMutableArray arrayWithCapacity:10];
+        self.existingPurples = [NSMutableArray arrayWithCapacity:10];
+        self.existingGreens = [NSMutableArray arrayWithCapacity:10];
+        self.existingYellows = [NSMutableArray arrayWithCapacity:10];
 
 		glClearColor(0.1f, 0.0f, 0.2f, 1.0f);
 		
@@ -256,6 +271,14 @@ const int TILESET_ROWS = 19;
             }
         }
 	}
+    
+    [self expireGreens];
+    [self expirePurples];
+    [self expireYellows];
+    
+    [self addYellowThing];
+    [self addPurpleThing];
+    [self addGreenThing];
 }
 
 
@@ -271,10 +294,26 @@ const int TILESET_ROWS = 19;
 	return ccpMult(CGPointMake(vec.x, vec.y), PTM_RATIO);
 }
 
--(void) addYellowThing {
-    
+-(CGPoint) createRandomPoint {
     CGSize screenSize = [CCDirector sharedDirector].winSize;
-    CGPoint pos = CGPointMake(screenSize.width / 1.5, screenSize.height / 1.5);
+    int x = arc4random() % (int)screenSize.width;
+    int y = arc4random() % (int)screenSize.height;
+    CGPoint pos = CGPointMake(x, y);
+    return pos;
+}
+
+-(void) addYellowThing {
+
+    double now = CACurrentMediaTime();
+    bool time = lastYellowPoint == 0.0 || (now - lastYellowPoint) >= 1.0;
+    
+    if(1 != (arc4random() % YELLOW_FREQ) || !time) {
+        return;
+    }
+    
+    lastYellowPoint = now;
+
+    CGPoint pos = [self createRandomPoint];
     
     // Create a body definition and set it to be a dynamic body
 	b2BodyDef bodyDef;
@@ -292,13 +331,15 @@ const int TILESET_ROWS = 19;
 	
 	// assign the sprite as userdata so it's easy to get to the sprite when working with the body
     
-    CollisionHandler* handler = [[YellowThingHandler alloc] init];
+    YellowThingHandler* handler = [[YellowThingHandler alloc] init];
     [handler setSprite:sprite];
+    
 	bodyDef.userData = (__bridge void*)handler;
     
-    [userDataReferences addObject:handler];
-    
     b2Body* body = world->CreateBody(&bodyDef);
+    [handler setBody:body];
+    
+    [existingYellows addObject:handler];
     
     // Define another box shape for our dynamic body.
     b2CircleShape ballShape;
@@ -322,8 +363,16 @@ const int TILESET_ROWS = 19;
 }
 
 -(void) addGreenThing {
-    CGSize screenSize = [CCDirector sharedDirector].winSize;
-    CGPoint pos = CGPointMake(screenSize.width / 1.75, screenSize.height / 1.3);
+    
+    double now = CACurrentMediaTime();
+    bool time = lastGreenPoint == 0.0 || (now - lastGreenPoint) >= 1.0;
+    if(1 != (arc4random() % GREEN_FREQ) || !time) {
+        return;
+    }
+    
+    lastGreenPoint = now;
+    
+    CGPoint pos = [self createRandomPoint];
     
     // Create a body definition and set it to be a dynamic body
 	b2BodyDef bodyDef;
@@ -338,16 +387,18 @@ const int TILESET_ROWS = 19;
 	sprite.batchNode = greenThing;
 	sprite.position = pos;
 	[greenThing addChild:sprite];
-	
+    
 	// assign the sprite as userdata so it's easy to get to the sprite when working with the body
     
-    CollisionHandler* handler = [[GreenThingHandler alloc] init];
+    GreenThingHandler* handler = [[GreenThingHandler alloc] init];
     [handler setSprite:sprite];
+    
+    
 	bodyDef.userData = (__bridge void*)handler;
     
-    [userDataReferences addObject:handler];
-    
     b2Body* body = world->CreateBody(&bodyDef);
+    [handler setBody: body];
+    [existingGreens addObject:handler];
     
     // Define another box shape for our dynamic body.
     b2CircleShape ballShape;
@@ -371,8 +422,26 @@ const int TILESET_ROWS = 19;
 }
 
 -(void) addPurpleThing {
-    CGSize screenSize = [CCDirector sharedDirector].winSize;
-    CGPoint pos = CGPointMake(screenSize.width / 8, screenSize.height / 7);
+    
+    double now = CACurrentMediaTime();
+//    double timeSinceLastRun = now - lastPurplePoint;
+    bool time = lastPurplePoint == 0.0 || (now - lastPurplePoint) >= 1.0;
+    
+    if(!time) {
+//        CCLOG(@"Not time. Time since last run: %f", timeSinceLastRun);
+        return;
+    }
+    
+    int purpleRand = (arc4random() % PURPLE_FREQ);
+//    CCLOG(@"Purple Random Rumber %i. Time since Last Run: %f", purpleRand, timeSinceLastRun);
+    
+    if(1!=purpleRand) {
+        return;
+    }
+    
+    lastPurplePoint = now;
+    
+    CGPoint pos = [self createRandomPoint];
     
     // Create a body definition and set it to be a dynamic body
 	b2BodyDef bodyDef;
@@ -389,14 +458,18 @@ const int TILESET_ROWS = 19;
 	[purpleThing addChild:sprite];
 	
 	// assign the sprite as userdata so it's easy to get to the sprite when working with the body
+
     
-    CollisionHandler* handler = [[PurpleThingHandler alloc] init];
+    PurpleThingHandler* handler = [[PurpleThingHandler alloc] init];
     [handler setSprite:sprite];
+    
 	bodyDef.userData = (__bridge void*)handler;
     
-    [userDataReferences addObject:handler];
-    
     b2Body* body = world->CreateBody(&bodyDef);
+    
+    [handler setBody: body];
+    
+    [existingPurples addObject:handler];
     
     // Define another box shape for our dynamic body.
     b2CircleShape ballShape;
@@ -416,9 +489,40 @@ const int TILESET_ROWS = 19;
 -(void) removePurpleThing: (CCSprite*) sprite {
     CCSpriteBatchNode* purpleThing = (CCSpriteBatchNode*)[self getChildByTag:kPurpleThingNode];
     [purpleThing removeChild:sprite cleanup:YES];
-    
 }
 
+-(void) expirePurples {
+    for(uint i=0; i<[existingPurples count]; i++) {
+        PurpleThingHandler* handler = (PurpleThingHandler*)[existingPurples objectAtIndex:i];
+        if(![handler isRemoved]) {
+            if(CACurrentMediaTime() - [handler createTime] >= PURPLE_EXPIRE_SECONDS) {
+                [handler removeThisTarget];
+            }
+        }
+    }
+}
+
+-(void) expireYellows {
+    for(uint i=0; i<[existingYellows count]; i++) {
+        YellowThingHandler* handler = (YellowThingHandler*)[existingYellows objectAtIndex:i];
+        if(![handler isRemoved]) {
+            if(CACurrentMediaTime() - [handler createTime] >= YELLOW_EXPIRE_SECONDS) {
+                [handler removeThisTarget];
+            }
+        }
+    }
+}
+
+-(void) expireGreens {
+    for(uint i=0; i<[existingGreens count]; i++) {
+        GreenThingHandler* handler = (GreenThingHandler*)[existingGreens objectAtIndex:i];
+        if(![handler isRemoved]) {
+            if(CACurrentMediaTime() - [handler createTime] >= GREEN_EXPIRE_SECONDS) {
+                [handler removeThisTarget];
+            }
+        }
+    }
+}
 
 #if DEBUG
 -(void) draw

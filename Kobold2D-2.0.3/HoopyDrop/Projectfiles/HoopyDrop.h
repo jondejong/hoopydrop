@@ -15,6 +15,17 @@
 #define HOOPY_DROP_H
 
 #define DRAW_DEBUG_OUTLINE 0
+#define SECONDS_PER_GAME 60
+
+#define YELLOW_FREQ 200
+#define GREEN_FREQ 400
+#define PURPLE_FREQ 600
+
+#define YELLOW_EXPIRE_SECONDS 10
+#define GREEN_EXPIRE_SECONDS 7
+#define PURPLE_EXPIRE_SECONDS 4
+
+#define TARGET_RADIUS .33
 
 @interface PauseLayer : CCLayer
 

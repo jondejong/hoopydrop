@@ -47,7 +47,7 @@
 		scoreText.position =  ccp(size.width - (.8*size.width), size.height - (.05*size.height));
 		
 		//timer
-        countTime = 10;
+        countTime = SECONDS_PER_GAME;
         NSString * timerString = [NSString stringWithFormat:@"Timer: %i", countTime];
 		CCLabelBMFont *timerText = [CCLabelBMFont labelWithString:timerString fntFile:@"hd-font.fnt"];
 		[timerText setTag:2];

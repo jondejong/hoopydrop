@@ -28,6 +28,10 @@ enum
 
 @property (nonatomic, retain) NSMutableArray* deletableBodies;
 
+@property (nonatomic, retain) NSMutableArray* existingYellows;
+@property (nonatomic, retain) NSMutableArray* existingGreens;
+@property (nonatomic, retain) NSMutableArray* existingPurples;
+
 -(void) addYellowThing;
 -(void) removeYellowThing: (CCSprite*) sprite;
 -(void) addGreenThing;
