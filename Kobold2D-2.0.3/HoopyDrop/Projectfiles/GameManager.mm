@@ -71,9 +71,7 @@ GameManager* _sharedInstance;
 	[physicsLayer addChild:textOverlayLayer];
     [physicsLayer addChild:pauseLayer];
     [[CCDirector sharedDirector] pushScene: physicsLayer];
-    [physicsLayer addYellowThing];
-    [physicsLayer addGreenThing];
-    [physicsLayer addPurpleThing];
+
 }
 
 -(void) handlePause {

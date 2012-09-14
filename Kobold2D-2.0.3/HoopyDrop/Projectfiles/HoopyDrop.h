@@ -25,7 +25,7 @@
 #define GREEN_EXPIRE_SECONDS 7
 #define PURPLE_EXPIRE_SECONDS 4
 
-#define TARGET_RADIUS .33
+#define TARGET_RADIUS .25
 
 @interface PauseLayer : CCLayer
 

@@ -180,6 +180,7 @@ const NSUInteger defaultCapacity = 29;
 {
 	NSAssert( child != nil, @"Argument must be non-nil");
 	NSAssert( [child isKindOfClass:[CCSprite class]], @"CCSpriteBatchNode only supports CCSprites as children");
+    
 	NSAssert( child.texture.name == textureAtlas_.texture.name, @"CCSprite is not using the same texture id");
 
 	[super addChild:child z:z tag:aTag];

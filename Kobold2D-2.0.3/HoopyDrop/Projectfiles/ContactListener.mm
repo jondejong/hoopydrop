@@ -16,8 +16,6 @@ void ContactListener::BeginContact(b2Contact* contact)
 	CollisionHandler* colA = (__bridge CollisionHandler*)bodyA->GetUserData();
 	CollisionHandler* colB = (__bridge CollisionHandler*)bodyB->GetUserData();
     
-    
-    
     if(colA != nil) {
         [colA handleCollision: bodyA];
     }

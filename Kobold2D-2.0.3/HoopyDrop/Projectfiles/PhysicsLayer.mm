@@ -105,15 +105,21 @@ const int TILESET_ROWS = 19;
 		
 		CCSpriteBatchNode* batch = [CCSpriteBatchNode batchNodeWithFile:@"goodball.png" capacity:1];
 		[self addChild:batch z:0 tag:kTagBatchNode];
+
+		//Yellow
+        [[CCSpriteFrameCache sharedSpriteFrameCache] addSpriteFramesWithFile:@"yellow_thing.plist"];
+        CCSpriteBatchNode *yellowSpriteSheet = [CCSpriteBatchNode batchNodeWithFile:@"yellow_thing.png"];
+        [self addChild:yellowSpriteSheet z:0 tag:kYellowThingNode];
         
-        CCSpriteBatchNode* yellowThing = [CCSpriteBatchNode batchNodeWithFile:@"yellow_thing.png" capacity:15];
-		[self addChild:yellowThing z:0 tag:kYellowThingNode];
-		
-        CCSpriteBatchNode* greenThing = [CCSpriteBatchNode batchNodeWithFile:@"green_thing.png" capacity:15];
-		[self addChild:greenThing z:0 tag:kGreenThingNode];
-        
-        CCSpriteBatchNode* purpleThing = [CCSpriteBatchNode batchNodeWithFile:@"purple_thing.png" capacity:15];
-		[self addChild:purpleThing z:0 tag:kPurpleThingNode];
+        //Purple
+        [[CCSpriteFrameCache sharedSpriteFrameCache] addSpriteFramesWithFile:@"purple_thing.plist"];
+        CCSpriteBatchNode *purpleSpriteSheet = [CCSpriteBatchNode batchNodeWithFile:@"purple_thing.png"];
+        [self addChild:purpleSpriteSheet z:0 tag:kPurpleThingNode];
+
+        //Green
+        [[CCSpriteFrameCache sharedSpriteFrameCache] addSpriteFramesWithFile:@"green_thing.plist"];
+        CCSpriteBatchNode *greenSpriteSheet = [CCSpriteBatchNode batchNodeWithFile:@"green_thing.png"];
+        [self addChild:greenSpriteSheet z:0 tag:kGreenThingNode];
         
         [self addNewSpriteAt:CGPointMake(screenSize.width / 2, screenSize.height / 2)];
 	
@@ -275,7 +281,7 @@ const int TILESET_ROWS = 19;
     [self expireGreens];
     [self expirePurples];
     [self expireYellows];
-    
+
     [self addYellowThing];
     [self addPurpleThing];
     [self addGreenThing];
@@ -296,10 +302,59 @@ const int TILESET_ROWS = 19;
 
 -(CGPoint) createRandomPoint {
     CGSize screenSize = [CCDirector sharedDirector].winSize;
-    int x = arc4random() % (int)screenSize.width;
-    int y = arc4random() % (int)screenSize.height;
+    int x = (arc4random() % ((int)screenSize.width - (int)PTM_RATIO)) + (int)(.5 * PTM_RATIO);
+    int y = (arc4random() % ((int)screenSize.height - (int)PTM_RATIO)) + (int)(.5 * PTM_RATIO);
     CGPoint pos = CGPointMake(x, y);
     return pos;
+}
+
+-(void) addTarget:(CollisionHandler*) handler andBaseSprite: (NSString*)baseSpriteName andParentNode: (int) parentNodeTag andTrackedBy: (NSMutableArray*) trackingArray{
+    NSMutableArray *animFrames = [NSMutableArray array];
+    for(int i = 1; i <= 4; ++i) {
+        [animFrames addObject: [[CCSpriteFrameCache sharedSpriteFrameCache] spriteFrameByName:[NSString stringWithFormat:@"%@%i.png", baseSpriteName, i]]];
+    }
+    
+    CCAnimation *animation = [CCAnimation animationWithSpriteFrames:animFrames delay:0.1f];
+    
+    CGPoint pos = [self createRandomPoint];
+    
+    CCSprite *sprite = [CCSprite spriteWithSpriteFrameName:[NSString stringWithFormat:@"%@1.png", baseSpriteName]];
+    
+    sprite.position = pos;
+    
+    [sprite runAction:[CCRepeatForever actionWithAction:[CCAnimate actionWithAnimation:animation]]];
+    [[self getChildByTag:parentNodeTag] addChild:sprite];
+    
+    
+    // Create a body definition and set it to be a dynamic body
+	b2BodyDef bodyDef;
+    bodyDef.type = b2_staticBody;
+	
+	// position must be converted to meters
+	bodyDef.position = [self toMeters:pos];
+    
+    [handler setSprite:sprite];
+    
+	bodyDef.userData = (__bridge void*)handler;
+    
+    b2Body* body = world->CreateBody(&bodyDef);
+    [handler setBody:body];
+    
+    [trackingArray addObject:handler];
+    
+    // Define another box shape for our dynamic body.
+    b2CircleShape ballShape;
+    ballShape.m_radius = TARGET_RADIUS;
+	
+    // Define the dynamic body fixture.
+    b2FixtureDef fixtureDef;
+    fixtureDef.shape = &ballShape;
+    fixtureDef.density = 1.0f;
+    fixtureDef.friction = 0.3f;
+    fixtureDef.restitution = 0.7f;
+    fixtureDef.isSensor = true;
+    
+    body->CreateFixture(&fixtureDef);
 }
 
 -(void) addYellowThing {
@@ -313,47 +368,8 @@ const int TILESET_ROWS = 19;
     
     lastYellowPoint = now;
 
-    CGPoint pos = [self createRandomPoint];
-    
-    // Create a body definition and set it to be a dynamic body
-	b2BodyDef bodyDef;
-    bodyDef.type = b2_staticBody;
-	
-	// position must be converted to meters
-	bodyDef.position = [self toMeters:pos];
-    
-    CCSpriteBatchNode* yellowThing = (CCSpriteBatchNode*)[self getChildByTag:kYellowThingNode];
-    
-	CCSprite* sprite = [CCSprite spriteWithTexture:yellowThing.texture];
-	sprite.batchNode = yellowThing;
-	sprite.position = pos;
-	[yellowThing addChild:sprite];
-	
-	// assign the sprite as userdata so it's easy to get to the sprite when working with the body
-    
-    YellowThingHandler* handler = [[YellowThingHandler alloc] init];
-    [handler setSprite:sprite];
-    
-	bodyDef.userData = (__bridge void*)handler;
-    
-    b2Body* body = world->CreateBody(&bodyDef);
-    [handler setBody:body];
-    
-    [existingYellows addObject:handler];
-    
-    // Define another box shape for our dynamic body.
-    b2CircleShape ballShape;
-    ballShape.m_radius = .35f;
-	
-    // Define the dynamic body fixture.
-    b2FixtureDef fixtureDef;
-    fixtureDef.shape = &ballShape;
-    fixtureDef.density = 1.0f;
-    fixtureDef.friction = 0.3f;
-    fixtureDef.restitution = 0.7f;
-    fixtureDef.isSensor = true;
-    
-    body->CreateFixture(&fixtureDef);
+    CollisionHandler* handler = [[YellowThingHandler alloc]init];
+    [self addTarget:handler andBaseSprite:@"yellow_thing" andParentNode:kYellowThingNode andTrackedBy:existingYellows];
 	
 }
 
@@ -371,50 +387,8 @@ const int TILESET_ROWS = 19;
     }
     
     lastGreenPoint = now;
-    
-    CGPoint pos = [self createRandomPoint];
-    
-    // Create a body definition and set it to be a dynamic body
-	b2BodyDef bodyDef;
-    bodyDef.type = b2_staticBody;
-	
-	// position must be converted to meters
-	bodyDef.position = [self toMeters:pos];
-    
-    CCSpriteBatchNode* greenThing = (CCSpriteBatchNode*)[self getChildByTag:kGreenThingNode];
-    
-	CCSprite* sprite = [CCSprite spriteWithTexture:greenThing.texture];
-	sprite.batchNode = greenThing;
-	sprite.position = pos;
-	[greenThing addChild:sprite];
-    
-	// assign the sprite as userdata so it's easy to get to the sprite when working with the body
-    
-    GreenThingHandler* handler = [[GreenThingHandler alloc] init];
-    [handler setSprite:sprite];
-    
-    
-	bodyDef.userData = (__bridge void*)handler;
-    
-    b2Body* body = world->CreateBody(&bodyDef);
-    [handler setBody: body];
-    [existingGreens addObject:handler];
-    
-    // Define another box shape for our dynamic body.
-    b2CircleShape ballShape;
-    ballShape.m_radius = .35f;
-	
-    // Define the dynamic body fixture.
-    b2FixtureDef fixtureDef;
-    fixtureDef.shape = &ballShape;
-    fixtureDef.density = 1.0f;
-    fixtureDef.friction = 0.3f;
-    fixtureDef.restitution = 0.7f;
-    fixtureDef.isSensor = true;
-    
-    body->CreateFixture(&fixtureDef);
-    
-}
+    [self addTarget:[[GreenThingHandler alloc]init] andBaseSprite:@"green_thing" andParentNode:kGreenThingNode andTrackedBy:existingGreens];
+  }
 
 -(void) removeGreenThing: (CCSprite*) sprite {
     CCSpriteBatchNode* greenThing = (CCSpriteBatchNode*)[self getChildByTag:kGreenThingNode];
@@ -424,66 +398,14 @@ const int TILESET_ROWS = 19;
 -(void) addPurpleThing {
     
     double now = CACurrentMediaTime();
-//    double timeSinceLastRun = now - lastPurplePoint;
-    bool time = lastPurplePoint == 0.0 || (now - lastPurplePoint) >= 1.0;
-    
-    if(!time) {
-//        CCLOG(@"Not time. Time since last run: %f", timeSinceLastRun);
-        return;
-    }
-    
-    int purpleRand = (arc4random() % PURPLE_FREQ);
-//    CCLOG(@"Purple Random Rumber %i. Time since Last Run: %f", purpleRand, timeSinceLastRun);
-    
-    if(1!=purpleRand) {
+    bool time = lastGreenPoint == 0.0 || (now - lastPurplePoint) >= 1.0;
+    if(1 != (arc4random() % PURPLE_FREQ) || !time) {
         return;
     }
     
     lastPurplePoint = now;
     
-    CGPoint pos = [self createRandomPoint];
-    
-    // Create a body definition and set it to be a dynamic body
-	b2BodyDef bodyDef;
-    bodyDef.type = b2_staticBody;
-	
-	// position must be converted to meters
-	bodyDef.position = [self toMeters:pos];
-    
-    CCSpriteBatchNode* purpleThing = (CCSpriteBatchNode*)[self getChildByTag:kPurpleThingNode];
-    
-	CCSprite* sprite = [CCSprite spriteWithTexture:purpleThing.texture];
-	sprite.batchNode = purpleThing;
-	sprite.position = pos;
-	[purpleThing addChild:sprite];
-	
-	// assign the sprite as userdata so it's easy to get to the sprite when working with the body
-
-    
-    PurpleThingHandler* handler = [[PurpleThingHandler alloc] init];
-    [handler setSprite:sprite];
-    
-	bodyDef.userData = (__bridge void*)handler;
-    
-    b2Body* body = world->CreateBody(&bodyDef);
-    
-    [handler setBody: body];
-    
-    [existingPurples addObject:handler];
-    
-    // Define another box shape for our dynamic body.
-    b2CircleShape ballShape;
-    ballShape.m_radius = .35f;
-	
-    // Define the dynamic body fixture.
-    b2FixtureDef fixtureDef;
-    fixtureDef.shape = &ballShape;
-    fixtureDef.density = 1.0f;
-    fixtureDef.friction = 0.3f;
-    fixtureDef.restitution = 0.7f;
-    fixtureDef.isSensor = true;
-    
-    body->CreateFixture(&fixtureDef);
+    [self addTarget:[[PurpleThingHandler alloc]init] andBaseSprite:@"purple_thing" andParentNode:kPurpleThingNode andTrackedBy:existingPurples];
 }
 
 -(void) removePurpleThing: (CCSprite*) sprite {
