@@ -314,7 +314,10 @@ const int TILESET_ROWS = 19;
         [animFrames addObject: [[CCSpriteFrameCache sharedSpriteFrameCache] spriteFrameByName:[NSString stringWithFormat:@"%@%i.png", baseSpriteName, i]]];
     }
     
-    CCAnimation *animation = [CCAnimation animationWithSpriteFrames:animFrames delay:0.1f];
+    [animFrames addObject: [[CCSpriteFrameCache sharedSpriteFrameCache] spriteFrameByName:[NSString stringWithFormat:@"%@3.png", baseSpriteName]]];
+    [animFrames addObject: [[CCSpriteFrameCache sharedSpriteFrameCache] spriteFrameByName:[NSString stringWithFormat:@"%@2.png", baseSpriteName]]];
+    
+    CCAnimation *animation = [CCAnimation animationWithSpriteFrames:animFrames delay:0.07f];
     
     CGPoint pos = [self createRandomPoint];
     
