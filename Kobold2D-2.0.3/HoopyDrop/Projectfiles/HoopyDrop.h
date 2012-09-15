@@ -15,7 +15,7 @@
 #define HOOPY_DROP_H
 
 #define DRAW_DEBUG_OUTLINE 0
-#define SECONDS_PER_GAME 15
+#define SECONDS_PER_GAME 60
 
 #define YELLOW_FREQ 200
 #define GREEN_FREQ 400
