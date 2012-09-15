@@ -33,11 +33,13 @@ const int TILESET_ROWS = 19;
     @private
     bool paused;
     NSMutableArray* userDataReferences;
-    double lastYellowPoint;
-    double lastPurplePoint;
-    double lastGreenPoint;
+    
+    int lastYellowPoint;
+    int lastPurplePoint;
+    int lastGreenPoint;
+    
     int totalTargets;
-    double timeTargetsEmpited;
+    int timeTargetsEmpited;
 }
 
 @synthesize deletableBodies;
@@ -52,12 +54,12 @@ const int TILESET_ROWS = 19;
 	{
 		CCLOG(@"%@ init", NSStringFromClass([self class]));
         
-        lastGreenPoint = 0.0;
-        lastPurplePoint = 0.0;
-        lastYellowPoint = 0.0;
+        lastYellowPoint = SECONDS_PER_GAME + YELLOW_EXPIRE_SECONDS + 1;
+        lastGreenPoint = SECONDS_PER_GAME + GREEN_EXPIRE_SECONDS + 1;
+        lastPurplePoint = SECONDS_PER_GAME + PURPLE_EXPIRE_SECONDS + 1;
         
         totalTargets = 0;
-        timeTargetsEmpited = CACurrentMediaTime();
+        timeTargetsEmpited = SECONDS_PER_GAME + 1;
         
         paused = false;
         userDataReferences = [NSMutableArray arrayWithCapacity: 10];
@@ -136,16 +138,6 @@ const int TILESET_ROWS = 19;
 	}
 
 	return self;
-}
-
--(void) dealloc
-{
-	delete contactListener;
-	delete world;
-
-#ifndef KK_ARC_ENABLED
-	[super dealloc];
-#endif
 }
 
 -(void) enableBox2dDebugDrawing
@@ -291,7 +283,7 @@ const int TILESET_ROWS = 19;
     
     int forced = -1;
     
-    if(totalTargets <=0 &&  (CACurrentMediaTime() - timeTargetsEmpited) > MAX_TARGET_EMPTY_SECONDS) {
+    if(totalTargets <=0 &&  (timeTargetsEmpited - [[GameManager sharedInstance] getRemainingTime]) > MAX_TARGET_EMPTY_SECONDS) {
         forced = arc4random() % 3;
     }
     
@@ -374,10 +366,10 @@ const int TILESET_ROWS = 19;
 
 -(void) addYellowThing:(bool) force {
 
-    double now = CACurrentMediaTime();
+    int now = [[GameManager sharedInstance] getRemainingTime];
     if(!force) {
-        bool time = lastYellowPoint == 0.0 || (now - lastYellowPoint) >= 1.0;
-        if(1 != (arc4random() % YELLOW_FREQ) || !time) {
+        bool time = lastYellowPoint > SECONDS_PER_GAME || (lastYellowPoint - now) >= YELLOW_MINIMUM_SECONDS_BUFFER;
+        if(!time || 1 != (arc4random() % YELLOW_FREQ)) {
             return;
         }
     }
@@ -389,21 +381,25 @@ const int TILESET_ROWS = 19;
 	
 }
 
+-(void) decrementTargets {
+    if(--totalTargets == 0) {
+        timeTargetsEmpited = [[GameManager sharedInstance] getRemainingTime];
+    }
+}
+
 -(void) removeYellowThing: (CCSprite*) sprite {
     CCSpriteBatchNode* yellowThing = (CCSpriteBatchNode*)[self getChildByTag:kYellowThingNode];
     [yellowThing removeChild:sprite cleanup:YES];
-    
-    if(--totalTargets == 0) {
-        timeTargetsEmpited = CACurrentMediaTime();
-    }
+    [self decrementTargets];
+   
 }
 
 -(void) addGreenThing:(bool) force  {
     
-    double now = CACurrentMediaTime();
+    int now = [[GameManager sharedInstance] getRemainingTime];
     if(!force) {
-        bool time = lastGreenPoint == 0.0 || (now - lastGreenPoint) >= 1.0;
-        if(1 != (arc4random() % GREEN_FREQ) || !time) {
+        bool time = lastGreenPoint > SECONDS_PER_GAME|| (lastGreenPoint - now) >= GREEN_MINIMUM_SECONDS_BUFFER;
+        if(!time || 1 != (arc4random() % GREEN_FREQ)) {
             return;
         }
     
@@ -415,18 +411,15 @@ const int TILESET_ROWS = 19;
 -(void) removeGreenThing: (CCSprite*) sprite {
     CCSpriteBatchNode* greenThing = (CCSpriteBatchNode*)[self getChildByTag:kGreenThingNode];
     [greenThing removeChild:sprite cleanup:YES];
-    
-    if(--totalTargets == 0) {
-        timeTargetsEmpited = CACurrentMediaTime();
-    }
+    [self decrementTargets];
 }
 
 -(void) addPurpleThing:(bool) force {
     
-    double now = CACurrentMediaTime();
+    int now = [[GameManager sharedInstance] getRemainingTime];
     if(!force) {
-        bool time = lastGreenPoint == 0.0 || (now - lastPurplePoint) >= 1.0;
-        if(1 != (arc4random() % PURPLE_FREQ) || !time) {
+        bool time = lastGreenPoint > SECONDS_PER_GAME || (lastPurplePoint - now) >= PURPLE_MINIMUM_SECONDS_BUFFER;
+        if(!time || 1 != (arc4random() % PURPLE_FREQ)) {
             return;
         }
     }
@@ -438,10 +431,7 @@ const int TILESET_ROWS = 19;
 -(void) removePurpleThing: (CCSprite*) sprite {
     CCSpriteBatchNode* purpleThing = (CCSpriteBatchNode*)[self getChildByTag:kPurpleThingNode];
     [purpleThing removeChild:sprite cleanup:YES];
-    
-    if(--totalTargets == 0) {
-        timeTargetsEmpited = CACurrentMediaTime();
-    }
+    [self decrementTargets];
 }
 
 -(void) expirePurples {
@@ -478,10 +468,28 @@ const int TILESET_ROWS = 19;
 }
 
 -(double) adjustExpireTime:(double)expireTime {
-    for(int i = 0; i< ([[GameManager sharedInstance] getScore] / BASE_SPEED_MULTIPLIER); i++) {
-        expireTime = .95 * expireTime;
+    int score = [[GameManager sharedInstance] getScore];
+    for(int i = 0; i< ( score/ BASE_SPEED_MULTIPLIER_SCORE); i++) {
+        expireTime = (1 - (.01 * BASE_SPEED_MULTIPLIER_PERCENTAGE)) * expireTime;
     }
     return expireTime;
+}
+
+- (void)dealloc
+{
+    for (b2Body* b = world->GetBodyList(); b; /*b = b->GetNext()*/)  // remove GetNext() call
+    {
+        b2Body* next = b->GetNext();  // remember next body before *b gets destroyed
+        world->DestroyBody(b); // do I need to destroy fixture as well(and how?) or it does that for me?
+        b = next;  // go to next body
+    }
+    
+    delete contactListener;
+    contactListener = NULL;
+    
+	delete world;
+	world = NULL;
+
 }
 
 #if DEBUG

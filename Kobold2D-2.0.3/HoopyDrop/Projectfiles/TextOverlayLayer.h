@@ -11,4 +11,5 @@
 @interface TextOverlayLayer : CCLayer
 -(void) addToScore: (int) sc;
 -(int) getScore;
+-(void) updateTimer:(int) time;
 @end

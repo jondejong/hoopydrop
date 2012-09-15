@@ -20,15 +20,24 @@ GameManager* _sharedInstance;
 @synthesize textOverlayLayer;
 @synthesize physicsLayer;
 @synthesize pauseLayer;
+@synthesize timerLayer;
 
 - (id)init
 {
     self = [super init];
     if (self) {
         _sharedInstance = self;
-        self.textOverlayLayer = [TextOverlayLayer node];
+       
     }
     return self;
+}
+
+-(void)updateTimer: (int) time {
+    [textOverlayLayer updateTimer:time];
+}
+
+-(int)getRemainingTime {
+    return [timerLayer remainingTime];
 }
 
 -(void) removeYellowThingFromGame: (CCSprite*) sprite {
@@ -64,24 +73,28 @@ GameManager* _sharedInstance;
 }
 
 -(void) startGame {
+    self.timerLayer = [HDTimer node];
     self.physicsLayer = [PhysicsLayer node];
     self.textOverlayLayer = [TextOverlayLayer node];
     self.pauseLayer = [PauseLayer node];
+    self.textOverlayLayer = [TextOverlayLayer node];
     
+    [physicsLayer addChild:timerLayer];
 	[physicsLayer addChild:textOverlayLayer];
     [physicsLayer addChild:pauseLayer];
     [[CCDirector sharedDirector] pushScene: physicsLayer];
+    [timerLayer start];
 
 }
 
 -(void) handlePause {
     [physicsLayer pauseSchedulerAndActions];
-    [textOverlayLayer pauseSchedulerAndActions];
+    [timerLayer pause];
 }
 
 -(void) handleUnpause {
     [physicsLayer resumeSchedulerAndActions];
-    [textOverlayLayer resumeSchedulerAndActions];
+    [timerLayer unpause];
 }
 
 -(void) addToScore: (int) points {

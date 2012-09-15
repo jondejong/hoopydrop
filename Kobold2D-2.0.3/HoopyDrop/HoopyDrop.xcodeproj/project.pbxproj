@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		C206D98816001D3400CAA726 /* TextOverlayLayer.mm in Sources */ = {isa = PBXBuildFile; fileRef = C206D98716001D3400CAA726 /* TextOverlayLayer.mm */; };
 		C206D98E16001D7200CAA726 /* GameManager.mm in Sources */ = {isa = PBXBuildFile; fileRef = C206D98D16001D7200CAA726 /* GameManager.mm */; };
+		C233C5191605312F00622E77 /* HDTimer.mm in Sources */ = {isa = PBXBuildFile; fileRef = C233C5181605312F00622E77 /* HDTimer.mm */; };
 		C26773C216001FBA008B2135 /* HDStartLayer.mm in Sources */ = {isa = PBXBuildFile; fileRef = C26773C116001FBA008B2135 /* HDStartLayer.mm */; };
 		C26773C616002E7E008B2135 /* goodball.png in Resources */ = {isa = PBXBuildFile; fileRef = C26773C416002E7E008B2135 /* goodball.png */; };
 		C26773C716002E7E008B2135 /* goodball-hd.png in Resources */ = {isa = PBXBuildFile; fileRef = C26773C516002E7E008B2135 /* goodball-hd.png */; };
@@ -65,6 +66,7 @@
 		C206D98716001D3400CAA726 /* TextOverlayLayer.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = TextOverlayLayer.mm; path = Projectfiles/TextOverlayLayer.mm; sourceTree = "<group>"; };
 		C206D98C16001D7200CAA726 /* HoopyDrop.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HoopyDrop.h; sourceTree = "<group>"; };
 		C206D98D16001D7200CAA726 /* GameManager.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = GameManager.mm; sourceTree = "<group>"; };
+		C233C5181605312F00622E77 /* HDTimer.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = HDTimer.mm; sourceTree = "<group>"; };
 		C26773C116001FBA008B2135 /* HDStartLayer.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = HDStartLayer.mm; sourceTree = "<group>"; };
 		C26773C416002E7E008B2135 /* goodball.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = goodball.png; sourceTree = "<group>"; };
 		C26773C516002E7E008B2135 /* goodball-hd.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "goodball-hd.png"; sourceTree = "<group>"; };
@@ -272,6 +274,7 @@
 				C26773CD16004144008B2135 /* CollisionHandler.mm */,
 				C26773D0160051A4008B2135 /* DeletableBody.mm */,
 				C26773E01600FD1A008B2135 /* PauseLayer.mm */,
+				C233C5181605312F00622E77 /* HDTimer.mm */,
 			);
 			path = Projectfiles;
 			sourceTree = "<group>";
@@ -426,6 +429,7 @@
 				C26773CE16004144008B2135 /* CollisionHandler.mm in Sources */,
 				C26773D1160051A4008B2135 /* DeletableBody.mm in Sources */,
 				C26773E11600FD1B008B2135 /* PauseLayer.mm in Sources */,
+				C233C5191605312F00622E77 /* HDTimer.mm in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
