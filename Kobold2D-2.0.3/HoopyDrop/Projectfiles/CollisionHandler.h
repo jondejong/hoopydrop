@@ -20,6 +20,7 @@
 -(void) markRemoved;
 -(void) removeThisTarget;
 
+
 @end
 
 @interface YellowThingHandler : CollisionHandler @end

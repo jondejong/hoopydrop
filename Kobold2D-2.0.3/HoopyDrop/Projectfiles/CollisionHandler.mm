@@ -65,12 +65,21 @@
     [self markRemoved];
 }
 
+-(int) multiplyScore:(int) score {
+    return (((float)score * [self scoreMultiplier]) / 1);
+}
+
+-(float) scoreMultiplier {
+    int score = [[GameManager sharedInstance] getScore];
+    return 1 + (float)score/BASE_SCORE_MULTIPLIER;
+}
+
 @end
 
 @implementation YellowThingHandler
 
 -(void) handleCollision: (b2Body*) body {
-    [[GameManager sharedInstance] addToScore:5];
+    [[GameManager sharedInstance] addToScore:[self multiplyScore:5]];
     [self removeThisTarget];
 }
 
@@ -83,7 +92,7 @@
 @implementation GreenThingHandler
 
 -(void) handleCollision: (b2Body*) body {
-    [[GameManager sharedInstance] addToScore:10];
+    [[GameManager sharedInstance] addToScore:[self multiplyScore:10]];
     [self removeThisTarget];
 }
 
@@ -97,7 +106,7 @@
 @implementation PurpleThingHandler
 
 -(void) handleCollision: (b2Body*) body {
-    [[GameManager sharedInstance] addToScore:15];
+    [[GameManager sharedInstance] addToScore:[self multiplyScore:15]];
     [self removeThisTarget];
 }
 

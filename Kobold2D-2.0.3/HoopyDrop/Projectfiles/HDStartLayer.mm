@@ -32,6 +32,7 @@
         [self addChild:scoreLabel];
 		[self addChild: label];
         isTouchEnabled_ = YES;
+        [[UIApplication sharedApplication] setIdleTimerDisabled:NO];
     }
     return self;
 }

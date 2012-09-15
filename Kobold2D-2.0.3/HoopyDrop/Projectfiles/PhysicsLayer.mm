@@ -36,6 +36,8 @@ const int TILESET_ROWS = 19;
     double lastYellowPoint;
     double lastPurplePoint;
     double lastGreenPoint;
+    int totalTargets;
+    double timeTargetsEmpited;
 }
 
 @synthesize deletableBodies;
@@ -53,6 +55,9 @@ const int TILESET_ROWS = 19;
         lastGreenPoint = 0.0;
         lastPurplePoint = 0.0;
         lastYellowPoint = 0.0;
+        
+        totalTargets = 0;
+        timeTargetsEmpited = CACurrentMediaTime();
         
         paused = false;
         userDataReferences = [NSMutableArray arrayWithCapacity: 10];
@@ -126,6 +131,8 @@ const int TILESET_ROWS = 19;
 		[self scheduleUpdate];
 		
 		[KKInput sharedInput].accelerometerActive = YES;
+        
+        [[UIApplication sharedApplication] setIdleTimerDisabled:YES];
 	}
 
 	return self;
@@ -281,10 +288,16 @@ const int TILESET_ROWS = 19;
     [self expireGreens];
     [self expirePurples];
     [self expireYellows];
-
-    [self addYellowThing];
-    [self addPurpleThing];
-    [self addGreenThing];
+    
+    int forced = -1;
+    
+    if(totalTargets <=0 &&  (CACurrentMediaTime() - timeTargetsEmpited) > MAX_TARGET_EMPTY_SECONDS) {
+        forced = arc4random() % 3;
+    }
+    
+    [self addYellowThing: (0==forced)];
+    [self addPurpleThing: (1==forced)];
+    [self addGreenThing: (2==forced)];
 }
 
 
@@ -304,8 +317,7 @@ const int TILESET_ROWS = 19;
     CGSize screenSize = [CCDirector sharedDirector].winSize;
     int x = (arc4random() % ((int)screenSize.width - (int)PTM_RATIO)) + (int)(.5 * PTM_RATIO);
     int y = (arc4random() % ((int)screenSize.height - (int)PTM_RATIO)) + (int)(.5 * PTM_RATIO);
-    CGPoint pos = CGPointMake(x, y);
-    return pos;
+    return CGPointMake(x, y);
 }
 
 -(void) addTarget:(CollisionHandler*) handler andBaseSprite: (NSString*)baseSpriteName andParentNode: (int) parentNodeTag andTrackedBy: (NSMutableArray*) trackingArray{
@@ -327,7 +339,6 @@ const int TILESET_ROWS = 19;
     
     [sprite runAction:[CCRepeatForever actionWithAction:[CCAnimate actionWithAnimation:animation]]];
     [[self getChildByTag:parentNodeTag] addChild:sprite];
-    
     
     // Create a body definition and set it to be a dynamic body
 	b2BodyDef bodyDef;
@@ -358,15 +369,17 @@ const int TILESET_ROWS = 19;
     fixtureDef.isSensor = true;
     
     body->CreateFixture(&fixtureDef);
+    totalTargets++;
 }
 
--(void) addYellowThing {
+-(void) addYellowThing:(bool) force {
 
     double now = CACurrentMediaTime();
-    bool time = lastYellowPoint == 0.0 || (now - lastYellowPoint) >= 1.0;
-    
-    if(1 != (arc4random() % YELLOW_FREQ) || !time) {
-        return;
+    if(!force) {
+        bool time = lastYellowPoint == 0.0 || (now - lastYellowPoint) >= 1.0;
+        if(1 != (arc4random() % YELLOW_FREQ) || !time) {
+            return;
+        }
     }
     
     lastYellowPoint = now;
@@ -379,16 +392,22 @@ const int TILESET_ROWS = 19;
 -(void) removeYellowThing: (CCSprite*) sprite {
     CCSpriteBatchNode* yellowThing = (CCSpriteBatchNode*)[self getChildByTag:kYellowThingNode];
     [yellowThing removeChild:sprite cleanup:YES];
+    
+    if(--totalTargets == 0) {
+        timeTargetsEmpited = CACurrentMediaTime();
+    }
 }
 
--(void) addGreenThing {
+-(void) addGreenThing:(bool) force  {
     
     double now = CACurrentMediaTime();
-    bool time = lastGreenPoint == 0.0 || (now - lastGreenPoint) >= 1.0;
-    if(1 != (arc4random() % GREEN_FREQ) || !time) {
-        return;
-    }
+    if(!force) {
+        bool time = lastGreenPoint == 0.0 || (now - lastGreenPoint) >= 1.0;
+        if(1 != (arc4random() % GREEN_FREQ) || !time) {
+            return;
+        }
     
+    }
     lastGreenPoint = now;
     [self addTarget:[[GreenThingHandler alloc]init] andBaseSprite:@"green_thing" andParentNode:kGreenThingNode andTrackedBy:existingGreens];
   }
@@ -396,16 +415,21 @@ const int TILESET_ROWS = 19;
 -(void) removeGreenThing: (CCSprite*) sprite {
     CCSpriteBatchNode* greenThing = (CCSpriteBatchNode*)[self getChildByTag:kGreenThingNode];
     [greenThing removeChild:sprite cleanup:YES];
+    
+    if(--totalTargets == 0) {
+        timeTargetsEmpited = CACurrentMediaTime();
+    }
 }
 
--(void) addPurpleThing {
+-(void) addPurpleThing:(bool) force {
     
     double now = CACurrentMediaTime();
-    bool time = lastGreenPoint == 0.0 || (now - lastPurplePoint) >= 1.0;
-    if(1 != (arc4random() % PURPLE_FREQ) || !time) {
-        return;
+    if(!force) {
+        bool time = lastGreenPoint == 0.0 || (now - lastPurplePoint) >= 1.0;
+        if(1 != (arc4random() % PURPLE_FREQ) || !time) {
+            return;
+        }
     }
-    
     lastPurplePoint = now;
     
     [self addTarget:[[PurpleThingHandler alloc]init] andBaseSprite:@"purple_thing" andParentNode:kPurpleThingNode andTrackedBy:existingPurples];
@@ -414,13 +438,17 @@ const int TILESET_ROWS = 19;
 -(void) removePurpleThing: (CCSprite*) sprite {
     CCSpriteBatchNode* purpleThing = (CCSpriteBatchNode*)[self getChildByTag:kPurpleThingNode];
     [purpleThing removeChild:sprite cleanup:YES];
+    
+    if(--totalTargets == 0) {
+        timeTargetsEmpited = CACurrentMediaTime();
+    }
 }
 
 -(void) expirePurples {
     for(uint i=0; i<[existingPurples count]; i++) {
         PurpleThingHandler* handler = (PurpleThingHandler*)[existingPurples objectAtIndex:i];
         if(![handler isRemoved]) {
-            if(CACurrentMediaTime() - [handler createTime] >= PURPLE_EXPIRE_SECONDS) {
+            if(CACurrentMediaTime() - [handler createTime] >= [self adjustExpireTime:PURPLE_EXPIRE_SECONDS]) {
                 [handler removeThisTarget];
             }
         }
@@ -431,7 +459,7 @@ const int TILESET_ROWS = 19;
     for(uint i=0; i<[existingYellows count]; i++) {
         YellowThingHandler* handler = (YellowThingHandler*)[existingYellows objectAtIndex:i];
         if(![handler isRemoved]) {
-            if(CACurrentMediaTime() - [handler createTime] >= YELLOW_EXPIRE_SECONDS) {
+            if(CACurrentMediaTime() - [handler createTime] >= [self adjustExpireTime:YELLOW_EXPIRE_SECONDS]) {
                 [handler removeThisTarget];
             }
         }
@@ -442,11 +470,18 @@ const int TILESET_ROWS = 19;
     for(uint i=0; i<[existingGreens count]; i++) {
         GreenThingHandler* handler = (GreenThingHandler*)[existingGreens objectAtIndex:i];
         if(![handler isRemoved]) {
-            if(CACurrentMediaTime() - [handler createTime] >= GREEN_EXPIRE_SECONDS) {
+            if(CACurrentMediaTime() - [handler createTime] >= [self adjustExpireTime:GREEN_EXPIRE_SECONDS]) {
                 [handler removeThisTarget];
             }
         }
     }
+}
+
+-(double) adjustExpireTime:(double)expireTime {
+    for(int i = 0; i< ([[GameManager sharedInstance] getScore] / BASE_SPEED_MULTIPLIER); i++) {
+        expireTime = .95 * expireTime;
+    }
+    return expireTime;
 }
 
 #if DEBUG
