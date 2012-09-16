@@ -10,6 +10,10 @@
 		C206D98816001D3400CAA726 /* TextOverlayLayer.mm in Sources */ = {isa = PBXBuildFile; fileRef = C206D98716001D3400CAA726 /* TextOverlayLayer.mm */; };
 		C206D98E16001D7200CAA726 /* GameManager.mm in Sources */ = {isa = PBXBuildFile; fileRef = C206D98D16001D7200CAA726 /* GameManager.mm */; };
 		C233C5191605312F00622E77 /* HDTimer.mm in Sources */ = {isa = PBXBuildFile; fileRef = C233C5181605312F00622E77 /* HDTimer.mm */; };
+		C233C5211605653D00622E77 /* background-hd.png in Resources */ = {isa = PBXBuildFile; fileRef = C233C51F1605653D00622E77 /* background-hd.png */; };
+		C233C5221605653D00622E77 /* background.png in Resources */ = {isa = PBXBuildFile; fileRef = C233C5201605653D00622E77 /* background.png */; };
+		C233C52516056A7E00622E77 /* BackgroundLayer.mm in Sources */ = {isa = PBXBuildFile; fileRef = C233C52416056A7E00622E77 /* BackgroundLayer.mm */; };
+		C233C52816056FB600622E77 /* HDGamePlayRootScene.mm in Sources */ = {isa = PBXBuildFile; fileRef = C233C52716056FB600622E77 /* HDGamePlayRootScene.mm */; };
 		C26773C216001FBA008B2135 /* HDStartLayer.mm in Sources */ = {isa = PBXBuildFile; fileRef = C26773C116001FBA008B2135 /* HDStartLayer.mm */; };
 		C26773C616002E7E008B2135 /* goodball.png in Resources */ = {isa = PBXBuildFile; fileRef = C26773C416002E7E008B2135 /* goodball.png */; };
 		C26773C716002E7E008B2135 /* goodball-hd.png in Resources */ = {isa = PBXBuildFile; fileRef = C26773C516002E7E008B2135 /* goodball-hd.png */; };
@@ -67,6 +71,10 @@
 		C206D98C16001D7200CAA726 /* HoopyDrop.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HoopyDrop.h; sourceTree = "<group>"; };
 		C206D98D16001D7200CAA726 /* GameManager.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = GameManager.mm; sourceTree = "<group>"; };
 		C233C5181605312F00622E77 /* HDTimer.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = HDTimer.mm; sourceTree = "<group>"; };
+		C233C51F1605653D00622E77 /* background-hd.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "background-hd.png"; sourceTree = "<group>"; };
+		C233C5201605653D00622E77 /* background.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = background.png; sourceTree = "<group>"; };
+		C233C52416056A7E00622E77 /* BackgroundLayer.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = BackgroundLayer.mm; sourceTree = "<group>"; };
+		C233C52716056FB600622E77 /* HDGamePlayRootScene.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = HDGamePlayRootScene.mm; sourceTree = "<group>"; };
 		C26773C116001FBA008B2135 /* HDStartLayer.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = HDStartLayer.mm; sourceTree = "<group>"; };
 		C26773C416002E7E008B2135 /* goodball.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = goodball.png; sourceTree = "<group>"; };
 		C26773C516002E7E008B2135 /* goodball-hd.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "goodball-hd.png"; sourceTree = "<group>"; };
@@ -165,6 +173,8 @@
 			children = (
 				C206D98616001D3400CAA726 /* TextOverlayLayer.h */,
 				C206D98716001D3400CAA726 /* TextOverlayLayer.mm */,
+				C233C52416056A7E00622E77 /* BackgroundLayer.mm */,
+				C233C52716056FB600622E77 /* HDGamePlayRootScene.mm */,
 			);
 			name = DisplayLayers;
 			sourceTree = "<group>";
@@ -283,6 +293,8 @@
 			isa = PBXGroup;
 			children = (
 				C2AFF08C1602E18000BD1BD1 /* green_thing-hd.plist */,
+				C233C51F1605653D00622E77 /* background-hd.png */,
+				C233C5201605653D00622E77 /* background.png */,
 				C2AFF08D1602E18000BD1BD1 /* green_thing-hd.png */,
 				C2AFF08E1602E18000BD1BD1 /* green_thing.plist */,
 				C2AFF08F1602E18000BD1BD1 /* green_thing.png */,
@@ -407,6 +419,8 @@
 				C2AFF0911602E18000BD1BD1 /* green_thing-hd.png in Resources */,
 				C2AFF0921602E18000BD1BD1 /* green_thing.plist in Resources */,
 				C2AFF0931602E18000BD1BD1 /* green_thing.png in Resources */,
+				C233C5211605653D00622E77 /* background-hd.png in Resources */,
+				C233C5221605653D00622E77 /* background.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -430,6 +444,8 @@
 				C26773D1160051A4008B2135 /* DeletableBody.mm in Sources */,
 				C26773E11600FD1B008B2135 /* PauseLayer.mm in Sources */,
 				C233C5191605312F00622E77 /* HDTimer.mm in Sources */,
+				C233C52516056A7E00622E77 /* BackgroundLayer.mm in Sources */,
+				C233C52816056FB600622E77 /* HDGamePlayRootScene.mm in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

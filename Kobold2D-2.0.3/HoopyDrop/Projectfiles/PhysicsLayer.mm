@@ -75,7 +75,7 @@ const int TILESET_ROWS = 19;
 		b2Vec2 gravity = b2Vec2(0.0f, -10.0f);
 		world = new b2World(gravity);
 		world->SetAllowSleeping(NO);
-		//world->SetContinuousPhysics(YES);
+//		world->SetContinuousPhysics(YES);
 		
 		// uncomment this line to draw debug info
 #if DRAW_DEBUG_OUTLINE

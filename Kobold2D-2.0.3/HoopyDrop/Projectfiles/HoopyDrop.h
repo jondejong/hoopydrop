@@ -43,7 +43,15 @@
 
 #define TARGET_RADIUS .25
 
+#define BACKGROUND_Z 0
+#define TEXT_Z 10
+#define OBJECTS_Z 5
+
+@interface BackgroundLayer : CCLayer @end
+
 @interface PauseLayer : CCLayer @end
+@interface HDGamePlayRootScene : CCScene @end
+
 @interface HDTimer : CCLayer
 
 -(void)start;
@@ -59,6 +67,7 @@
 @property (nonatomic, retain) PhysicsLayer* physicsLayer;
 @property (nonatomic, retain) PauseLayer* pauseLayer;
 @property (nonatomic, retain) HDTimer* timerLayer;
+@property (nonatomic, retain) HDGamePlayRootScene* gamePlayRootScene;
 
 -(void) removeYellowThingFromGame: (CCSprite*) sprite;
 -(void) removeGreenThingFromGame: (CCSprite*) sprite;

@@ -21,6 +21,7 @@ GameManager* _sharedInstance;
 @synthesize physicsLayer;
 @synthesize pauseLayer;
 @synthesize timerLayer;
+@synthesize gamePlayRootScene;
 
 - (id)init
 {
@@ -73,16 +74,25 @@ GameManager* _sharedInstance;
 }
 
 -(void) startGame {
+    
+    self.gamePlayRootScene = [HDGamePlayRootScene node];
+    
+    
     self.timerLayer = [HDTimer node];
     self.physicsLayer = [PhysicsLayer node];
     self.textOverlayLayer = [TextOverlayLayer node];
     self.pauseLayer = [PauseLayer node];
     self.textOverlayLayer = [TextOverlayLayer node];
     
-    [physicsLayer addChild:timerLayer];
-	[physicsLayer addChild:textOverlayLayer];
-    [physicsLayer addChild:pauseLayer];
-    [[CCDirector sharedDirector] pushScene: physicsLayer];
+    [gamePlayRootScene addChild:[BackgroundLayer node] z:BACKGROUND_Z];
+    
+    [gamePlayRootScene addChild:timerLayer];
+	[gamePlayRootScene addChild:textOverlayLayer z:TEXT_Z];
+    [gamePlayRootScene addChild:pauseLayer];
+    
+    [gamePlayRootScene addChild:physicsLayer z:OBJECTS_Z];
+    
+    [[CCDirector sharedDirector] pushScene: gamePlayRootScene];
     [timerLayer start];
 
 }
