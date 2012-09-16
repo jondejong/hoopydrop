@@ -32,6 +32,9 @@ enum
 @property (nonatomic, retain) NSMutableArray* existingGreens;
 @property (nonatomic, retain) NSMutableArray* existingPurples;
 
+
+-(void) handlePause;
+-(void) handleUnpause;
 -(void) addYellowThing: (bool)forced;
 -(void) removeYellowThing: (CCSprite*) sprite;
 -(void) addGreenThing: (bool)forced;

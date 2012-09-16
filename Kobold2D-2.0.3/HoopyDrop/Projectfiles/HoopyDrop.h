@@ -27,18 +27,18 @@
 
 #define YELLOW_POINTS 5
 #define GREEN_POINTS 10
-#define PURPLE_POINTS 15
+#define PURPLE_POINTS 20
 
-#define YELLOW_EXPIRE_SECONDS 20
-#define GREEN_EXPIRE_SECONDS 15
-#define PURPLE_EXPIRE_SECONDS 10
+#define YELLOW_EXPIRE_SECONDS 30
+#define GREEN_EXPIRE_SECONDS 20
+#define PURPLE_EXPIRE_SECONDS 15
 
 #define MAX_TARGET_EMPTY_SECONDS 1.0
 
-#define BASE_SCORE_MULTIPLIER_SCORE 50
-#define BASE_SCORE_MULTIPLIER_PERCENTAGE 20
+#define BASE_SCORE_MULTIPLIER_SCORE 25
+#define BASE_SCORE_MULTIPLIER_PERCENTAGE 15
 
-#define BASE_SPEED_MULTIPLIER_SCORE 50
+#define BASE_SPEED_MULTIPLIER_SCORE 40
 #define BASE_SPEED_MULTIPLIER_PERCENTAGE 10
 
 #define TARGET_RADIUS .25
@@ -46,10 +46,11 @@
 #define BACKGROUND_Z 0
 #define TEXT_Z 10
 #define OBJECTS_Z 5
+#define OVERLAY_Z 20
 
 @interface BackgroundLayer : CCLayer @end
-
 @interface PauseLayer : CCLayer @end
+
 @interface HDGamePlayRootScene : CCScene @end
 
 @interface HDTimer : CCLayer
@@ -84,6 +85,7 @@
 -(void) handleUnpause;
 -(void) startGame;
 -(void) handleEnd;
+-(void) handleAbandon;
 -(void) markBodyForDeletion: (b2Body*) body;
 -(void) addToScore: (int) points;
 -(int) getScore;

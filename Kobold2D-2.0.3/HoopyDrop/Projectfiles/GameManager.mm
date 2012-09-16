@@ -69,12 +69,19 @@ GameManager* _sharedGameManager;
     return [UIScreen mainScreen].scale > 1;
 }
 
+-(void) handleAbandon {
+    _score = 0;
+    [self handleEnd];
+}
+
 -(void) handleEnd {
     [[HDStartLayer sharedInstance] refreshDisplay];
     [[CCDirector sharedDirector] popScene];
 }
 
 -(void) startGame {
+    
+    _score = 0;
     
     self.gamePlayRootScene = [HDGamePlayRootScene node];
     
@@ -88,7 +95,7 @@ GameManager* _sharedGameManager;
     
     [gamePlayRootScene addChild:timerLayer];
 	[gamePlayRootScene addChild:textOverlayLayer z:TEXT_Z];
-    [gamePlayRootScene addChild:pauseLayer];
+    [gamePlayRootScene addChild:pauseLayer z:OVERLAY_Z];
     
     [gamePlayRootScene addChild:physicsLayer z:OBJECTS_Z];
     
@@ -98,12 +105,12 @@ GameManager* _sharedGameManager;
 }
 
 -(void) handlePause {
-    [physicsLayer pauseSchedulerAndActions];
+    [physicsLayer handlePause];
     [timerLayer pause];
 }
 
 -(void) handleUnpause {
-    [physicsLayer resumeSchedulerAndActions];
+    [physicsLayer handleUnpause];
     [timerLayer unpause];
 }
 

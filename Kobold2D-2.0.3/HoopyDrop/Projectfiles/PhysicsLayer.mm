@@ -31,7 +31,6 @@ const int TILESET_ROWS = 19;
 
 @implementation PhysicsLayer {
     @private
-    bool paused;
     NSMutableArray* userDataReferences;
     
     int lastYellowPoint;
@@ -61,7 +60,6 @@ const int TILESET_ROWS = 19;
         totalTargets = 0;
         timeTargetsEmpited = SECONDS_PER_GAME + 1;
         
-        paused = false;
         userDataReferences = [NSMutableArray arrayWithCapacity: 10];
         
         self.deletableBodies = [NSMutableArray arrayWithCapacity:10];
@@ -472,13 +470,47 @@ const int TILESET_ROWS = 19;
     for(int i = 0; i< ( score/ BASE_SPEED_MULTIPLIER_SCORE); i++) {
         expireTime = (1 - (.01 * BASE_SPEED_MULTIPLIER_PERCENTAGE)) * expireTime;
     }
+    if(expireTime < 1.0) expireTime = 1.0;
     return expireTime;
+}
+
+-(void) handlePause {
+    [self pauseSchedulerAndActions];
+    for(uint i=0; i<[existingYellows count]; i++) {
+        [self pauseAction: (CollisionHandler*)[existingYellows objectAtIndex:i]];
+    }
+    for(uint i=0; i<[existingGreens count]; i++) {
+        [self pauseAction: (CollisionHandler*)[existingGreens objectAtIndex:i]];
+    }
+    for(uint i=0; i<[existingPurples count]; i++) {
+        [self pauseAction: (CollisionHandler*)[existingPurples objectAtIndex:i]];
+    }
+}
+
+-(void) pauseAction: (CollisionHandler*) handler {
+    [[handler sprite] pauseSchedulerAndActions];
+}
+
+-(void) resumeAction: (CollisionHandler*) handler {
+    [[handler sprite] resumeSchedulerAndActions];
+}
+
+-(void) handleUnpause {
+    [self resumeSchedulerAndActions];
+    for(uint i=0; i<[existingYellows count]; i++) {
+        [self resumeAction: (CollisionHandler*)[existingYellows objectAtIndex:i]];
+    }
+    for(uint i=0; i<[existingGreens count]; i++) {
+        [self resumeAction: (CollisionHandler*)[existingGreens objectAtIndex:i]];
+    }
+    for(uint i=0; i<[existingPurples count]; i++) {
+        [self resumeAction: (CollisionHandler*)[existingPurples objectAtIndex:i]];
+    }
+
 }
 
 - (void)dealloc
 {
-//    [[CCSpriteFrameCache sharedSpriteFrameCache] removeSpriteFrames];
-    
     for (b2Body* b = world->GetBodyList(); b; /*b = b->GetNext()*/)  // remove GetNext() call
     {
         b2Body* next = b->GetNext();  // remember next body before *b gets destroyed

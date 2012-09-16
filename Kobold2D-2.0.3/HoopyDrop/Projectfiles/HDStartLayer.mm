@@ -8,7 +8,7 @@
 //
 
 #import "HoopyDrop.h"
-
+#import "SneakyButton.h"
 
 @implementation HDStartLayer {
     
@@ -21,27 +21,36 @@ HDStartLayer* _sharedHDStartLayer;
     self = [super init];
     if (self) {
         
-        int score = [[GameManager sharedInstance] getScore];
+        CCSprite* startSprite = [CCSprite spriteWithFile:@"start.png"];
+        CCSprite* startSpriteSelected = [CCSprite spriteWithFile:@"start.png"];
+        
+        CCMenuItemSprite * startButton = [CCMenuItemSprite itemWithNormalSprite:startSprite selectedSprite:startSpriteSelected target:self selector:@selector(handleStart)];
+        
+		CCMenu *menu = [CCMenu menuWithItems:startButton, nil];
+        
+		[menu alignItemsHorizontallyWithPadding:20];
         
         _sharedHDStartLayer = self;
         
-        CCLabelTTF *scoreLabel = [CCLabelTTF labelWithString:[NSString stringWithFormat:@"Score: %i", score] fontName:@"Marker Felt" fontSize:24];
-        CCLabelTTF *label = [CCLabelTTF labelWithString:@"Tap Screen To Start" fontName:@"Marker Felt" fontSize:24];
+        CCLabelTTF *scoreLabel = [CCLabelTTF labelWithString:@"" fontName:@"Marker Felt" fontSize:24];
         
-		// ask director the the window size1
+
 		CGSize size = [[CCDirector sharedDirector] winSize];
         
-        scoreLabel.position = ccp(size.width/2, size.height/1.8);
-		label.position =  ccp(size.width/2, size.height/2);
-        //
-		// add the label as a child to this Layer
+        scoreLabel.position = ccp(size.width/2, size.height/1.45);
+		menu.position =  ccp(size.width/2, size.height/2);
+
         [self addChild:scoreLabel z:1 tag:1];
-		[self addChild: label];
-        isTouchEnabled_ = YES;
+		[self addChild: menu];
+        isTouchEnabled_ = NO;
         [[UIApplication sharedApplication] setIdleTimerDisabled:NO];
     }
     return self;
     
+}
+
+-(void) handleStart {
+    [[GameManager sharedInstance] startGame];
 }
 
 +(HDStartLayer*) sharedInstance {
@@ -54,7 +63,7 @@ HDStartLayer* _sharedHDStartLayer;
 }
 
 -(void)ccTouchesEnded:(NSSet *)touches withEvent:(UIEvent *)event {
-    [[GameManager sharedInstance] startGame];
+//    [[GameManager sharedInstance] startGame];
 }
 
 @end
