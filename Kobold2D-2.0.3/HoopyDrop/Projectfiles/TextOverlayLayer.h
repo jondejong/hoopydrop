@@ -9,7 +9,6 @@
 #import "CCLayer.h"
 
 @interface TextOverlayLayer : CCLayer
--(void) addToScore: (int) sc;
--(int) getScore;
+-(void) updateScore: (int) sc;
 -(void) updateTimer:(int) time;
 @end

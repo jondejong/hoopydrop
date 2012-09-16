@@ -61,7 +61,14 @@
 
 @end
 
-@interface GameManager : NSObject
+@interface HDStartLayer : CCLayer {
+}
++(HDStartLayer*) sharedInstance;
+-(void) refreshDisplay;
+@end
+
+@interface GameManager : NSObject {
+}
 
 @property (nonatomic, retain) TextOverlayLayer* textOverlayLayer;
 @property (nonatomic, retain) PhysicsLayer* physicsLayer;
@@ -86,11 +93,6 @@
 
 +(GameManager*) sharedInstance;
 +(bool) isRetina;
-
-@end
-
-
-@interface HDStartLayer : CCLayer
 
 @end
 

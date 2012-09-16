@@ -10,7 +10,7 @@
 #import "HoopyDrop.h"
 
 @implementation TextOverlayLayer {
-	int score;
+
 }
 
 -(id) init
@@ -18,13 +18,11 @@
 	// always call "super" init
 	// Apple recommends to re-assign "self" with the "super's" return value
 	if( (self=[super init])) {
-        score = 0;
-    
+
 		// ask director the the window size
 		CGSize size = [[CCDirector sharedDirector] winSize];
         
 		[CCMenuItemFont setFontSize:28];
-		
 		
 		//score
 		CCLabelBMFont *scoreText = [CCLabelBMFont labelWithString:@"Score: 0" fntFile:@"hd-font.fnt"];
@@ -50,15 +48,10 @@
     [timerText setString:[NSString stringWithFormat:@"Timer: %i", time]];
 }
 
--(void) addToScore: (int) sc
+-(void) updateScore: (int) score
 {
 	CCLabelBMFont *scoreText = (CCLabelBMFont *)[self getChildByTag:1];
-	score += sc;
 	[scoreText setString:[NSString stringWithFormat:@"Score: %i", score]];
-}
-
--(int) getScore {
-    return score;
 }
 
 @end

@@ -11,11 +11,11 @@
 #import "TextOverlayLayer.h"
 
 @implementation GameManager {
-
+    
+@private int _score;
     
 }
-
-GameManager* _sharedInstance;
+GameManager* _sharedGameManager;
 
 @synthesize textOverlayLayer;
 @synthesize physicsLayer;
@@ -27,8 +27,8 @@ GameManager* _sharedInstance;
 {
     self = [super init];
     if (self) {
-        _sharedInstance = self;
-       
+        _sharedGameManager = self;
+        _score = 0;
     }
     return self;
 }
@@ -62,7 +62,7 @@ GameManager* _sharedInstance;
 }
 
 +(GameManager*) sharedInstance {
-    return _sharedInstance;
+    return _sharedGameManager;
 }
 
 +(bool) isRetina {
@@ -70,13 +70,13 @@ GameManager* _sharedInstance;
 }
 
 -(void) handleEnd {
+    [[HDStartLayer sharedInstance] refreshDisplay];
     [[CCDirector sharedDirector] popScene];
 }
 
 -(void) startGame {
     
     self.gamePlayRootScene = [HDGamePlayRootScene node];
-    
     
     self.timerLayer = [HDTimer node];
     self.physicsLayer = [PhysicsLayer node];
@@ -108,11 +108,12 @@ GameManager* _sharedInstance;
 }
 
 -(void) addToScore: (int) points {
-    [textOverlayLayer addToScore:points];
+    _score += points;
+    [textOverlayLayer updateScore:_score];
 }
 
 -(int) getScore {
-    return [textOverlayLayer getScore];
+    return _score;
 }
 
 @end
