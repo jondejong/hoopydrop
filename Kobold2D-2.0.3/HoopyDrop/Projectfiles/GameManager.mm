@@ -69,7 +69,7 @@ GameManager* _sharedInstance;
 }
 
 -(void) handleEnd {
-    [[CCDirector sharedDirector] pushScene:[HDStartLayer node]];
+    [[CCDirector sharedDirector] popScene];
 }
 
 -(void) startGame {

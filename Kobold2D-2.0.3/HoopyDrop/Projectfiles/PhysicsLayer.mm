@@ -477,6 +477,8 @@ const int TILESET_ROWS = 19;
 
 - (void)dealloc
 {
+//    [[CCSpriteFrameCache sharedSpriteFrameCache] removeSpriteFrames];
+    
     for (b2Body* b = world->GetBodyList(); b; /*b = b->GetNext()*/)  // remove GetNext() call
     {
         b2Body* next = b->GetNext();  // remember next body before *b gets destroyed
