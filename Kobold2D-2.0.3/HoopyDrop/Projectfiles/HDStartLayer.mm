@@ -40,8 +40,9 @@ HDStartLayer* _sharedHDStartLayer;
         scoreLabel.position = ccp(size.width/2, size.height/1.45);
 		menu.position =  ccp(size.width/2, size.height/2);
 
-        [self addChild:scoreLabel z:1 tag:1];
-		[self addChild: menu];
+        [self addChild:[BackgroundLayer node] z:BACKGROUND_Z];
+        [self addChild:scoreLabel z:OBJECTS_Z tag:1];
+		[self addChild: menu z:OBJECTS_Z];
         isTouchEnabled_ = NO;
         [[UIApplication sharedApplication] setIdleTimerDisabled:NO];
     }

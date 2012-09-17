@@ -25,7 +25,7 @@
     self = [super init];
     if (self) {
         _removed = false;
-        _createTime = CACurrentMediaTime();
+        _createTime = [[GameManager sharedInstance] getRemainingTime];
     }
     return self;
 }
@@ -48,7 +48,7 @@
     _sprite = sprite;
 }
 
--(double) createTime {
+-(int) createTime {
     return _createTime;
 }
 
@@ -65,25 +65,12 @@
     [self markRemoved];
 }
 
--(int) multiplyPoints:(int) points {
-    
-    int score = [[GameManager sharedInstance]getScore];
-    
-    float newPoints = points;
-    
-    for(int i=0; i<(score/BASE_SCORE_MULTIPLIER_SCORE); i++) {
-        newPoints *= 1 + (.01 * BASE_SCORE_MULTIPLIER_PERCENTAGE);
-    }
-    
-    return (int)newPoints;
-}
-
 @end
 
 @implementation YellowThingHandler
 
 -(void) handleCollision: (b2Body*) body {
-    [[GameManager sharedInstance] addToScore:[self multiplyPoints:YELLOW_POINTS]];
+    [[GameManager sharedInstance] addToScore:[[GameManager sharedInstance] yellowTargetPoints]];
     [self removeThisTarget];
 }
 
@@ -96,7 +83,7 @@
 @implementation GreenThingHandler
 
 -(void) handleCollision: (b2Body*) body {
-    [[GameManager sharedInstance] addToScore:[self multiplyPoints:GREEN_POINTS]];
+    [[GameManager sharedInstance] addToScore:[[GameManager sharedInstance] greenTargetPoints]];
     [self removeThisTarget];
 }
 
@@ -110,7 +97,7 @@
 @implementation PurpleThingHandler
 
 -(void) handleCollision: (b2Body*) body {
-    [[GameManager sharedInstance] addToScore:[self multiplyPoints:PURPLE_POINTS]];
+    [[GameManager sharedInstance] addToScore:[[GameManager sharedInstance] purpleTargetPoints]];
     [self removeThisTarget];
 }
 

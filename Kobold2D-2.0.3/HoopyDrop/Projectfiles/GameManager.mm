@@ -12,8 +12,11 @@
 
 @implementation GameManager {
     
-@private int _score;
-    
+@private
+    uint _score;
+    uint _yellowTargetPoints;
+    uint _greenTargetPoints;
+    uint _purpleTargetPoints;
 }
 GameManager* _sharedGameManager;
 
@@ -29,6 +32,9 @@ GameManager* _sharedGameManager;
     if (self) {
         _sharedGameManager = self;
         _score = 0;
+        _yellowTargetPoints = YELLOW_POINTS;
+        _greenTargetPoints = GREEN_POINTS;
+        _purpleTargetPoints = PURPLE_POINTS;
     }
     return self;
 }
@@ -119,7 +125,21 @@ GameManager* _sharedGameManager;
     [textOverlayLayer updateScore:_score];
 }
 
--(int) getScore {
+-(uint) yellowTargetPoints { return _yellowTargetPoints; }
+-(uint) greenTargetPoints {return _greenTargetPoints;}
+-(uint) purpleTargetPoints {return _purpleTargetPoints;}
+
+-(void) setYellowTargetPoints: (uint) points {
+        _yellowTargetPoints = points;
+}
+-(void) setGreenTargetPoints: (uint) points {
+    _greenTargetPoints = points;
+}
+-(void) setPurpleTargetPoints: (uint) points {
+    _purpleTargetPoints = points;
+}
+
+-(uint) getScore {
     return _score;
 }
 
