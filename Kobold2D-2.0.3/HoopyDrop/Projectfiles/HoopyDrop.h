@@ -11,6 +11,8 @@
 #import "Box2D.h"
 #import "PhysicsLayer.h"
 
+#define HIGH_SCORE_KEYCHAIN_KEY @"hoopyDropAllTimeHighScore"
+
 #ifndef HOOPY_DROP_H
 #define HOOPY_DROP_H
 
@@ -73,7 +75,7 @@
 
 @end
 
-@interface HDStartLayer : CCLayer {
+@interface HDStartLayer : CCLayer <UIAlertViewDelegate> {
 }
 +(HDStartLayer*) sharedInstance;
 -(void) refreshDisplay;
@@ -87,6 +89,9 @@
 @property (nonatomic, retain) PauseLayer* pauseLayer;
 @property (nonatomic, retain) HDTimer* timerLayer;
 @property (nonatomic, retain) HDGamePlayRootScene* gamePlayRootScene;
+
+-(uint) allTimeHighScore;
+-(void) resetAllTimeHighScore;
 
 -(void) removeYellowThingFromGame: (CCSprite*) sprite;
 -(void) removeGreenThingFromGame: (CCSprite*) sprite;
@@ -109,8 +114,8 @@
 -(void) setGreenTargetPoints: (uint) points;
 -(void) setPurpleTargetPoints: (uint) points;
 
--(void)updateTimer: (int) time;
--(int)getRemainingTime;
+-(void) updateTimer: (int) time;
+-(int) getRemainingTime;
 
 +(GameManager*) sharedInstance;
 +(bool) isRetina;

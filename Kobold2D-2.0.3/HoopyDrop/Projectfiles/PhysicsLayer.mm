@@ -456,7 +456,7 @@ const int TILESET_ROWS = 19;
         PurpleThingHandler* handler = (PurpleThingHandler*)[existingPurples objectAtIndex:i];
         if(![handler isRemoved]) {
             double at = [self adjustExpireTime:PURPLE_EXPIRE_SECONDS withIncrement:PURPLE_SPEED_INCREMENTS];
-            CCLOG(@"Expiring Purple in: %f", at);
+//            CCLOG(@"Expiring Purple in: %f", at);
             if([handler createTime] - [[GameManager sharedInstance] getRemainingTime] >= at) {
                 [handler removeThisTarget];
             }

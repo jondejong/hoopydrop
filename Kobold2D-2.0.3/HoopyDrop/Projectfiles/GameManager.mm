@@ -9,6 +9,7 @@
 #import "HoopyDrop.h"
 #import "PhysicsLayer.h"
 #import "TextOverlayLayer.h"
+#import "PDKeychainBindings.h"
 
 @implementation GameManager {
     
@@ -17,6 +18,7 @@
     uint _yellowTargetPoints;
     uint _greenTargetPoints;
     uint _purpleTargetPoints;
+    uint _allTimeHighScore;
 }
 GameManager* _sharedGameManager;
 
@@ -35,6 +37,12 @@ GameManager* _sharedGameManager;
         _yellowTargetPoints = YELLOW_POINTS;
         _greenTargetPoints = GREEN_POINTS;
         _purpleTargetPoints = PURPLE_POINTS;
+        
+        NSString * highScoreString = [[PDKeychainBindings sharedKeychainBindings] stringForKey:HIGH_SCORE_KEYCHAIN_KEY];
+        _allTimeHighScore = 0;
+        if(highScoreString) {
+            _allTimeHighScore = [highScoreString intValue];
+        }
     }
     return self;
 }
@@ -81,6 +89,11 @@ GameManager* _sharedGameManager;
 }
 
 -(void) handleEnd {
+    if(_score > _allTimeHighScore) {
+        _allTimeHighScore = _score;
+        [self flushAllTimeHighScore];
+
+    }
     [[HDStartLayer sharedInstance] refreshDisplay];
     [[CCDirector sharedDirector] popScene];
 }
@@ -125,6 +138,15 @@ GameManager* _sharedGameManager;
     [textOverlayLayer updateScore:_score];
 }
 
+-(uint) allTimeHighScore {
+    return _allTimeHighScore;
+}
+
+-(void) resetAllTimeHighScore {
+    _allTimeHighScore = 0;
+    [self flushAllTimeHighScore];
+}
+
 -(uint) yellowTargetPoints { return _yellowTargetPoints; }
 -(uint) greenTargetPoints {return _greenTargetPoints;}
 -(uint) purpleTargetPoints {return _purpleTargetPoints;}
@@ -141,6 +163,11 @@ GameManager* _sharedGameManager;
 
 -(uint) getScore {
     return _score;
+}
+
+-(void) flushAllTimeHighScore  {
+    [[PDKeychainBindings sharedKeychainBindings] setString:[NSString stringWithFormat:@"%i", _score] forKey:HIGH_SCORE_KEYCHAIN_KEY];
+    [[HDStartLayer sharedInstance] refreshDisplay];
 }
 
 @end
