@@ -60,6 +60,19 @@
 -(void) handlePause {
     [self pauseSchedulerAndActions];
     for(uint i=0; i<[existingYellows count]; i++) {
+        [self pauseAction: (CollisionHandler*)[existingYellows objectAtIndex:i]];
+    }
+    for(uint i=0; i<[existingGreens count]; i++) {
+        [self pauseAction: (CollisionHandler*)[existingGreens objectAtIndex:i]];
+    }
+    for(uint i=0; i<[existingPurples count]; i++) {
+        [self pauseAction: (CollisionHandler*)[existingPurples objectAtIndex:i]];
+    }
+}
+
+-(void) handleUnpause {
+    lastUpdateTime = CACurrentMediaTime();
+    for(uint i=0; i<[existingYellows count]; i++) {
         [self resumeAction: (CollisionHandler*)[existingYellows objectAtIndex:i]];
     }
     for(uint i=0; i<[existingGreens count]; i++) {
@@ -68,10 +81,6 @@
     for(uint i=0; i<[existingPurples count]; i++) {
         [self resumeAction: (CollisionHandler*)[existingPurples objectAtIndex:i]];
     }
-}
-
--(void) handleUnpause {
-    lastUpdateTime = CACurrentMediaTime();
     [self resumeSchedulerAndActions];
 }
 
