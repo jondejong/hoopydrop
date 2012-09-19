@@ -15,7 +15,7 @@
     @private
     CCSprite* _sprite;
     bool _removed;
-    double _createTime;
+    uint _createTime;
     b2Body* _body;
     
 }
@@ -47,11 +47,11 @@
     _sprite = sprite;
 }
 
--(int) createTime {
+-(uint) createTime {
     return _createTime;
 }
 
--(void) setCreateTime: (double)time {
+-(void) setCreateTime: (uint)time {
     _createTime = time;
 }
 

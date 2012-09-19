@@ -276,7 +276,7 @@ const float PTM_RATIO = 32.0f;
     return CGPointMake(x, y);
 }
 
--(void) addTarget:(CollisionHandler*) handler andBaseSprite: (NSString*)baseSpriteName andParentNode: (int) parentNodeTag andTrackedBy: (NSMutableArray*) trackingArray at: (double) createTime{
+-(void) addTarget:(CollisionHandler*) handler andBaseSprite: (NSString*)baseSpriteName andParentNode: (int) parentNodeTag andTrackedBy: (NSMutableArray*) trackingArray at: (uint) createTime{
     NSMutableArray *animFrames = [NSMutableArray array];
     for(int i = 1; i <= 4; ++i) {
         [animFrames addObject: [[CCSpriteFrameCache sharedSpriteFrameCache] spriteFrameByName:[NSString stringWithFormat:@"%@%i.png", baseSpriteName, i]]];

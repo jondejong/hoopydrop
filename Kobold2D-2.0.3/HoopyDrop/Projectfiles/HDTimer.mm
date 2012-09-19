@@ -7,6 +7,8 @@
 //
 
 #import "HoopyDrop.h"
+#ifndef HD_ORB_TIMER_H
+#define HD_ORB_TIMER_H
 
 @implementation HDTimer {
     @private
@@ -56,3 +58,5 @@
 }
 
 @end
+
+#endif

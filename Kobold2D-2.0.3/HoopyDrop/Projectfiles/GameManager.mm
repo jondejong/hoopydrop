@@ -157,7 +157,7 @@ GameManager* _sharedGameManager;
     [self flushAllTimeHighScore];
 }
 
--(void) addTarget:(CollisionHandler*) handler andBaseSprite: (NSString*)baseSpriteName andParentNode: (int) parentNodeTag andTrackedBy: (NSMutableArray*) trackingArray at:(double) createTime {
+-(void) addTarget:(CollisionHandler*) handler andBaseSprite: (NSString*)baseSpriteName andParentNode: (int) parentNodeTag andTrackedBy: (NSMutableArray*) trackingArray at:(uint) createTime {
     [physicsLayer addTarget:handler andBaseSprite:baseSpriteName andParentNode:parentNodeTag andTrackedBy:trackingArray at: createTime];
 }
 

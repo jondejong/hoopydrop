@@ -20,6 +20,8 @@
 #define DRAW_DEBUG_OUTLINE 0
 #define SECONDS_PER_GAME 60
 
+#define UPDATE_TIMER_LOOP_SECONDS .1
+
 // Odd are 1/_FREQ that each will appear in a give loop, which occurs every REDRAW_LOOP_SECONDS
 #define REDRAW_LOOP_SECONDS .5
 #define YELLOW_FREQ 20
@@ -139,7 +141,7 @@
 -(void) updateTimer: (int) time;
 -(int) getRemainingTime;
 
--(void) addTarget:(CollisionHandler*) handler andBaseSprite: (NSString*)baseSpriteName andParentNode: (int) parentNodeTag andTrackedBy: (NSMutableArray*) trackingArray at: (double)createTime;
+-(void) addTarget:(CollisionHandler*) handler andBaseSprite: (NSString*)baseSpriteName andParentNode: (int) parentNodeTag andTrackedBy: (NSMutableArray*) trackingArray at: (uint)createTime;
 
 +(GameManager*) sharedInstance;
 +(bool) isRetina;
