@@ -42,23 +42,55 @@ HDStartLayer* _sharedHDStartLayer;
         highScoreLabel.position = ccp(size.width/2, size.height/1.1);
 		menu.position =  ccp(size.width/2, size.height/2);
         
-        CCMenuItemFont* resetHighScoreMenuItem = [CCMenuItemFont itemWithString:@"Reset High Score" target:self selector:@selector(handleHighScoreReset)];
-        [resetHighScoreMenuItem setFontSize:20];
-        [resetHighScoreMenuItem setFontName:@"Marker Felt"];
+        CCSprite * questionButtonSprite = [CCSprite spriteWithFile:@"question_button.png"];
+        CCSprite * questionButtonSelectedSprite = [CCSprite spriteWithFile:@"question_button_sel.png"];
         
-        CCMenu* resetMenu = [CCMenu menuWithItems:resetHighScoreMenuItem, nil];
-        resetMenu.position = ccp(size.width/2, 50);
+        CCMenuItemSprite* questionButton = [CCMenuItemSprite itemWithNormalSprite:questionButtonSprite selectedSprite:questionButtonSelectedSprite target:self selector:@selector(handleHelpButtonPress)];
+        
+        CCSprite * settingsButtonSprite = [CCSprite spriteWithFile:@"gear_button.png"];
+        CCSprite * settingsButtonSelectedSprite = [CCSprite spriteWithFile:@"gear_button_sel.png"];
+        
+        CCMenuItemSprite* settingsButton = [CCMenuItemSprite itemWithNormalSprite:settingsButtonSprite selectedSprite:settingsButtonSelectedSprite target:self selector:@selector(handleSettingsButtonPress)];
+        settingsButton.position = ccp(80, 0);
+        
+        CCSprite * leaderBoardSprite = [CCSprite spriteWithFile:@"leader_board.png"];
+        CCSprite * leaderBoardSelectedSprite = [CCSprite spriteWithFile:@"leader_board_sel.png"];
+        
+        CCMenuItemSprite* leaderBoardButton = [CCMenuItemSprite itemWithNormalSprite:leaderBoardSprite selectedSprite:leaderBoardSelectedSprite target:self selector:@selector(handleButtonPress)];
+        leaderBoardButton.position = ccp(160, 0);
+        
+        CCSprite * creditsSprite = [CCSprite spriteWithFile:@"credits.png"];
+        CCSprite * creditsSelectedSprite = [CCSprite spriteWithFile:@"credits_sel.png"];
+        
+        CCMenuItemSprite* aboutButton = [CCMenuItemSprite itemWithNormalSprite:creditsSprite selectedSprite:creditsSelectedSprite target:self selector:@selector(handleButtonPress)];
+        aboutButton.position = ccp(240, 0);
+        
+        CCMenu* optionsMenu = [CCMenu menuWithItems:questionButton, settingsButton,leaderBoardButton, aboutButton, nil];
+        optionsMenu.position = ccp(40, 40);
         
         [self addChild:[BackgroundLayer node] z:BACKGROUND_Z];
         [self addChild:scoreLabel z:OBJECTS_Z tag:1];
 		[self addChild: menu z:OBJECTS_Z];
         [self addChild:highScoreLabel z:OBJECTS_Z tag:2];
-        [self addChild:resetMenu z:OBJECTS_Z tag:3];
+//        [self addChild:resetMenu z:OBJECTS_Z tag:3];
+        [self addChild:optionsMenu z:OBJECTS_Z tag:3];
         isTouchEnabled_ = NO;
         [[UIApplication sharedApplication] setIdleTimerDisabled:NO];
     }
     return self;
     
+}
+
+-(void) handleSettingsButtonPress  {
+    [[CCDirector sharedDirector] pushScene:[HDSettingsLayer node]];
+}
+
+-(void) handleHelpButtonPress {
+    [[CCDirector sharedDirector]pushScene:[HelpLayer node]];
+}
+
+-(void) handleButtonPress {
+    CCLOG(@"BAZINGA!");
 }
 
 -(void) handleStart {
@@ -82,23 +114,6 @@ HDStartLayer* _sharedHDStartLayer;
     
 }
 
--(void)handleHighScoreReset {
-    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Are you sure?"
-                                                    message:@"This will set your all time high score back to ZERO!!"
-                                                   delegate:self
-                                          cancelButtonTitle:@"OK"
-                                          otherButtonTitles:@"NO!", nil];
-    [alert show];
-}
 
-- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
-{
-    NSString *title = [alertView buttonTitleAtIndex:buttonIndex];
-    
-    if([title isEqualToString:@"OK"])
-    {
-        [[GameManager sharedInstance]resetAllTimeHighScore];
-    }
-}
 
 @end

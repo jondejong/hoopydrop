@@ -70,6 +70,9 @@
 #define OBJECTS_Z 5
 #define OVERLAY_Z 20
 
+@interface HDSettingsLayer : CCLayer <UIAlertViewDelegate> @end
+@interface HelpLayer : CCLayer @end
+
 @interface HDOrbTimer : CCScene
 @property (nonatomic, retain) NSMutableArray* existingYellows;
 @property (nonatomic, retain) NSMutableArray* existingGreens;
@@ -94,7 +97,7 @@
 -(int) remainingTime;
 @end
 
-@interface HDStartLayer : CCLayer <UIAlertViewDelegate> {
+@interface HDStartLayer : CCLayer  {
 }
 +(HDStartLayer*) sharedInstance;
 -(void) refreshDisplayWith:(bool)finishedGameFlag;
