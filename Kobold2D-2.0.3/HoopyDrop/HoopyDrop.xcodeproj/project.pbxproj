@@ -17,6 +17,7 @@
 		C24A84621607E42700F769D4 /* PDKeychainBindings.m in Sources */ = {isa = PBXBuildFile; fileRef = C24A84611607E42700F769D4 /* PDKeychainBindings.m */; };
 		C24A84651607E46200F769D4 /* PDKeychainBindingsController.m in Sources */ = {isa = PBXBuildFile; fileRef = C24A84641607E46200F769D4 /* PDKeychainBindingsController.m */; };
 		C24A84671607E51B00F769D4 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C24A84661607E51B00F769D4 /* Security.framework */; };
+		C24A846B16093DB200F769D4 /* HDOrbTimer.mm in Sources */ = {isa = PBXBuildFile; fileRef = C24A846A16093DB200F769D4 /* HDOrbTimer.mm */; };
 		C26773C216001FBA008B2135 /* HDStartLayer.mm in Sources */ = {isa = PBXBuildFile; fileRef = C26773C116001FBA008B2135 /* HDStartLayer.mm */; };
 		C26773C616002E7E008B2135 /* goodball.png in Resources */ = {isa = PBXBuildFile; fileRef = C26773C416002E7E008B2135 /* goodball.png */; };
 		C26773C716002E7E008B2135 /* goodball-hd.png in Resources */ = {isa = PBXBuildFile; fileRef = C26773C516002E7E008B2135 /* goodball-hd.png */; };
@@ -87,6 +88,7 @@
 		C24A84631607E46200F769D4 /* PDKeychainBindingsController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PDKeychainBindingsController.h; path = Projectfiles/PDKeychainBindingsController.h; sourceTree = "<group>"; };
 		C24A84641607E46200F769D4 /* PDKeychainBindingsController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PDKeychainBindingsController.m; path = Projectfiles/PDKeychainBindingsController.m; sourceTree = "<group>"; };
 		C24A84661607E51B00F769D4 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS6.0.sdk/System/Library/Frameworks/Security.framework; sourceTree = DEVELOPER_DIR; };
+		C24A846A16093DB200F769D4 /* HDOrbTimer.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = HDOrbTimer.mm; sourceTree = "<group>"; };
 		C26773C116001FBA008B2135 /* HDStartLayer.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = HDStartLayer.mm; path = Projectfiles/HDStartLayer.mm; sourceTree = "<group>"; };
 		C26773C416002E7E008B2135 /* goodball.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = goodball.png; sourceTree = "<group>"; };
 		C26773C516002E7E008B2135 /* goodball-hd.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "goodball-hd.png"; sourceTree = "<group>"; };
@@ -315,6 +317,7 @@
 				C26773CD16004144008B2135 /* CollisionHandler.mm */,
 				C26773D0160051A4008B2135 /* DeletableBody.mm */,
 				C233C5181605312F00622E77 /* HDTimer.mm */,
+				C24A846A16093DB200F769D4 /* HDOrbTimer.mm */,
 			);
 			path = Projectfiles;
 			sourceTree = "<group>";
@@ -376,9 +379,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		DCC1A0E213A94ED5005BD75D /* HoopyDrop-iOS */ = {
+		DCC1A0E213A94ED5005BD75D /* HoopyDrop */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = DCC1A25313A94ED7005BD75D /* Build configuration list for PBXNativeTarget "HoopyDrop-iOS" */;
+			buildConfigurationList = DCC1A25313A94ED7005BD75D /* Build configuration list for PBXNativeTarget "HoopyDrop" */;
 			buildPhases = (
 				DCC1A0DF13A94ED5005BD75D /* Sources */,
 				DCC1A0E013A94ED5005BD75D /* Frameworks */,
@@ -388,7 +391,7 @@
 			);
 			dependencies = (
 			);
-			name = "HoopyDrop-iOS";
+			name = HoopyDrop;
 			productName = "Hello-World-iOS";
 			productReference = DCC1A0E313A94ED5005BD75D /* HoopyDrop-iOS.app */;
 			productType = "com.apple.product-type.application";
@@ -414,7 +417,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				DCC1A0E213A94ED5005BD75D /* HoopyDrop-iOS */,
+				DCC1A0E213A94ED5005BD75D /* HoopyDrop */,
 			);
 		};
 /* End PBXProject section */
@@ -486,6 +489,7 @@
 				C233C52816056FB600622E77 /* HDGamePlayRootScene.mm in Sources */,
 				C24A84621607E42700F769D4 /* PDKeychainBindings.m in Sources */,
 				C24A84651607E46200F769D4 /* PDKeychainBindingsController.m in Sources */,
+				C24A846B16093DB200F769D4 /* HDOrbTimer.mm in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -514,12 +518,14 @@
 		DCC1A0DD13A94EC0005BD75D /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 			};
 			name = Debug;
 		};
 		DCC1A0DE13A94EC0005BD75D /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 			};
 			name = Release;
 		};
@@ -527,10 +533,12 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = DCFA90EF13B4F6F7009DD35A /* BuildSettings-Debug-iOS.xcconfig */;
 			buildSettings = {
+				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/../__Kobold2D__/libs/GoogleAdMobAdsSDK\"",
 				);
+				PRODUCT_NAME = "$(TARGET_NAME)";
 				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
@@ -539,10 +547,12 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = DCFA90F013B4F811009DD35A /* BuildSettings-Release-iOS.xcconfig */;
 			buildSettings = {
+				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/../__Kobold2D__/libs/GoogleAdMobAdsSDK\"",
 				);
+				PRODUCT_NAME = "$(TARGET_NAME)";
 				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
@@ -559,7 +569,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		DCC1A25313A94ED7005BD75D /* Build configuration list for PBXNativeTarget "HoopyDrop-iOS" */ = {
+		DCC1A25313A94ED7005BD75D /* Build configuration list for PBXNativeTarget "HoopyDrop" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				DCC1A25413A94ED7005BD75D /* Debug */,

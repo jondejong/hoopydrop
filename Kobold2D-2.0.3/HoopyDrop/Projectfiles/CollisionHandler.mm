@@ -25,7 +25,6 @@
     self = [super init];
     if (self) {
         _removed = false;
-        _createTime = [[GameManager sharedInstance] getRemainingTime];
     }
     return self;
 }
@@ -50,6 +49,10 @@
 
 -(int) createTime {
     return _createTime;
+}
+
+-(void) setCreateTime: (double)time {
+    _createTime = time;
 }
 
 -(bool) isRemoved {

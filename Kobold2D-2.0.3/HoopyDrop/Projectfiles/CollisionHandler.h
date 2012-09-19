@@ -16,6 +16,7 @@
 -(b2Body*) body;
 -(void) handleCollision: (b2Body*) body;
 -(int) createTime;
+-(void) setCreateTime: (double)time;
 -(bool) isRemoved;
 -(void) markRemoved;
 -(void) removeThisTarget;

@@ -10,6 +10,7 @@
 #import "GLES-Render.h"
 
 #import "ContactListener.h"
+#import "CollisionHandler.h"
 
 enum
 {
@@ -28,18 +29,12 @@ enum
 
 @property (nonatomic, retain) NSMutableArray* deletableBodies;
 
-@property (nonatomic, retain) NSMutableArray* existingYellows;
-@property (nonatomic, retain) NSMutableArray* existingGreens;
-@property (nonatomic, retain) NSMutableArray* existingPurples;
-
 
 -(void) handlePause;
 -(void) handleUnpause;
--(void) addYellowThing: (bool)forced;
 -(void) removeYellowThing: (CCSprite*) sprite;
--(void) addGreenThing: (bool)forced;
 -(void) removeGreenThing: (CCSprite*) sprite;
--(void) addPurpleThing: (bool)forced;
 -(void) removePurpleThing: (CCSprite*) sprite;
+-(void) addTarget:(CollisionHandler*) handler andBaseSprite: (NSString*)baseSpriteName andParentNode: (int) parentNodeTag andTrackedBy: (NSMutableArray*) trackingArray at: (double) createTime;
 
 @end

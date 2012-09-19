@@ -27,6 +27,7 @@ GameManager* _sharedGameManager;
 @synthesize pauseLayer;
 @synthesize timerLayer;
 @synthesize gamePlayRootScene;
+@synthesize orbTimer;
 
 - (id)init
 {
@@ -75,6 +76,10 @@ GameManager* _sharedGameManager;
     [[physicsLayer deletableBodies] addObject:db];
 }
 
+-(void) handleTargetAdded {
+    [orbTimer handleTargetAdded];
+}
+
 +(GameManager*) sharedInstance {
     return _sharedGameManager;
 }
@@ -94,7 +99,7 @@ GameManager* _sharedGameManager;
         [self flushAllTimeHighScore];
 
     }
-    [[HDStartLayer sharedInstance] refreshDisplay];
+    [[HDStartLayer sharedInstance] refreshDisplayWith:YES];
     [[CCDirector sharedDirector] popScene];
 }
 
@@ -109,26 +114,31 @@ GameManager* _sharedGameManager;
     self.textOverlayLayer = [TextOverlayLayer node];
     self.pauseLayer = [PauseLayer node];
     self.textOverlayLayer = [TextOverlayLayer node];
+    self.orbTimer = [HDOrbTimer node];
     
     [gamePlayRootScene addChild:[BackgroundLayer node] z:BACKGROUND_Z];
     
     [gamePlayRootScene addChild:timerLayer];
+    [gamePlayRootScene addChild:orbTimer];
 	[gamePlayRootScene addChild:textOverlayLayer z:TEXT_Z];
     [gamePlayRootScene addChild:pauseLayer z:OVERLAY_Z];
     
     [gamePlayRootScene addChild:physicsLayer z:OBJECTS_Z];
     
     [[CCDirector sharedDirector] pushScene: gamePlayRootScene];
+    [orbTimer start];
     [timerLayer start];
 
 }
 
 -(void) handlePause {
     [physicsLayer handlePause];
+    [orbTimer handlePause];
     [timerLayer pause];
 }
 
 -(void) handleUnpause {
+    [orbTimer handleUnpause];
     [physicsLayer handleUnpause];
     [timerLayer unpause];
 }
@@ -145,6 +155,14 @@ GameManager* _sharedGameManager;
 -(void) resetAllTimeHighScore {
     _allTimeHighScore = 0;
     [self flushAllTimeHighScore];
+}
+
+-(void) addTarget:(CollisionHandler*) handler andBaseSprite: (NSString*)baseSpriteName andParentNode: (int) parentNodeTag andTrackedBy: (NSMutableArray*) trackingArray at:(double) createTime {
+    [physicsLayer addTarget:handler andBaseSprite:baseSpriteName andParentNode:parentNodeTag andTrackedBy:trackingArray at: createTime];
+}
+
+-(void) decrementTargets {
+    [orbTimer decrementTargets];
 }
 
 -(uint) yellowTargetPoints { return _yellowTargetPoints; }
@@ -167,7 +185,7 @@ GameManager* _sharedGameManager;
 
 -(void) flushAllTimeHighScore  {
     [[PDKeychainBindings sharedKeychainBindings] setString:[NSString stringWithFormat:@"%i", _score] forKey:HIGH_SCORE_KEYCHAIN_KEY];
-    [[HDStartLayer sharedInstance] refreshDisplay];
+    [[HDStartLayer sharedInstance] refreshDisplayWith:NO];
 }
 
 @end

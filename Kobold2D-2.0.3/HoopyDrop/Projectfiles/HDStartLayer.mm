@@ -69,11 +69,15 @@ HDStartLayer* _sharedHDStartLayer;
     return _sharedHDStartLayer;
 }
 
--(void) refreshDisplay {
+-(void) refreshDisplayWith:(bool)finishedGameFlag {
     CCLabelTTF *scoreLabel = (CCLabelTTF*)[self getChildByTag:1];
     CCLabelTTF *highScoreLabel = (CCLabelTTF*)[self getChildByTag:2];
     
-    [scoreLabel setString:[NSString stringWithFormat:@"Last Game Score: %i", [[GameManager sharedInstance]getScore]]];
+    if(finishedGameFlag) {
+        [scoreLabel setString:[NSString stringWithFormat:@"Last Game Score: %i", [[GameManager sharedInstance]getScore]]];
+    } else {
+        [scoreLabel setString:@""];
+    }
     [highScoreLabel setString:[NSString stringWithFormat:@"All Time High Score: %i", [[GameManager sharedInstance] allTimeHighScore]]];
     
 }

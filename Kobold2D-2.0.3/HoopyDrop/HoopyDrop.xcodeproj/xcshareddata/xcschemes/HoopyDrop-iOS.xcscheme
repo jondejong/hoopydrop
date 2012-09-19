@@ -16,7 +16,7 @@
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "DCC1A0E213A94ED5005BD75D"
                BuildableName = "HoopyDrop-iOS.app"
-               BlueprintName = "HoopyDrop-iOS"
+               BlueprintName = "HoopyDrop"
                ReferencedContainer = "container:HoopyDrop.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
@@ -34,7 +34,7 @@
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "DCC1A0E213A94ED5005BD75D"
             BuildableName = "HoopyDrop-iOS.app"
-            BlueprintName = "HoopyDrop-iOS"
+            BlueprintName = "HoopyDrop"
             ReferencedContainer = "container:HoopyDrop.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
@@ -55,7 +55,7 @@
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "DCC1A0E213A94ED5005BD75D"
             BuildableName = "HoopyDrop-iOS.app"
-            BlueprintName = "HoopyDrop-iOS"
+            BlueprintName = "HoopyDrop"
             ReferencedContainer = "container:HoopyDrop.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
@@ -75,7 +75,7 @@
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "DCC1A0E213A94ED5005BD75D"
             BuildableName = "HoopyDrop-iOS.app"
-            BlueprintName = "HoopyDrop-iOS"
+            BlueprintName = "HoopyDrop"
             ReferencedContainer = "container:HoopyDrop.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>

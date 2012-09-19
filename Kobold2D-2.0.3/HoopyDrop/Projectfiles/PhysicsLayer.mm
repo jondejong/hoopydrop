@@ -16,11 +16,6 @@
 //to define the ratio so that your most common object type is 1x1 metre.
 const float PTM_RATIO = 32.0f;
 
-const int TILESIZE = 32;
-const int TILESET_COLUMNS = 9;
-const int TILESET_ROWS = 19;
-
-
 @interface PhysicsLayer (PrivateMethods)
 -(void) enableBox2dDebugDrawing;
 -(void) addSomeJoinedBodies:(CGPoint)pos;
@@ -33,19 +28,10 @@ const int TILESET_ROWS = 19;
     @private
     NSMutableArray* userDataReferences;
     
-    int lastYellowPoint;
-    int lastPurplePoint;
-    int lastGreenPoint;
-    
-    int totalTargets;
-    int timeTargetsEmpited;
 }
 
 @synthesize deletableBodies;
 
-@synthesize existingGreens;
-@synthesize existingPurples;
-@synthesize existingYellows;
 
 -(id) init
 {
@@ -57,19 +43,9 @@ const int TILESET_ROWS = 19;
         [[GameManager sharedInstance] setGreenTargetPoints:GREEN_POINTS];
         [[GameManager sharedInstance] setPurpleTargetPoints:PURPLE_POINTS];
         
-        lastYellowPoint = SECONDS_PER_GAME + YELLOW_EXPIRE_SECONDS + 1;
-        lastGreenPoint = SECONDS_PER_GAME + GREEN_EXPIRE_SECONDS + 1;
-        lastPurplePoint = SECONDS_PER_GAME + PURPLE_EXPIRE_SECONDS + 1;
-        
-        totalTargets = 0;
-        timeTargetsEmpited = SECONDS_PER_GAME + 1;
-        
         userDataReferences = [NSMutableArray arrayWithCapacity: 10];
         
         self.deletableBodies = [NSMutableArray arrayWithCapacity:10];
-        self.existingPurples = [NSMutableArray arrayWithCapacity:10];
-        self.existingGreens = [NSMutableArray arrayWithCapacity:10];
-        self.existingYellows = [NSMutableArray arrayWithCapacity:10];
 
 		glClearColor(0.1f, 0.0f, 0.2f, 1.0f);
 		
@@ -278,29 +254,6 @@ const int TILESET_ROWS = 19;
             }
         }
 	}
-    
-    [self expireGreens];
-    [self expirePurples];
-    [self expireYellows];
-    
-    int forced = -1;
-    
-    if(totalTargets <=0 &&  (timeTargetsEmpited - [[GameManager sharedInstance] getRemainingTime]) > MAX_TARGET_EMPTY_SECONDS) {
-        forced = arc4random() % 3;
-    }
-    
-    uint score = [[GameManager sharedInstance] getScore];
-    
-    uint multiplier = score/BASE_SCORE_MULTIPLIER_SCORE;
-    if(multiplier > 0) {
-        [[GameManager sharedInstance] setYellowTargetPoints: YELLOW_POINTS + (multiplier * YELLOW_SCORE_INCREMENTS)];
-        [[GameManager sharedInstance] setGreenTargetPoints:GREEN_POINTS + (multiplier * GREEN_SCORE_INCREMENTS)];
-        [[GameManager sharedInstance] setPurpleTargetPoints:PURPLE_POINTS + (multiplier * PURPLE_SCORE_INCREMENTS)];
-    }
-    
-    [self addYellowThing: (0==forced)];
-    [self addPurpleThing: (1==forced)];
-    [self addGreenThing: (2==forced)];
 }
 
 
@@ -323,7 +276,7 @@ const int TILESET_ROWS = 19;
     return CGPointMake(x, y);
 }
 
--(void) addTarget:(CollisionHandler*) handler andBaseSprite: (NSString*)baseSpriteName andParentNode: (int) parentNodeTag andTrackedBy: (NSMutableArray*) trackingArray{
+-(void) addTarget:(CollisionHandler*) handler andBaseSprite: (NSString*)baseSpriteName andParentNode: (int) parentNodeTag andTrackedBy: (NSMutableArray*) trackingArray at: (double) createTime{
     NSMutableArray *animFrames = [NSMutableArray array];
     for(int i = 1; i <= 4; ++i) {
         [animFrames addObject: [[CCSpriteFrameCache sharedSpriteFrameCache] spriteFrameByName:[NSString stringWithFormat:@"%@%i.png", baseSpriteName, i]]];
@@ -356,6 +309,7 @@ const int TILESET_ROWS = 19;
     
     b2Body* body = world->CreateBody(&bodyDef);
     [handler setBody:body];
+    [handler setCreateTime:createTime];
     
     [trackingArray addObject:handler];
     
@@ -372,165 +326,34 @@ const int TILESET_ROWS = 19;
     fixtureDef.isSensor = true;
     
     body->CreateFixture(&fixtureDef);
-    totalTargets++;
+    [[GameManager sharedInstance] handleTargetAdded];
 }
 
--(void) addYellowThing:(bool) force {
-
-    int now = [[GameManager sharedInstance] getRemainingTime];
-    if(!force) {
-        bool time = lastYellowPoint > SECONDS_PER_GAME || (lastYellowPoint - now) >= YELLOW_MINIMUM_SECONDS_BUFFER;
-        if(!time || 1 != (arc4random() % [self adjustFrequency:YELLOW_FREQ withIncrement:YELLOW_FREQUENCY_INCREMENTS]))  {
-            return;
-        }
-    }
-    
-    lastYellowPoint = now;
-
-    CollisionHandler* handler = [[YellowThingHandler alloc]init];
-    [self addTarget:handler andBaseSprite:@"yellow_thing" andParentNode:kYellowThingNode andTrackedBy:existingYellows];
+-(void) handlePause {
+    [self pauseSchedulerAndActions];
 }
 
--(void) decrementTargets {
-    if(--totalTargets == 0) {
-        timeTargetsEmpited = [[GameManager sharedInstance] getRemainingTime];
-    }
+-(void) handleUnpause {
+    [self resumeSchedulerAndActions];
 }
 
 -(void) removeYellowThing: (CCSprite*) sprite {
     CCSpriteBatchNode* yellowThing = (CCSpriteBatchNode*)[self getChildByTag:kYellowThingNode];
     [yellowThing removeChild:sprite cleanup:YES];
-    [self decrementTargets];
-   
-}
-
--(void) addGreenThing:(bool) force  {
+    [[GameManager sharedInstance] decrementTargets];
     
-    int now = [[GameManager sharedInstance] getRemainingTime];
-    if(!force) {
-        bool time = lastGreenPoint > SECONDS_PER_GAME|| (lastGreenPoint - now) >= GREEN_MINIMUM_SECONDS_BUFFER;
-        if(!time || 1 != (arc4random() % [self adjustFrequency:GREEN_FREQ withIncrement:GREEN_FREQUENCY_INCREMENTS])) {
-            return;
-        }
-    
-    }
-    lastGreenPoint = now;
-    [self addTarget:[[GreenThingHandler alloc]init] andBaseSprite:@"green_thing" andParentNode:kGreenThingNode andTrackedBy:existingGreens];
-}
-
--(uint) adjustFrequency:(int)frequency withIncrement: (uint) increment {
-    uint score = [[GameManager sharedInstance] getScore];
-    uint multiplier = score/BASE_SCORE_MULTIPLIER_SCORE;
-    frequency -= (increment * multiplier);
-    return frequency < 2 ? 2 : frequency;
 }
 
 -(void) removeGreenThing: (CCSprite*) sprite {
     CCSpriteBatchNode* greenThing = (CCSpriteBatchNode*)[self getChildByTag:kGreenThingNode];
     [greenThing removeChild:sprite cleanup:YES];
-    [self decrementTargets];
-}
-
--(void) addPurpleThing:(bool) force {
-    
-    int now = [[GameManager sharedInstance] getRemainingTime];
-    if(!force) {
-        bool time = lastGreenPoint > SECONDS_PER_GAME || (lastPurplePoint - now) >= PURPLE_MINIMUM_SECONDS_BUFFER;
-        if(!time || 1 != (arc4random() % [self adjustFrequency:PURPLE_FREQ withIncrement:PURPLE_FREQUENCY_INCREMENTS]))  {
-            return;
-        }
-    }
-    lastPurplePoint = now;
-    
-    [self addTarget:[[PurpleThingHandler alloc]init] andBaseSprite:@"purple_thing" andParentNode:kPurpleThingNode andTrackedBy:existingPurples];
+    [[GameManager sharedInstance] decrementTargets];
 }
 
 -(void) removePurpleThing: (CCSprite*) sprite {
     CCSpriteBatchNode* purpleThing = (CCSpriteBatchNode*)[self getChildByTag:kPurpleThingNode];
     [purpleThing removeChild:sprite cleanup:YES];
-    [self decrementTargets];
-}
-
--(void) expirePurples {
-    for(uint i=0; i<[existingPurples count]; i++) {
-        PurpleThingHandler* handler = (PurpleThingHandler*)[existingPurples objectAtIndex:i];
-        if(![handler isRemoved]) {
-            double at = [self adjustExpireTime:PURPLE_EXPIRE_SECONDS withIncrement:PURPLE_SPEED_INCREMENTS];
-//            CCLOG(@"Expiring Purple in: %f", at);
-            if([handler createTime] - [[GameManager sharedInstance] getRemainingTime] >= at) {
-                [handler removeThisTarget];
-            }
-        }
-    }
-}
-
--(void) expireYellows {
-    for(uint i=0; i<[existingYellows count]; i++) {
-        YellowThingHandler* handler = (YellowThingHandler*)[existingYellows objectAtIndex:i];
-        if(![handler isRemoved]) {
-            double at = [self adjustExpireTime:YELLOW_EXPIRE_SECONDS withIncrement:YELLOW_SPEED_INCREMENTS];
-//            CCLOG(@"Expiring Yellow in: %f", at);
-            if([handler createTime] - [[GameManager sharedInstance] getRemainingTime] >= at) {
-                [handler removeThisTarget];
-            }
-        }
-    }
-}
-
--(void) expireGreens {
-    for(uint i=0; i<[existingGreens count]; i++) {
-        GreenThingHandler* handler = (GreenThingHandler*)[existingGreens objectAtIndex:i];
-        if(![handler isRemoved]) {
-            int at = [self adjustExpireTime:GREEN_EXPIRE_SECONDS withIncrement:GREEN_SPEED_INCREMENTS];
-//            CCLOG(@"Expiring Green in: %d", at);
-            if([handler createTime] - [[GameManager sharedInstance] getRemainingTime] > at) {
-//                CCLOG(@"Expiring green target. Was created at %d, it is now %d.", [handler createTime], [[GameManager sharedInstance] getRemainingTime]);
-                [handler removeThisTarget];
-            }
-        }
-    }
-}
-
--(uint) adjustExpireTime:(int)expireTime withIncrement:(uint)increment {
-    uint score = [[GameManager sharedInstance] getScore];
-    uint multiplier = score/BASE_SCORE_MULTIPLIER_SCORE;
-    expireTime -= (increment * multiplier);
-    return expireTime < MINIMUM_EXPIRE_TIME ? MINIMUM_EXPIRE_TIME : expireTime;
-}
-
--(void) handlePause {
-    [self pauseSchedulerAndActions];
-    for(uint i=0; i<[existingYellows count]; i++) {
-        [self pauseAction: (CollisionHandler*)[existingYellows objectAtIndex:i]];
-    }
-    for(uint i=0; i<[existingGreens count]; i++) {
-        [self pauseAction: (CollisionHandler*)[existingGreens objectAtIndex:i]];
-    }
-    for(uint i=0; i<[existingPurples count]; i++) {
-        [self pauseAction: (CollisionHandler*)[existingPurples objectAtIndex:i]];
-    }
-}
-
--(void) pauseAction: (CollisionHandler*) handler {
-    [[handler sprite] pauseSchedulerAndActions];
-}
-
--(void) resumeAction: (CollisionHandler*) handler {
-    [[handler sprite] resumeSchedulerAndActions];
-}
-
--(void) handleUnpause {
-    [self resumeSchedulerAndActions];
-    for(uint i=0; i<[existingYellows count]; i++) {
-        [self resumeAction: (CollisionHandler*)[existingYellows objectAtIndex:i]];
-    }
-    for(uint i=0; i<[existingGreens count]; i++) {
-        [self resumeAction: (CollisionHandler*)[existingGreens objectAtIndex:i]];
-    }
-    for(uint i=0; i<[existingPurples count]; i++) {
-        [self resumeAction: (CollisionHandler*)[existingPurples objectAtIndex:i]];
-    }
-
+    [[GameManager sharedInstance] decrementTargets];
 }
 
 - (void)dealloc
