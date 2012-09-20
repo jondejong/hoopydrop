@@ -104,7 +104,7 @@
         int forced = -1;
         
         if(_targetCount <=0) {
-            CCLOG(@"Looking to force. _now: %i, _timeTargetsEmpited: %i, emptySecondsConst: %f", _now, _timeTargetsEmpited,(10.0 * (float)MAX_TARGET_EMPTY_SECONDS) );
+//            CCLOG(@"Looking to force. _now: %i, _timeTargetsEmpited: %i, emptySecondsConst: %f", _now, _timeTargetsEmpited,(10.0 * (float)MAX_TARGET_EMPTY_SECONDS) );
         }
         
         if(_targetCount <=0 &&  (_now - _timeTargetsEmpited) > 10.0 * (float)MAX_TARGET_EMPTY_SECONDS) {
