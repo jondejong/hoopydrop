@@ -35,10 +35,6 @@ GameManager* _sharedGameManager;
     if (self) {
         _sharedGameManager = self;
         _score = 0;
-        _yellowTargetPoints = YELLOW_POINTS;
-        _greenTargetPoints = GREEN_POINTS;
-        _purpleTargetPoints = PURPLE_POINTS;
-        
         NSString * highScoreString = [[PDKeychainBindings sharedKeychainBindings] stringForKey:HIGH_SCORE_KEYCHAIN_KEY];
         _allTimeHighScore = 0;
         if(highScoreString) {

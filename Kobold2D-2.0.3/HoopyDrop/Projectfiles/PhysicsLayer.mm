@@ -39,10 +39,6 @@ const float PTM_RATIO = 32.0f;
 	{
 		CCLOG(@"%@ init", NSStringFromClass([self class]));
         
-        [[GameManager sharedInstance] setYellowTargetPoints:YELLOW_POINTS];
-        [[GameManager sharedInstance] setGreenTargetPoints:GREEN_POINTS];
-        [[GameManager sharedInstance] setPurpleTargetPoints:PURPLE_POINTS];
-        
         userDataReferences = [NSMutableArray arrayWithCapacity: 10];
         
         self.deletableBodies = [NSMutableArray arrayWithCapacity:10];

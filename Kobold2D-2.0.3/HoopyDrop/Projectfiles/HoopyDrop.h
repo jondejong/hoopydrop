@@ -22,48 +22,30 @@
 
 #define UPDATE_TIMER_LOOP_SECONDS .1
 
-// Odds are 1/_FREQ that each will appear in a give loop, which occurs every REDRAW_LOOP_SECONDS
-#define REDRAW_LOOP_SECONDS .5
-#define YELLOW_FREQ 8
-#define GREEN_FREQ 15
-#define PURPLE_FREQ 45
+// SCORING CONSTANTS
+#define BASE_YELLOW_SCORE 1.0
+#define BASE_GREEN_SCORE 5.0
+#define BASE_PURPLE_SOCRE 15.0
+#define SCORE_CHANGE_PERCENTAGE .50
 
-#define YELLOW_MINIMUM_SECONDS_BUFFER 1
-#define GREEN_MINIMUM_SECONDS_BUFFER 1
-#define PURPLE_MINIMUM_SECONDS_BUFFER 2
+// THRESHOLD CONSTANTS
+#define BASE_THRESHOLD_BOTTOM 60    // (in 1/10s)
+#define BASE_THRESHOLD_TOP 120      // (in 1/10s)
+#define THRESHOLD_CHANGE_LEVEL 5    // orbs collected
+#define THESHOLD_CHANGE_PERCENTAGE .25
+#define THESHOLD_LEVEL_CHANGE_PERCENTAGE .50
 
-#define YELLOW_POINTS 1
-#define GREEN_POINTS 10
-#define PURPLE_POINTS 40
+// HOW LONG DO ORBS STAY ON THE SCREEN?
+#define BASE_EXPIRE_TIME 100 // (in 1/10s)
+#define MIN_EXPIRE_TIME 30 // (in 1/10s)
+#define EXPIRE_TIME_CHANGE_PERCENTAGE .25
 
-#define YELLOW_EXPIRE_SECONDS 60
-#define GREEN_EXPIRE_SECONDS 30
-#define PURPLE_EXPIRE_SECONDS 10
+// WHAT ARE EACH COLOR'S ODDS (add up 100)
+#define YELLOW_ODDS 60
+#define GREEN_ODDS 30
+#define PURPLE_ODDS 10
 
-#define MAX_TARGET_EMPTY_SECONDS .6
-
-#define BASE_SCORE_MULTIPLIER_SCORE 30
-#define YELLOW_SCORE_INCREMENTS 1
-#define GREEN_SCORE_INCREMENTS 3
-#define PURPLE_SCORE_INCREMENTS 10
-
-#define BASE_SPEED_MULTIPLIER_SCORE 80
-#define YELLOW_SPEED_INCREMENTS 8
-#define GREEN_SPEED_INCREMENTS 4
-#define PURPLE_SPEED_INCREMENTS 2
-
-#define BASE_FREQUENCY_MULTIPLIER 120
-#define YELLOW_FREQUENCY_INCREMENTS 1
-#define GREEN_FREQUENCY_INCREMENTS 2
-#define PURPLE_FREQUENCY_INCREMENTS 3
-
-#define MINIMUM_YELLOW_FREQ 1
-#define MINIMUM_GREEN_FREQ 2
-#define MINIMUM_PURPLE_FREQ 4
-
-#define MINIMUM_EXPIRE_TIME 2.5
-
-#define TARGET_RADIUS .25
+#define TARGET_RADIUS .3
 
 #define BACKGROUND_Z 0
 #define TEXT_Z 10
@@ -74,9 +56,8 @@
 @interface HelpLayer : CCLayer @end
 
 @interface HDOrbTimer : CCScene
-@property (nonatomic, retain) NSMutableArray* existingYellows;
-@property (nonatomic, retain) NSMutableArray* existingGreens;
-@property (nonatomic, retain) NSMutableArray* existingPurples;
+@property (nonatomic, retain) NSMutableArray* existingOrbs;
+
 -(void) start;
 -(void) handlePause;
 -(void) handleUnpause;

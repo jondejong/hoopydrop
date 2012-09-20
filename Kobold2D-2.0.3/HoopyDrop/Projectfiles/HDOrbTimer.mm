@@ -12,41 +12,173 @@
 @private
     float _lastLoopTime;
     uint _targetCount;
-    float _lastYellowPoint;
-    float _lastPurplePoint;
-    float _lastGreenPoint;
     
     // Current game time in 10ths of seconds
     uint _now;
+    
     uint _timeTargetsEmpited;
-    uint _lastUpdateTime;
-
+    uint _lastTimeOrbPlaced;
+    uint _collectedOrbCount;
+    
+    uint _thresholdBottom;
+    uint _thresholdTop;
+    uint _thresholdChangeLevel;
+    uint _expireTime;
+    
+    
+    // All scores will be uints when added
+    // But store them as floating points since
+    // we are doing percentage math on them.
+    // i.e. 1.5 might be an acceptable value but
+    // the game will only add 1 in that case.
+    double _yellowScore;
+    double _greenScore;
+    double _purpleScore;
+    
 }
 
-@synthesize existingGreens;
-@synthesize existingPurples;
-@synthesize existingYellows;
+@synthesize existingOrbs;
+
 
 - (id)init
 {
     self = [super init];
     if (self) {
-        _lastYellowPoint = SECONDS_PER_GAME + YELLOW_EXPIRE_SECONDS + 1;
-        _lastGreenPoint = SECONDS_PER_GAME + GREEN_EXPIRE_SECONDS + 1;
-        _lastPurplePoint = SECONDS_PER_GAME + PURPLE_EXPIRE_SECONDS + 1;
+        
+        self.existingOrbs = [NSMutableArray arrayWithCapacity:100];
+        
         _lastLoopTime = 0.0;
-        _now = 0.0;
-        _lastUpdateTime = _now;
-        
         _targetCount = 0;
-        _timeTargetsEmpited = SECONDS_PER_GAME + 1;
         
-        self.existingPurples = [NSMutableArray arrayWithCapacity:10];
-        self.existingGreens = [NSMutableArray arrayWithCapacity:10];
-        self.existingYellows = [NSMutableArray arrayWithCapacity:10];
+        // Current game time in 10ths of seconds
+        _now = 0;
+        _timeTargetsEmpited = 0;
+        _lastTimeOrbPlaced = 0;
+        _collectedOrbCount = 0;
+        
+        _thresholdBottom = BASE_THRESHOLD_BOTTOM;
+        _thresholdTop = BASE_THRESHOLD_TOP;
+        _thresholdChangeLevel = THRESHOLD_CHANGE_LEVEL;
+        _expireTime = BASE_EXPIRE_TIME;
+        
+        _yellowScore = BASE_YELLOW_SCORE;
+        _greenScore = BASE_GREEN_SCORE;
+        _purpleScore = BASE_PURPLE_SOCRE;
+        
+        [self updateGameWithNewOrbPointValues];
     }
     return self;
 }
+
+-(void) tick: (ccTime) dt
+{
+    
+    /**
+     
+     New placement algorithm to try:
+     
+     (All increments in 1/10 of a second)
+     
+     Set a threshold for new orbs. For now, we can just set one threshold for all orbs,
+     but we may need to change that to 1 per color. Each threshold has a lower time and
+     an upper time (i.e. 5 and 10 seconds). Each orb gets a percentage chance of appearing
+     during that threshold. We guarantee that a new orb will appear in that threshold.
+     Once and orb is placed, we will restart the countdown. If the screen becomes empty, a
+     new orb will immediately be placed.
+     
+     Once a certain number Orbs are collected we trigger a change. We will call this the
+     THRESHOLD_CHANGE_LEVEL. At that point the threshold will shirnk and come quicker.
+     For example, 5-10 seconds may become 4-8. In addition, the points awarded for each
+     orb will go up, but the time the orb stays on the playing surface will decrease. At
+     this point, the THRESHOLD_CHANGE_LEVEL will also go up.
+     
+     The values for the threshold change level, the base lower/upper points, and the rate
+     and which every thing changes will be stored in constants so they can be tweaked
+     until the appropriate difficutly of play is reached.
+     
+     **/
+    
+    //     We want to process every 10th of second
+    float currentTime = CACurrentMediaTime();
+    if(currentTime - _lastLoopTime  >= UPDATE_TIMER_LOOP_SECONDS) {
+        // Adjust the counter
+        if(_lastLoopTime > 0) {
+            _now += (10 * (currentTime - _lastLoopTime))/1;
+        } else {
+            _now = 1;
+        }
+//        CCLOG(@"Looping %i", _now);
+        _lastLoopTime = currentTime;
+        
+        // Expire what needs to be expired
+        [self expireOrbs];
+        
+        // Decide if we should add a new orb
+        bool addTarget = NO;
+         uint timeSinceLastTarget = _now - _lastTimeOrbPlaced;
+        
+        if(_targetCount <= 0 || timeSinceLastTarget >= _thresholdTop) {
+            // We are eiter out of targets or we've waited to long, force one.
+            addTarget = true;
+        } else if (timeSinceLastTarget > _thresholdBottom ) {
+            // Give each loop in the threshold an equal change to have a new orb
+            addTarget = (1 == arc4random() % (_thresholdTop - _thresholdBottom) );
+        }
+    
+        if(addTarget) {
+            [self addAnOrb];
+        }
+    
+        // Update all values (if needed)
+        [self updateValues];
+    }
+}
+
+-(void) updateValues {
+    if(_collectedOrbCount >= _thresholdChangeLevel) {
+        _thresholdChangeLevel = (uint)((float)_thresholdChangeLevel * (1.0 + THESHOLD_LEVEL_CHANGE_PERCENTAGE));
+        _yellowScore *=  (1 + SCORE_CHANGE_PERCENTAGE);
+        _greenScore *=  (1 + SCORE_CHANGE_PERCENTAGE);
+        _purpleScore *=  (1 + SCORE_CHANGE_PERCENTAGE);
+        _thresholdBottom = (uint)((float)_thresholdBottom * (1.0 - THESHOLD_CHANGE_PERCENTAGE));
+        _thresholdTop = (uint)((float)_thresholdTop * (1.0 - THESHOLD_CHANGE_PERCENTAGE));
+        float tempExpireTime = ((float)_expireTime * (1.0 - EXPIRE_TIME_CHANGE_PERCENTAGE));
+        _expireTime = (tempExpireTime < MIN_EXPIRE_TIME) ? MIN_EXPIRE_TIME : (uint)tempExpireTime;
+        
+        [self updateGameWithNewOrbPointValues];
+    }
+}
+
+-(void) updateGameWithNewOrbPointValues {
+    [[GameManager sharedInstance] setYellowTargetPoints:_yellowScore];
+    [[GameManager sharedInstance] setGreenTargetPoints:_greenScore];
+    [[GameManager sharedInstance] setPurpleTargetPoints:_purpleScore];
+
+}
+
+-(void) addAnOrb {
+
+    _lastTimeOrbPlaced = _now;
+    
+    uint val = arc4random() % 100;
+    
+    if(val < YELLOW_ODDS) {
+        [self addYellowOrb];
+    } else if (val >= YELLOW_ODDS && val < (YELLOW_ODDS + GREEN_ODDS)) {
+        [self addGreenOrb];
+    } else {
+        [self addPurpleOrb];
+    }
+}
+
+-(void) expireOrbs {
+    for(CollisionHandler* handler in existingOrbs) {
+        if( ![handler isRemoved] && (_now -  [handler createTime]) > _expireTime) {
+            [handler removeThisTarget];
+        }
+    }
+}
+
 
 -(void) start {
     [self schedule: @selector(tick:)];
@@ -62,76 +194,22 @@
 
 -(void) handlePause {
     [self pauseSchedulerAndActions];
-    for(uint i=0; i<[existingYellows count]; i++) {
-        [self pauseAction: (CollisionHandler*)[existingYellows objectAtIndex:i]];
-    }
-    for(uint i=0; i<[existingGreens count]; i++) {
-        [self pauseAction: (CollisionHandler*)[existingGreens objectAtIndex:i]];
-    }
-    for(uint i=0; i<[existingPurples count]; i++) {
-        [self pauseAction: (CollisionHandler*)[existingPurples objectAtIndex:i]];
+    for(CollisionHandler* handler in existingOrbs) {
+        [self pauseAction: handler];
     }
 }
 
 -(void) handleUnpause {
-    for(uint i=0; i<[existingYellows count]; i++) {
-        [self resumeAction: (CollisionHandler*)[existingYellows objectAtIndex:i]];
-    }
-    for(uint i=0; i<[existingGreens count]; i++) {
-        [self resumeAction: (CollisionHandler*)[existingGreens objectAtIndex:i]];
-    }
-    for(uint i=0; i<[existingPurples count]; i++) {
-        [self resumeAction: (CollisionHandler*)[existingPurples objectAtIndex:i]];
+    for(CollisionHandler* handler in existingOrbs) {
+        [self resumeAction: handler];
     }
     [self resumeSchedulerAndActions];
 }
 
--(void) tick: (ccTime) dt
-{
-    
-//     We want to process every 10th of second
-    float currentTime = CACurrentMediaTime();
-    if(currentTime - _lastLoopTime  >= UPDATE_TIMER_LOOP_SECONDS) {
-        
-        _lastLoopTime = currentTime;
-        
-        [self expireGreens];
-        [self expirePurples];
-        [self expireYellows];
-        
-        _now++;
-        
-        int forced = -1;
-        
-        if(_targetCount <=0) {
-//            CCLOG(@"Looking to force. _now: %i, _timeTargetsEmpited: %i, emptySecondsConst: %f", _now, _timeTargetsEmpited,(10.0 * (float)MAX_TARGET_EMPTY_SECONDS) );
-        }
-        
-        if(_targetCount <=0 &&  (_now - _timeTargetsEmpited) > 10.0 * (float)MAX_TARGET_EMPTY_SECONDS) {
-            forced = arc4random() % 10;
-        }
-        
-        if(forced >= 0 || _now - _lastUpdateTime >= 10.0 * (float)REDRAW_LOOP_SECONDS) {
-            
-            uint score = [[GameManager sharedInstance] getScore];
-            
-            uint multiplier = score/BASE_SCORE_MULTIPLIER_SCORE;
-            
-            [[GameManager sharedInstance] setYellowTargetPoints: YELLOW_POINTS + (multiplier * YELLOW_SCORE_INCREMENTS)];
-            [[GameManager sharedInstance] setGreenTargetPoints:GREEN_POINTS + (multiplier * GREEN_SCORE_INCREMENTS)];
-            [[GameManager sharedInstance] setPurpleTargetPoints:PURPLE_POINTS + (multiplier * PURPLE_SCORE_INCREMENTS)];
-            
-            [self addYellowThing: (forced >= 0 && forced < 6)];
-            [self addGreenThing: (forced < 9 && forced >= 6)];
-            [self addPurpleThing: (9==forced)];
-            
-            _lastUpdateTime = _now;
-        }
-    }
-}
 
 -(void) handleTargetAdded {
     _targetCount++;
+    _collectedOrbCount++;
 }
 
 -(void) decrementTargets {
@@ -141,109 +219,19 @@
 //    CCLOG(@"_targetCount: %i", _targetCount);
 }
 
--(uint) adjustFrequency:(int)frequency withIncrement: (uint) increment andMinimum: (int) min {
-    uint score = [[GameManager sharedInstance] getScore];
-    uint multiplier = score/BASE_FREQUENCY_MULTIPLIER;
-    frequency -= (increment * multiplier);
-    return frequency < min ? min : frequency;
-}
 
--(uint) adjustExpireTime:(float)expireTime withIncrement:(uint)increment {
-    // Expire times are in seconds, game time counters are in 1/10 seconds.
-    // adjust accordingly.
-    
-    expireTime *= 10;
-    float minimumExpireTime = 10 * MINIMUM_EXPIRE_TIME;
-    
-    uint score = [[GameManager sharedInstance] getScore];
-    uint multiplier = score/BASE_SCORE_MULTIPLIER_SCORE;
-    expireTime -= (increment * multiplier);
-    return expireTime < minimumExpireTime ? minimumExpireTime : expireTime;
-}
-
--(void) addYellowThing:(bool) force {
-    
-    if(!force) {
-        bool time = _lastYellowPoint > SECONDS_PER_GAME || (_now - _lastYellowPoint) >= YELLOW_MINIMUM_SECONDS_BUFFER;
-        int at = [self adjustFrequency:YELLOW_FREQ withIncrement:YELLOW_FREQUENCY_INCREMENTS andMinimum:MINIMUM_YELLOW_FREQ];
-        int rand = (arc4random() % at);
-//        CCLOG(@"Yellow FREQ: %i -- rand: %i with time %i (dif: %f)", at, rand, time, (_now - lastYellowPoint));
-        if(!time || 1 != rand)  {
-            return;
-        }
-    }
-    
-    _lastYellowPoint = _now;
+-(void) addYellowOrb{
     
     CollisionHandler* handler = [[YellowThingHandler alloc]init];
-    [[GameManager sharedInstance]  addTarget:handler andBaseSprite:@"yellow_thing" andParentNode:kYellowThingNode andTrackedBy:existingYellows at:_now];
+    [[GameManager sharedInstance]  addTarget:handler andBaseSprite:@"yellow_thing" andParentNode:kYellowThingNode andTrackedBy:existingOrbs at:_now];
 }
 
--(void) addGreenThing:(bool) force  {
-    if(!force) {
-        bool time = _lastGreenPoint > SECONDS_PER_GAME|| (_now - _lastGreenPoint) >= GREEN_MINIMUM_SECONDS_BUFFER;
-        if(!time || 1 != (arc4random() % [self adjustFrequency:GREEN_FREQ withIncrement:GREEN_FREQUENCY_INCREMENTS andMinimum:MINIMUM_GREEN_FREQ])) {
-            return;
-        }
-        
-    }
-    _lastGreenPoint = _now;
-    [[GameManager sharedInstance] addTarget:[[GreenThingHandler alloc]init] andBaseSprite:@"green_thing" andParentNode:kGreenThingNode andTrackedBy:existingGreens at:_now];
+-(void) addGreenOrb {
+    [[GameManager sharedInstance] addTarget:[[GreenThingHandler alloc]init] andBaseSprite:@"green_thing" andParentNode:kGreenThingNode andTrackedBy:existingOrbs at:_now];
 }
 
--(void) addPurpleThing:(bool) force {
-    if(!force) {
-        bool time = _lastGreenPoint > SECONDS_PER_GAME || (_now - _lastPurplePoint) >= PURPLE_MINIMUM_SECONDS_BUFFER;
-        int at = [self adjustFrequency:PURPLE_FREQ withIncrement:PURPLE_FREQUENCY_INCREMENTS andMinimum:MINIMUM_PURPLE_FREQ];
-//        CCLOG(@"Purple FREQ: %i", at);
-        if(!time || 1 != (arc4random() % at))  {
-            return;
-        }
-    }
-    _lastPurplePoint = _now;
-    
-    [[GameManager sharedInstance] addTarget:[[PurpleThingHandler alloc]init] andBaseSprite:@"purple_thing" andParentNode:kPurpleThingNode andTrackedBy:existingPurples at:_now];
-}
-
--(void) expireYellows {
-    for(uint i=0; i<[existingYellows count]; i++) {
-        YellowThingHandler* handler = (YellowThingHandler*)[existingYellows objectAtIndex:i];
-        if(![handler isRemoved]) {
-            double at = [self adjustExpireTime:YELLOW_EXPIRE_SECONDS withIncrement:YELLOW_SPEED_INCREMENTS];
-//            CCLOG(@"Expiring Yellow in: %f", at);
-            if(_now - [handler createTime] >= at) {
-//                CCLOG(@"It is now %i.  --  Expiring Yellow with create time: %i", _now, [handler createTime]);
-                [handler removeThisTarget];
-            }
-        }
-    }
-}
-
--(void) expireGreens {
-    for(uint i=0; i<[existingGreens count]; i++) {
-        GreenThingHandler* handler = (GreenThingHandler*)[existingGreens objectAtIndex:i];
-        if(![handler isRemoved]) {
-            uint at = [self adjustExpireTime:GREEN_EXPIRE_SECONDS withIncrement:GREEN_SPEED_INCREMENTS];
-            //            CCLOG(@"Expiring Green in: %d", at);
-            if(_now - [handler createTime] > at) {
-                //                CCLOG(@"Expiring green target. Was created at %d, it is now %d.", [handler createTime], [[GameManager sharedInstance] getRemainingTime]);
-                [handler removeThisTarget];
-            }
-        }
-    }
-}
-
--(void) expirePurples {
-    for(uint i=0; i<[existingPurples count]; i++) {
-        PurpleThingHandler* handler = (PurpleThingHandler*)[existingPurples objectAtIndex:i];
-        if(![handler isRemoved]) {
-            double at = [self adjustExpireTime:PURPLE_EXPIRE_SECONDS withIncrement:PURPLE_SPEED_INCREMENTS];
-            //            CCLOG(@"Expiring Purple in: %f", at);
-            if(_now - [handler createTime] >= at) {
-                [handler removeThisTarget];
-            }
-        }
-    }
+-(void) addPurpleOrb {
+    [[GameManager sharedInstance] addTarget:[[PurpleThingHandler alloc]init] andBaseSprite:@"purple_thing" andParentNode:kPurpleThingNode andTrackedBy:existingOrbs at:_now];
 }
 
 @end
