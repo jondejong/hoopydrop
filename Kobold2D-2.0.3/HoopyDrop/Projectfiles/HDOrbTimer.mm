@@ -22,7 +22,8 @@
     
     uint _thresholdBottom;
     uint _thresholdTop;
-    uint _thresholdChangeLevel;
+    double _thresholdChangeLevel;
+    double _thresholdIncrementLevel;
     uint _expireTime;
     
     
@@ -59,6 +60,7 @@
         _thresholdBottom = BASE_THRESHOLD_BOTTOM;
         _thresholdTop = BASE_THRESHOLD_TOP;
         _thresholdChangeLevel = THRESHOLD_CHANGE_LEVEL;
+        _thresholdIncrementLevel = THRESHOLD_CHANGE_LEVEL;
         _expireTime = BASE_EXPIRE_TIME;
         
         _yellowScore = BASE_YELLOW_SCORE;
@@ -136,7 +138,8 @@
 
 -(void) updateValues {
     if(_collectedOrbCount >= _thresholdChangeLevel) {
-        _thresholdChangeLevel = (uint)((float)_thresholdChangeLevel * (1.0 + THESHOLD_LEVEL_CHANGE_PERCENTAGE));
+        _thresholdIncrementLevel = _thresholdIncrementLevel * (1.0 + THESHOLD_LEVEL_CHANGE_PERCENTAGE);
+        _thresholdChangeLevel += _thresholdIncrementLevel;
         _yellowScore *=  (1 + SCORE_CHANGE_PERCENTAGE);
         _greenScore *=  (1 + SCORE_CHANGE_PERCENTAGE);
         _purpleScore *=  (1 + SCORE_CHANGE_PERCENTAGE);
@@ -144,6 +147,11 @@
         _thresholdTop = (uint)((float)_thresholdTop * (1.0 - THESHOLD_CHANGE_PERCENTAGE));
         float tempExpireTime = ((float)_expireTime * (1.0 - EXPIRE_TIME_CHANGE_PERCENTAGE));
         _expireTime = (tempExpireTime < MIN_EXPIRE_TIME) ? MIN_EXPIRE_TIME : (uint)tempExpireTime;
+        
+        _thresholdBottom = _thresholdBottom < MIN_THRESHOLD_BOTTOM ? MIN_THRESHOLD_BOTTOM : _thresholdBottom;
+        _thresholdTop = _thresholdTop < MIN_THRESHOLD_TOP ? MIN_THRESHOLD_TOP : _thresholdTop;
+        
+        CCLOG(@"Change level reset to: %f. New Increment: %f. New threshold to %i - %i. Expires at: %i", _thresholdChangeLevel, _thresholdIncrementLevel, _thresholdBottom, _thresholdTop, _expireTime);
         
         [self updateGameWithNewOrbPointValues];
     }
