@@ -14,6 +14,8 @@
 		C233C5221605653D00622E77 /* background.png in Resources */ = {isa = PBXBuildFile; fileRef = C233C5201605653D00622E77 /* background.png */; };
 		C233C52516056A7E00622E77 /* BackgroundLayer.mm in Sources */ = {isa = PBXBuildFile; fileRef = C233C52416056A7E00622E77 /* BackgroundLayer.mm */; };
 		C233C52816056FB600622E77 /* HDGamePlayRootScene.mm in Sources */ = {isa = PBXBuildFile; fileRef = C233C52716056FB600622E77 /* HDGamePlayRootScene.mm */; };
+		C2468470160C72D10063DAAD /* LeaderBoardLayer.mm in Sources */ = {isa = PBXBuildFile; fileRef = C246846F160C72D10063DAAD /* LeaderBoardLayer.mm */; };
+		C2468474160C76610063DAAD /* AboutLayer.mm in Sources */ = {isa = PBXBuildFile; fileRef = C2468473160C76610063DAAD /* AboutLayer.mm */; };
 		C24A84621607E42700F769D4 /* PDKeychainBindings.m in Sources */ = {isa = PBXBuildFile; fileRef = C24A84611607E42700F769D4 /* PDKeychainBindings.m */; };
 		C24A84651607E46200F769D4 /* PDKeychainBindingsController.m in Sources */ = {isa = PBXBuildFile; fileRef = C24A84641607E46200F769D4 /* PDKeychainBindingsController.m */; };
 		C24A84671607E51B00F769D4 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C24A84661607E51B00F769D4 /* Security.framework */; };
@@ -101,6 +103,8 @@
 		C233C5201605653D00622E77 /* background.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = background.png; sourceTree = "<group>"; };
 		C233C52416056A7E00622E77 /* BackgroundLayer.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = BackgroundLayer.mm; sourceTree = "<group>"; };
 		C233C52716056FB600622E77 /* HDGamePlayRootScene.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = HDGamePlayRootScene.mm; sourceTree = "<group>"; };
+		C246846F160C72D10063DAAD /* LeaderBoardLayer.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = LeaderBoardLayer.mm; sourceTree = "<group>"; };
+		C2468473160C76610063DAAD /* AboutLayer.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = AboutLayer.mm; path = Projectfiles/AboutLayer.mm; sourceTree = "<group>"; };
 		C24A84601607E42700F769D4 /* PDKeychainBindings.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PDKeychainBindings.h; path = Projectfiles/PDKeychainBindings.h; sourceTree = "<group>"; };
 		C24A84611607E42700F769D4 /* PDKeychainBindings.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PDKeychainBindings.m; path = Projectfiles/PDKeychainBindings.m; sourceTree = "<group>"; };
 		C24A84631607E46200F769D4 /* PDKeychainBindingsController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PDKeychainBindingsController.h; path = Projectfiles/PDKeychainBindingsController.h; sourceTree = "<group>"; };
@@ -234,6 +238,8 @@
 				C233C52716056FB600622E77 /* HDGamePlayRootScene.mm */,
 				C2F5F76B160A7DB9002B8EE9 /* HDSettingsLayer.mm */,
 				C26FF867160A854200190FC7 /* HelpLayer.mm */,
+				C246846F160C72D10063DAAD /* LeaderBoardLayer.mm */,
+				C2468473160C76610063DAAD /* AboutLayer.mm */,
 			);
 			name = DisplayLayers;
 			sourceTree = "<group>";
@@ -562,6 +568,8 @@
 				C24A846B16093DB200F769D4 /* HDOrbTimer.mm in Sources */,
 				C2F5F76C160A7DB9002B8EE9 /* HDSettingsLayer.mm in Sources */,
 				C26FF868160A854200190FC7 /* HelpLayer.mm in Sources */,
+				C2468470160C72D10063DAAD /* LeaderBoardLayer.mm in Sources */,
+				C2468474160C76610063DAAD /* AboutLayer.mm in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

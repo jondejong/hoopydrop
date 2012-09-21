@@ -35,12 +35,11 @@ HDStartLayer* _sharedHDStartLayer;
         CCLabelTTF *scoreLabel = [CCLabelTTF labelWithString:@"" fontName:@"Marker Felt" fontSize:24];
         CCLabelTTF *highScoreLabel = [CCLabelTTF labelWithString:[NSString stringWithFormat:@"All Time High Score: %i", [[GameManager sharedInstance] allTimeHighScore]] fontName:@"Marker Felt" fontSize:24];
         
-
 		CGSize size = [[CCDirector sharedDirector] winSize];
         
         scoreLabel.position = ccp(size.width/2, size.height/1.20);
         highScoreLabel.position = ccp(size.width/2, size.height/1.1);
-		menu.position =  ccp(size.width/2, size.height/2);
+		menu.position =  ccp(size.width/2, size.height - 175);
         
         CCSprite * questionButtonSprite = [CCSprite spriteWithFile:@"question_button.png"];
         CCSprite * questionButtonSelectedSprite = [CCSprite spriteWithFile:@"question_button_sel.png"];
@@ -56,13 +55,13 @@ HDStartLayer* _sharedHDStartLayer;
         CCSprite * leaderBoardSprite = [CCSprite spriteWithFile:@"leader_board.png"];
         CCSprite * leaderBoardSelectedSprite = [CCSprite spriteWithFile:@"leader_board_sel.png"];
         
-        CCMenuItemSprite* leaderBoardButton = [CCMenuItemSprite itemWithNormalSprite:leaderBoardSprite selectedSprite:leaderBoardSelectedSprite target:self selector:@selector(handleButtonPress)];
+        CCMenuItemSprite* leaderBoardButton = [CCMenuItemSprite itemWithNormalSprite:leaderBoardSprite selectedSprite:leaderBoardSelectedSprite target:self selector:@selector(handleLeaderboardButtonPress)];
         leaderBoardButton.position = ccp(160, 0);
         
         CCSprite * creditsSprite = [CCSprite spriteWithFile:@"credits.png"];
         CCSprite * creditsSelectedSprite = [CCSprite spriteWithFile:@"credits_sel.png"];
         
-        CCMenuItemSprite* aboutButton = [CCMenuItemSprite itemWithNormalSprite:creditsSprite selectedSprite:creditsSelectedSprite target:self selector:@selector(handleButtonPress)];
+        CCMenuItemSprite* aboutButton = [CCMenuItemSprite itemWithNormalSprite:creditsSprite selectedSprite:creditsSelectedSprite target:self selector:@selector(handleAboutButtonPress)];
         aboutButton.position = ccp(240, 0);
         
         CCMenu* optionsMenu = [CCMenu menuWithItems:questionButton, settingsButton,leaderBoardButton, aboutButton, nil];
@@ -72,7 +71,6 @@ HDStartLayer* _sharedHDStartLayer;
         [self addChild:scoreLabel z:OBJECTS_Z tag:1];
 		[self addChild: menu z:OBJECTS_Z];
         [self addChild:highScoreLabel z:OBJECTS_Z tag:2];
-//        [self addChild:resetMenu z:OBJECTS_Z tag:3];
         [self addChild:optionsMenu z:OBJECTS_Z tag:3];
         isTouchEnabled_ = NO;
         [[UIApplication sharedApplication] setIdleTimerDisabled:NO];
@@ -86,11 +84,15 @@ HDStartLayer* _sharedHDStartLayer;
 }
 
 -(void) handleHelpButtonPress {
-    [[CCDirector sharedDirector]pushScene:[HelpLayer node]];
+    [[CCDirector sharedDirector] pushScene:[HelpLayer node]];
 }
 
--(void) handleButtonPress {
-    CCLOG(@"BAZINGA!");
+-(void) handleLeaderboardButtonPress {
+    [[CCDirector sharedDirector] pushScene:[LeaderBoardLayer node]];
+}
+
+-(void) handleAboutButtonPress {
+    [[CCDirector sharedDirector] pushScene:[AboutLayer node]];
 }
 
 -(void) handleStart {

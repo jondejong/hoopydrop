@@ -81,6 +81,8 @@
 
 @interface HDSettingsLayer : CCLayer <UIAlertViewDelegate> @end
 @interface HelpLayer : CCLayer @end
+@interface LeaderBoardLayer : CCLayer @end
+@interface AboutLayer : CCLayer @end
 
 @interface HDOrbTimer : CCScene
 @property (nonatomic, retain) NSMutableArray* existingOrbs;
