@@ -14,17 +14,19 @@
     uint _targetCount;
     
     // Current game time in 10ths of seconds
-    uint _now;
+    int _now;
     
-    uint _timeTargetsEmpited;
-    uint _lastTimeOrbPlaced;
+    int _timeTargetsEmpited;
+    int _lastTimeOrbPlaced;
     uint _collectedOrbCount;
     
-    uint _thresholdBottom;
-    uint _thresholdTop;
+    int _thresholdBottom;
+    int _thresholdTop;
     double _thresholdChangeLevel;
     double _thresholdIncrementLevel;
-    uint _expireTime;
+    int _expireTime;
+    
+    double _pauseTime;
     
     
     // All scores will be uints when added
@@ -39,7 +41,6 @@
 }
 
 @synthesize existingOrbs;
-
 
 - (id)init
 {
@@ -56,6 +57,7 @@
         _timeTargetsEmpited = 0;
         _lastTimeOrbPlaced = 0;
         _collectedOrbCount = 0;
+        _pauseTime = 0.0;
         
 #if PLACE_LINEAR_ALGORITHM
         _thresholdBottom = BASE_THRESHOLD_BOTTOM_LINEAR;
@@ -131,7 +133,7 @@
         
         // Decide if we should add a new orb
         bool addTarget = NO;
-         uint timeSinceLastTarget = _now - _lastTimeOrbPlaced;
+        int timeSinceLastTarget = _now - _lastTimeOrbPlaced;
         
         if(_targetCount <= 0 || timeSinceLastTarget >= _thresholdTop) {
             // We are eiter out of targets or we've waited to long, force one.
@@ -158,7 +160,7 @@
         [self updateValueslExponential];
 #endif
         [self updateGameWithNewOrbPointValues];
-//          CCLOG(@"Change level reset to: %f. New Increment: %f. New threshold to %i - %i. Expires at: %i", _thresholdChangeLevel, _thresholdIncrementLevel, _thresholdBottom, _thresholdTop, _expireTime);
+          CCLOG(@"Change level reset to: %f. New Increment: %f. New threshold to %i - %i. Expires at: %i", _thresholdChangeLevel, _thresholdIncrementLevel, _thresholdBottom, _thresholdTop, _expireTime);
     }
 }
 
@@ -168,12 +170,13 @@
     _greenScore += GREEN_SCORE_INCREMENT;
     _purpleScore += PURPLE_SCORE_INCREMENT;
     
-    _thresholdBottom = (THRESHOLD_BOTTOM_INCREMENT_LINEAR >= _thresholdBottom) ? MIN_THRESHOLD_BOTTOM_LINEAR : _thresholdBottom - THRESHOLD_BOTTOM_INCREMENT_LINEAR;
-    _thresholdTop = (THRESHOLD_TOP_INCREMENT_LINEAR >= _thresholdTop) ? MIN_THRESHOLD_TOP_LINEAR : _thresholdTop - THRESHOLD_TOP_INCREMENT_LINEAR;
+    _thresholdBottom -= THRESHOLD_BOTTOM_INCREMENT_LINEAR;
+    _thresholdTop -= THRESHOLD_TOP_INCREMENT_LINEAR;
+    _expireTime -= EXPIRE_TIME_INCREMENT_LINEAR;
     
-   
-    _expireTime = (EXPIRE_TIME_INCREMENT_LINEAR >= _expireTime) ? MIN_EXPIRE_TIME_LINEAR : _expireTime - EXPIRE_TIME_INCREMENT_LINEAR;
-    
+    _thresholdBottom = (_thresholdBottom < MIN_THRESHOLD_BOTTOM_LINEAR) ? MIN_THRESHOLD_BOTTOM_LINEAR : _thresholdBottom;
+    _thresholdTop = (_thresholdTop < MIN_THRESHOLD_TOP_LINEAR) ? MIN_THRESHOLD_TOP_LINEAR : _thresholdTop;
+    _expireTime = (_expireTime < MIN_EXPIRE_TIME_LINEAR) ? MIN_EXPIRE_TIME_LINEAR : _expireTime;
 }
 
 -(void) updateValuesExponential {
@@ -229,6 +232,7 @@
 }
 
 -(void) pauseAction: (CollisionHandler*) handler {
+    _pauseTime = CACurrentMediaTime();
     [[handler sprite] pauseSchedulerAndActions];
 }
 
@@ -247,6 +251,8 @@
     for(CollisionHandler* handler in existingOrbs) {
         [self resumeAction: handler];
     }
+    
+    _lastLoopTime += CACurrentMediaTime() - _pauseTime;
     [self resumeSchedulerAndActions];
 }
 
