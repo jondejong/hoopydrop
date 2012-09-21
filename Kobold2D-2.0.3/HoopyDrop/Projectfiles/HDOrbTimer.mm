@@ -57,6 +57,19 @@
         _lastTimeOrbPlaced = 0;
         _collectedOrbCount = 0;
         
+#if PLACE_LINEAR_ALGORITHM
+        _thresholdBottom = BASE_THRESHOLD_BOTTOM_LINEAR;
+        _thresholdTop = BASE_THRESHOLD_TOP_LINEAR;
+        _thresholdChangeLevel = THRESHOLD_CHANGE_LEVEL_LINEAR;
+        _thresholdIncrementLevel = THRESHOLD_CHANGE_INCREMENT_LINEAR;
+        _expireTime = BASE_EXPIRE_TIME_LINEAR;
+        
+        _yellowScore = BASE_YELLOW_SCORE_LINEAR;
+        _greenScore = BASE_GREEN_SCORE_LINEAR;
+        _purpleScore = BASE_PURPLE_SOCRE_LINEAR;
+        
+#else
+        
         _thresholdBottom = BASE_THRESHOLD_BOTTOM;
         _thresholdTop = BASE_THRESHOLD_TOP;
         _thresholdChangeLevel = THRESHOLD_CHANGE_LEVEL;
@@ -66,6 +79,7 @@
         _yellowScore = BASE_YELLOW_SCORE;
         _greenScore = BASE_GREEN_SCORE;
         _purpleScore = BASE_PURPLE_SOCRE;
+#endif
         
         [self updateGameWithNewOrbPointValues];
     }
@@ -138,23 +152,45 @@
 
 -(void) updateValues {
     if(_collectedOrbCount >= _thresholdChangeLevel) {
-        _thresholdIncrementLevel = _thresholdIncrementLevel * (1.0 + THESHOLD_LEVEL_CHANGE_PERCENTAGE);
-        _thresholdChangeLevel += _thresholdIncrementLevel;
-        _yellowScore *=  (1 + SCORE_CHANGE_PERCENTAGE);
-        _greenScore *=  (1 + SCORE_CHANGE_PERCENTAGE);
-        _purpleScore *=  (1 + SCORE_CHANGE_PERCENTAGE);
-        _thresholdBottom = (uint)((float)_thresholdBottom * (1.0 - THESHOLD_CHANGE_PERCENTAGE));
-        _thresholdTop = (uint)((float)_thresholdTop * (1.0 - THESHOLD_CHANGE_PERCENTAGE));
-        float tempExpireTime = ((float)_expireTime * (1.0 - EXPIRE_TIME_CHANGE_PERCENTAGE));
-        _expireTime = (tempExpireTime < MIN_EXPIRE_TIME) ? MIN_EXPIRE_TIME : (uint)tempExpireTime;
-        
-        _thresholdBottom = _thresholdBottom < MIN_THRESHOLD_BOTTOM ? MIN_THRESHOLD_BOTTOM : _thresholdBottom;
-        _thresholdTop = _thresholdTop < MIN_THRESHOLD_TOP ? MIN_THRESHOLD_TOP : _thresholdTop;
-        
-        CCLOG(@"Change level reset to: %f. New Increment: %f. New threshold to %i - %i. Expires at: %i", _thresholdChangeLevel, _thresholdIncrementLevel, _thresholdBottom, _thresholdTop, _expireTime);
-        
+#if PLACE_LINEAR_ALGORITHM
+        [self updateValuesLinear];
+#else
+        [self updateValueslExponential];
+#endif
         [self updateGameWithNewOrbPointValues];
+//          CCLOG(@"Change level reset to: %f. New Increment: %f. New threshold to %i - %i. Expires at: %i", _thresholdChangeLevel, _thresholdIncrementLevel, _thresholdBottom, _thresholdTop, _expireTime);
     }
+}
+
+-(void) updateValuesLinear {
+    _thresholdChangeLevel += _thresholdIncrementLevel;
+    _yellowScore += YELLOW_SCORE_INCREMENT;
+    _greenScore += GREEN_SCORE_INCREMENT;
+    _purpleScore += PURPLE_SCORE_INCREMENT;
+    
+    _thresholdBottom = (THRESHOLD_BOTTOM_INCREMENT_LINEAR >= _thresholdBottom) ? MIN_THRESHOLD_BOTTOM_LINEAR : _thresholdBottom - THRESHOLD_BOTTOM_INCREMENT_LINEAR;
+    _thresholdTop = (THRESHOLD_TOP_INCREMENT_LINEAR >= _thresholdTop) ? MIN_THRESHOLD_TOP_LINEAR : _thresholdTop - THRESHOLD_TOP_INCREMENT_LINEAR;
+    
+   
+    _expireTime = (EXPIRE_TIME_INCREMENT_LINEAR >= _expireTime) ? MIN_EXPIRE_TIME_LINEAR : _expireTime - EXPIRE_TIME_INCREMENT_LINEAR;
+    
+}
+
+-(void) updateValuesExponential {
+    
+    _thresholdIncrementLevel = _thresholdIncrementLevel * (1.0 + THESHOLD_LEVEL_CHANGE_PERCENTAGE);
+    _thresholdChangeLevel += _thresholdIncrementLevel;
+    _yellowScore *=  (1 + SCORE_CHANGE_PERCENTAGE_EXPONENTIAL);
+    _greenScore *=  (1 + SCORE_CHANGE_PERCENTAGE_EXPONENTIAL);
+    _purpleScore *=  (1 + SCORE_CHANGE_PERCENTAGE_EXPONENTIAL);
+    _thresholdBottom = (uint)((float)_thresholdBottom * (1.0 - THESHOLD_CHANGE_PERCENTAGE));
+    _thresholdTop = (uint)((float)_thresholdTop * (1.0 - THESHOLD_CHANGE_PERCENTAGE));
+    float tempExpireTime = ((float)_expireTime * (1.0 - EXPIRE_TIME_CHANGE_PERCENTAGE));
+    _expireTime = (tempExpireTime < MIN_EXPIRE_TIME_EXPONENTIAL) ? MIN_EXPIRE_TIME_EXPONENTIAL : (uint)tempExpireTime;
+    
+    _thresholdBottom = _thresholdBottom < MIN_THRESHOLD_BOTTOM_EXPONENTIAL ? MIN_THRESHOLD_BOTTOM_EXPONENTIAL : _thresholdBottom;
+    _thresholdTop = _thresholdTop < MIN_THRESHOLD_TOP_EXPONENTIAL ? MIN_THRESHOLD_TOP_EXPONENTIAL : _thresholdTop;
+    
 }
 
 -(void) updateGameWithNewOrbPointValues {
