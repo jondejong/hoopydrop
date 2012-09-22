@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		C205A12C160E4F7200A4209C /* button-back-hd.png in Resources */ = {isa = PBXBuildFile; fileRef = C205A12A160E4F7200A4209C /* button-back-hd.png */; };
+		C205A12D160E4F7200A4209C /* button-back.png in Resources */ = {isa = PBXBuildFile; fileRef = C205A12B160E4F7200A4209C /* button-back.png */; };
 		C206D98816001D3400CAA726 /* TextOverlayLayer.mm in Sources */ = {isa = PBXBuildFile; fileRef = C206D98716001D3400CAA726 /* TextOverlayLayer.mm */; };
 		C206D98E16001D7200CAA726 /* GameManager.mm in Sources */ = {isa = PBXBuildFile; fileRef = C206D98D16001D7200CAA726 /* GameManager.mm */; };
 		C233C5191605312F00622E77 /* HDTimer.mm in Sources */ = {isa = PBXBuildFile; fileRef = C233C5181605312F00622E77 /* HDTimer.mm */; };
@@ -94,6 +96,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		C205A12A160E4F7200A4209C /* button-back-hd.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "button-back-hd.png"; sourceTree = "<group>"; };
+		C205A12B160E4F7200A4209C /* button-back.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "button-back.png"; sourceTree = "<group>"; };
 		C206D98616001D3400CAA726 /* TextOverlayLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TextOverlayLayer.h; path = Projectfiles/TextOverlayLayer.h; sourceTree = "<group>"; };
 		C206D98716001D3400CAA726 /* TextOverlayLayer.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = TextOverlayLayer.mm; path = Projectfiles/TextOverlayLayer.mm; sourceTree = "<group>"; };
 		C206D98C16001D7200CAA726 /* HoopyDrop.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HoopyDrop.h; sourceTree = "<group>"; };
@@ -369,6 +373,8 @@
 		DCC1A39413A94F1A005BD75D /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				C205A12A160E4F7200A4209C /* button-back-hd.png */,
+				C205A12B160E4F7200A4209C /* button-back.png */,
 				C2F5F761160A7B9F002B8EE9 /* credits-hd.png */,
 				C2F5F762160A7B9F002B8EE9 /* credits.png */,
 				C26FF862160A850F00190FC7 /* credits_sel-hd.png */,
@@ -538,6 +544,8 @@
 				C26FF861160A850500190FC7 /* leader_board_sel.png in Resources */,
 				C26FF864160A850F00190FC7 /* credits_sel-hd.png in Resources */,
 				C26FF865160A850F00190FC7 /* credits_sel.png in Resources */,
+				C205A12C160E4F7200A4209C /* button-back-hd.png in Resources */,
+				C205A12D160E4F7200A4209C /* button-back.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -65,13 +65,18 @@ HDStartLayer* _sharedHDStartLayer;
         aboutButton.position = ccp(240, 0);
         
         CCMenu* optionsMenu = [CCMenu menuWithItems:questionButton, settingsButton,leaderBoardButton, aboutButton, nil];
-        optionsMenu.position = ccp(40, 40);
+        optionsMenu.position = ccp(40, 30);
         
         [self addChild:[BackgroundLayer node] z:BACKGROUND_Z];
         [self addChild:scoreLabel z:OBJECTS_Z tag:1];
 		[self addChild: menu z:OBJECTS_Z];
         [self addChild:highScoreLabel z:OBJECTS_Z tag:2];
         [self addChild:optionsMenu z:OBJECTS_Z tag:3];
+        
+        CCSprite* buttonBack = [CCSprite spriteWithFile:@"button-back.png"];
+        buttonBack.position = ccp(size.width/2, 25);
+        [self addChild: buttonBack z:BACKGROUND_Z+1];
+        
         isTouchEnabled_ = NO;
         [[UIApplication sharedApplication] setIdleTimerDisabled:NO];
     }
