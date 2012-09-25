@@ -7,6 +7,7 @@
 //
 
 #import "HoopyDrop.h"
+#import "HDUtil.h"
 
 @implementation PauseLayer {
     @private
@@ -21,7 +22,7 @@
     self = [super init];
     if (self) {
         paused = false;
-        faderOverlay = [CCSprite spriteWithFile:@"faderOverlay.png"];
+        faderOverlay = [CCSprite spriteWithFile:[ScreenImage convertImageName:@"faderOverlay"]];
         faderOverlay.position = ccp(0,0);
         faderOverlay.anchorPoint = ccp(0,0);
         

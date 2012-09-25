@@ -35,7 +35,6 @@
 		[timerText setTag:2];
 		timerText.position =  ccp(size.width - (.2*size.width), size.height - (.05*size.height));		
 		
-		
 		[self addChild: scoreText];
 		[self addChild: timerText];
 

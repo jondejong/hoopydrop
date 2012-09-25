@@ -158,6 +158,7 @@
 
 +(GameManager*) sharedInstance;
 +(bool) isRetina;
++(bool) is16x9;
 
 @end
 

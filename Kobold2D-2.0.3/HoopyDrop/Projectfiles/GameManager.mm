@@ -84,6 +84,10 @@ GameManager* _sharedGameManager;
     return [UIScreen mainScreen].scale > 1;
 }
 
++(bool) is16x9 {
+    return [CCDirector sharedDirector].winSize.height > 481;
+}
+
 -(void) handleAbandon {
     _score = 0;
     [self handleEnd];

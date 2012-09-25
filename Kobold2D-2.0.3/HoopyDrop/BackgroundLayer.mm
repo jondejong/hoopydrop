@@ -7,6 +7,7 @@
 //
 
 #import "HoopyDrop.h"
+#import "HDUtil.h"
 
 @implementation BackgroundLayer
 
@@ -18,7 +19,8 @@
 {
     self = [super init];
     if (self) {
-        CCSprite* background = [CCSprite spriteWithFile:@"background.png"];
+        NSString* imageName = [ScreenImage convertImageName:@"start_screen_bg"];
+        CCSprite* background = [CCSprite spriteWithFile:imageName];
         background.position = ccp(0,0);
         background.anchorPoint = ccp(0,0);
         [self addChild:background];
