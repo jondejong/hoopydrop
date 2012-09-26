@@ -273,15 +273,15 @@
 -(void) addYellowOrb{
     
     CollisionHandler* handler = [[YellowThingHandler alloc]init];
-    [[GameManager sharedInstance]  addTarget:handler andBaseSprite:@"yellow_thing" andParentNode:kYellowThingNode andTrackedBy:existingOrbs at:_now];
+    [[GameManager sharedInstance]  addTarget:handler andBaseSprite:@"yellow_orb" andParentNode:kYellowThingNode andTrackedBy:existingOrbs at:_now];
 }
 
 -(void) addGreenOrb {
-    [[GameManager sharedInstance] addTarget:[[GreenThingHandler alloc]init] andBaseSprite:@"green_thing" andParentNode:kGreenThingNode andTrackedBy:existingOrbs at:_now];
+    [[GameManager sharedInstance] addTarget:[[GreenThingHandler alloc]init] andBaseSprite:@"green_orb" andParentNode:kGreenThingNode andTrackedBy:existingOrbs at:_now];
 }
 
 -(void) addPurpleOrb {
-    [[GameManager sharedInstance] addTarget:[[PurpleThingHandler alloc]init] andBaseSprite:@"purple_thing" andParentNode:kPurpleThingNode andTrackedBy:existingOrbs at:_now];
+    [[GameManager sharedInstance] addTarget:[[PurpleThingHandler alloc]init] andBaseSprite:@"purple_orb" andParentNode:kPurpleThingNode andTrackedBy:existingOrbs at:_now];
 }
 
 @end

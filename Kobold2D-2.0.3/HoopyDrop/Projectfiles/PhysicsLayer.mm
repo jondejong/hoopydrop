@@ -88,18 +88,18 @@ const float PTM_RATIO = 32.0f;
 		[self addChild:batch z:0 tag:kTagBatchNode];
 
 		//Yellow
-        [[CCSpriteFrameCache sharedSpriteFrameCache] addSpriteFramesWithFile:@"yellow_thing.plist"];
-        CCSpriteBatchNode *yellowSpriteSheet = [CCSpriteBatchNode batchNodeWithFile:@"yellow_thing.png"];
+        [[CCSpriteFrameCache sharedSpriteFrameCache] addSpriteFramesWithFile:@"yellow_orb.plist"];
+        CCSpriteBatchNode *yellowSpriteSheet = [CCSpriteBatchNode batchNodeWithFile:@"yellow_orb.png"];
         [self addChild:yellowSpriteSheet z:0 tag:kYellowThingNode];
         
         //Purple
-        [[CCSpriteFrameCache sharedSpriteFrameCache] addSpriteFramesWithFile:@"purple_thing.plist"];
-        CCSpriteBatchNode *purpleSpriteSheet = [CCSpriteBatchNode batchNodeWithFile:@"purple_thing.png"];
+        [[CCSpriteFrameCache sharedSpriteFrameCache] addSpriteFramesWithFile:@"purple_orb.plist"];
+        CCSpriteBatchNode *purpleSpriteSheet = [CCSpriteBatchNode batchNodeWithFile:@"purple_orb.png"];
         [self addChild:purpleSpriteSheet z:0 tag:kPurpleThingNode];
 
         //Green
-        [[CCSpriteFrameCache sharedSpriteFrameCache] addSpriteFramesWithFile:@"green_thing.plist"];
-        CCSpriteBatchNode *greenSpriteSheet = [CCSpriteBatchNode batchNodeWithFile:@"green_thing.png"];
+        [[CCSpriteFrameCache sharedSpriteFrameCache] addSpriteFramesWithFile:@"green_orb.plist"];
+        CCSpriteBatchNode *greenSpriteSheet = [CCSpriteBatchNode batchNodeWithFile:@"green_orb.png"];
         [self addChild:greenSpriteSheet z:0 tag:kGreenThingNode];
         
         [self addNewSpriteAt:CGPointMake(screenSize.width / 2, screenSize.height / 2)];
