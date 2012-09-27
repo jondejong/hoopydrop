@@ -22,18 +22,18 @@
 		// ask director the the window size
 		CGSize size = [[CCDirector sharedDirector] winSize];
         
-		[CCMenuItemFont setFontSize:28];
+//		[CCMenuItemFont setFontSize:28];
 		
 		//score
-		CCLabelBMFont *scoreText = [CCLabelBMFont labelWithString:@"Score: 0" fntFile:@"hd-font.fnt"];
+		CCLabelBMFont *scoreText = [CCLabelBMFont labelWithString:@"0" fntFile:@"hdfont.fnt"];
 		[scoreText setTag:1];
-		scoreText.position =  ccp(size.width - (.8*size.width), size.height - (.05*size.height));
+		scoreText.position =  ccp(size.width/2.0, size.height - (.05*size.height));
 		
 		//timer
-        NSString * timerString = [NSString stringWithFormat:@"Timer: %i", [[GameManager sharedInstance] getRemainingTime]];
-		CCLabelBMFont *timerText = [CCLabelBMFont labelWithString:timerString fntFile:@"hd-font.fnt"];
+        NSString * timerString = [NSString stringWithFormat:@"%i", [[GameManager sharedInstance] getRemainingTime]];
+		CCLabelBMFont *timerText = [CCLabelBMFont labelWithString:timerString fntFile:@"hdfont.fnt"];
 		[timerText setTag:2];
-		timerText.position =  ccp(size.width - (.2*size.width), size.height - (.05*size.height));		
+		timerText.position =  ccp(size.width/2.0, .05*size.height);
 		
 		[self addChild: scoreText];
 		[self addChild: timerText];
@@ -44,13 +44,13 @@
 
 -(void) updateTimer:(int) time {
     CCLabelBMFont *timerText = (CCLabelBMFont *)[self getChildByTag:2];
-    [timerText setString:[NSString stringWithFormat:@"Timer: %i", time]];
+    [timerText setString:[NSString stringWithFormat:@"%i", time]];
 }
 
 -(void) updateScore: (int) score
 {
 	CCLabelBMFont *scoreText = (CCLabelBMFont *)[self getChildByTag:1];
-	[scoreText setString:[NSString stringWithFormat:@"Score: %i", score]];
+	[scoreText setString:[NSString stringWithFormat:@"%i", score]];
 }
 
 @end
