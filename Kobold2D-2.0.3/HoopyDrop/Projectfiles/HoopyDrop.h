@@ -79,6 +79,7 @@
 #define OBJECTS_Z 5
 #define OVERLAY_Z 20
 
+@interface HDGamePlayBackground : CCLayer @end
 @interface HDSettingsLayer : CCLayer <UIAlertViewDelegate> @end
 @interface HelpLayer : CCLayer @end
 @interface LeaderBoardLayer : CCLayer @end
@@ -130,9 +131,7 @@
 
 -(void) handleTargetAdded;
 
--(void) removeYellowThingFromGame: (CCSprite*) sprite;
--(void) removeGreenThingFromGame: (CCSprite*) sprite;
--(void) removePurpleThingFromGame: (CCSprite*) sprite;
+-(void) removeOrbFromGame: (CCSprite*)sprite;
 
 -(void) handlePause;
 -(void) handleUnpause;
@@ -154,7 +153,7 @@
 -(void) updateTimer: (int) time;
 -(int) getRemainingTime;
 
--(void) addTarget:(CollisionHandler*) handler andBaseSprite: (NSString*)baseSpriteName andParentNode: (int) parentNodeTag andTrackedBy: (NSMutableArray*) trackingArray at: (uint)createTime;
+-(void) addTarget:(CollisionHandler*) handler andBaseSprite: (NSString*)baseSpriteName andTrackedBy: (NSMutableArray*) trackingArray at: (uint)createTime;
 
 +(GameManager*) sharedInstance;
 +(bool) isRetina;

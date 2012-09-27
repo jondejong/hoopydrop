@@ -63,7 +63,9 @@
     _removed = YES;
 }
 
--(void) removeThisTarget{
+-(void) removeThisTarget
+{
+    [[GameManager sharedInstance] removeOrbFromGame: [self sprite]];
     [[GameManager sharedInstance] markBodyForDeletion: _body];
     [self markRemoved];
 }
@@ -76,11 +78,6 @@
     [[GameManager sharedInstance] addToScore:[[GameManager sharedInstance] yellowTargetPoints]];
     [self removeThisTarget];
 }
-
--(void) removeThisTarget {
-    [[GameManager sharedInstance] removeYellowThingFromGame: [self sprite]];
-    [super removeThisTarget];
-}
 @end
 
 @implementation GreenThingHandler
@@ -90,11 +87,6 @@
     [self removeThisTarget];
 }
 
--(void) removeThisTarget {
-    [[GameManager sharedInstance] removeGreenThingFromGame: [self sprite]];
-    [super removeThisTarget];
-}
-
 @end
 
 @implementation PurpleThingHandler
@@ -102,11 +94,6 @@
 -(void) handleCollision: (b2Body*) body {
     [[GameManager sharedInstance] addToScore:[[GameManager sharedInstance] purpleTargetPoints]];
     [self removeThisTarget];
-}
-
--(void) removeThisTarget {
-    [[GameManager sharedInstance] removePurpleThingFromGame: [self sprite]];
-    [super removeThisTarget];
 }
 
 @end

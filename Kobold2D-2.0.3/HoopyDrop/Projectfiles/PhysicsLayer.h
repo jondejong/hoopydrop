@@ -15,9 +15,7 @@
 enum
 {
 	kTagBatchNode,
-    kYellowThingNode,
-    kGreenThingNode,
-    kPurpleThingNode,
+    kOrbNode,
 };
 
 @interface PhysicsLayer : CCScene
@@ -32,9 +30,7 @@ enum
 
 -(void) handlePause;
 -(void) handleUnpause;
--(void) removeYellowThing: (CCSprite*) sprite;
--(void) removeGreenThing: (CCSprite*) sprite;
--(void) removePurpleThing: (CCSprite*) sprite;
--(void) addTarget:(CollisionHandler*) handler andBaseSprite: (NSString*)baseSpriteName andParentNode: (int) parentNodeTag andTrackedBy: (NSMutableArray*) trackingArray at: (uint) createTime;
+-(void) removeOrb: (CCSprite*) sprite;
+-(void) addTarget:(CollisionHandler*) handler andBaseSprite: (NSString*)baseSpriteName andTrackedBy: (NSMutableArray*) trackingArray at: (uint) createTime;
 
 @end

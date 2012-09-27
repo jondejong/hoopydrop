@@ -87,20 +87,10 @@ const float PTM_RATIO = 32.0f;
 		CCSpriteBatchNode* batch = [CCSpriteBatchNode batchNodeWithFile:@"goodball.png" capacity:1];
 		[self addChild:batch z:0 tag:kTagBatchNode];
 
-		//Yellow
-        [[CCSpriteFrameCache sharedSpriteFrameCache] addSpriteFramesWithFile:@"yellow_orb.plist"];
-        CCSpriteBatchNode *yellowSpriteSheet = [CCSpriteBatchNode batchNodeWithFile:@"yellow_orb.png"];
-        [self addChild:yellowSpriteSheet z:0 tag:kYellowThingNode];
-        
-        //Purple
-        [[CCSpriteFrameCache sharedSpriteFrameCache] addSpriteFramesWithFile:@"purple_orb.plist"];
-        CCSpriteBatchNode *purpleSpriteSheet = [CCSpriteBatchNode batchNodeWithFile:@"purple_orb.png"];
-        [self addChild:purpleSpriteSheet z:0 tag:kPurpleThingNode];
-
-        //Green
-        [[CCSpriteFrameCache sharedSpriteFrameCache] addSpriteFramesWithFile:@"green_orb.plist"];
-        CCSpriteBatchNode *greenSpriteSheet = [CCSpriteBatchNode batchNodeWithFile:@"green_orb.png"];
-        [self addChild:greenSpriteSheet z:0 tag:kGreenThingNode];
+		// Orbs
+        [[CCSpriteFrameCache sharedSpriteFrameCache] addSpriteFramesWithFile:@"orbs.plist"];
+        CCSpriteBatchNode *yellowSpriteSheet = [CCSpriteBatchNode batchNodeWithFile:@"orbs.png"];
+        [self addChild:yellowSpriteSheet z:0 tag:kOrbNode];
         
         [self addNewSpriteAt:CGPointMake(screenSize.width / 2, screenSize.height / 2)];
 	
@@ -272,7 +262,7 @@ const float PTM_RATIO = 32.0f;
     return CGPointMake(x, y);
 }
 
--(void) addTarget:(CollisionHandler*) handler andBaseSprite: (NSString*)baseSpriteName andParentNode: (int) parentNodeTag andTrackedBy: (NSMutableArray*) trackingArray at: (uint) createTime{
+-(void) addTarget:(CollisionHandler*) handler andBaseSprite: (NSString*)baseSpriteName andTrackedBy: (NSMutableArray*) trackingArray at: (uint) createTime{
     NSMutableArray *animFrames = [NSMutableArray array];
     for(int i = 1; i <= 4; ++i) {
         [animFrames addObject: [[CCSpriteFrameCache sharedSpriteFrameCache] spriteFrameByName:[NSString stringWithFormat:@"%@%i.png", baseSpriteName, i]]];
@@ -290,7 +280,7 @@ const float PTM_RATIO = 32.0f;
     sprite.position = pos;
     
     [sprite runAction:[CCRepeatForever actionWithAction:[CCAnimate actionWithAnimation:animation]]];
-    [[self getChildByTag:parentNodeTag] addChild:sprite];
+    [[self getChildByTag:kOrbNode] addChild:sprite];
     
     // Create a body definition and set it to be a dynamic body
 	b2BodyDef bodyDef;
@@ -333,24 +323,12 @@ const float PTM_RATIO = 32.0f;
     [self resumeSchedulerAndActions];
 }
 
--(void) removeYellowThing: (CCSprite*) sprite {
-    CCSpriteBatchNode* yellowThing = (CCSpriteBatchNode*)[self getChildByTag:kYellowThingNode];
-    [yellowThing removeChild:sprite cleanup:YES];
-    [[GameManager sharedInstance] decrementTargets];
-    
-}
-
--(void) removeGreenThing: (CCSprite*) sprite {
-    CCSpriteBatchNode* greenThing = (CCSpriteBatchNode*)[self getChildByTag:kGreenThingNode];
-    [greenThing removeChild:sprite cleanup:YES];
+-(void) removeOrb: (CCSprite*) sprite {
+    CCSpriteBatchNode* orbSprite = (CCSpriteBatchNode*)[self getChildByTag:kOrbNode];
+    [orbSprite removeChild:sprite cleanup:YES];
     [[GameManager sharedInstance] decrementTargets];
 }
 
--(void) removePurpleThing: (CCSprite*) sprite {
-    CCSpriteBatchNode* purpleThing = (CCSpriteBatchNode*)[self getChildByTag:kPurpleThingNode];
-    [purpleThing removeChild:sprite cleanup:YES];
-    [[GameManager sharedInstance] decrementTargets];
-}
 
 - (void)dealloc
 {

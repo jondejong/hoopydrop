@@ -52,16 +52,8 @@ GameManager* _sharedGameManager;
     return [timerLayer remainingTime];
 }
 
--(void) removeYellowThingFromGame: (CCSprite*) sprite {
-    [physicsLayer removeYellowThing:sprite];
-}
-
--(void) removeGreenThingFromGame: (CCSprite*) sprite {
-    [physicsLayer removeGreenThing:sprite];
-}
-
--(void) removePurpleThingFromGame: (CCSprite*) sprite {
-    [physicsLayer removePurpleThing:sprite];
+-(void) removeOrbFromGame: (CCSprite*)sprite {
+    [physicsLayer removeOrb: sprite];
 }
 
 -(void) markBodyForDeletion: (b2Body*) body {
@@ -116,7 +108,7 @@ GameManager* _sharedGameManager;
     self.textOverlayLayer = [TextOverlayLayer node];
     self.orbTimer = [HDOrbTimer node];
     
-    [gamePlayRootScene addChild:[BackgroundLayer node] z:BACKGROUND_Z];
+    [gamePlayRootScene addChild:[HDGamePlayBackground node] z:BACKGROUND_Z];
     
     [gamePlayRootScene addChild:timerLayer];
     [gamePlayRootScene addChild:orbTimer];
@@ -157,8 +149,8 @@ GameManager* _sharedGameManager;
     [self flushAllTimeHighScore];
 }
 
--(void) addTarget:(CollisionHandler*) handler andBaseSprite: (NSString*)baseSpriteName andParentNode: (int) parentNodeTag andTrackedBy: (NSMutableArray*) trackingArray at:(uint) createTime {
-    [physicsLayer addTarget:handler andBaseSprite:baseSpriteName andParentNode:parentNodeTag andTrackedBy:trackingArray at: createTime];
+-(void) addTarget:(CollisionHandler*) handler andBaseSprite: (NSString*)baseSpriteName andTrackedBy: (NSMutableArray*) trackingArray at:(uint) createTime {
+    [physicsLayer addTarget:handler andBaseSprite:baseSpriteName andTrackedBy:trackingArray at: createTime];
 }
 
 -(void) decrementTargets {
