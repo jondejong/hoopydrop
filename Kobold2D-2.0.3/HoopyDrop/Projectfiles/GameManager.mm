@@ -180,4 +180,8 @@ GameManager* _sharedGameManager;
     [[HDStartLayer sharedInstance] refreshDisplayWith:NO];
 }
 
+-(int) currentGameTime {
+    return [orbTimer currentGameTime];
+}
+
 @end

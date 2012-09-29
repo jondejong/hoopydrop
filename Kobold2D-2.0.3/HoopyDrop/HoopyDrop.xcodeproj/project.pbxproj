@@ -257,9 +257,9 @@
 				C233C52716056FB600622E77 /* HDGamePlayRootScene.mm */,
 				C2F5F76B160A7DB9002B8EE9 /* HDSettingsLayer.mm */,
 				C26FF867160A854200190FC7 /* HelpLayer.mm */,
+				C24F509F1612AFD0005435E1 /* HDGamePlayBackground.mm */,
 				C246846F160C72D10063DAAD /* LeaderBoardLayer.mm */,
 				C2468473160C76610063DAAD /* AboutLayer.mm */,
-				C24F509F1612AFD0005435E1 /* HDGamePlayBackground.mm */,
 			);
 			name = DisplayLayers;
 			sourceTree = "<group>";

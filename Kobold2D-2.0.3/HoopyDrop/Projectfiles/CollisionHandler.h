@@ -20,6 +20,7 @@
 -(bool) isRemoved;
 -(void) markRemoved;
 -(void) removeThisTarget;
+-(int) removeTime;
 
 @end
 

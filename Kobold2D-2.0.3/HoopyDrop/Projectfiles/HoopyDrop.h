@@ -93,6 +93,7 @@
 -(void) handleUnpause;
 -(void) decrementTargets;
 -(void) handleTargetAdded;
+-(int) currentGameTime;
 @end
 
 @interface BackgroundLayer : CCLayer @end
@@ -123,6 +124,8 @@
 @property (nonatomic, retain) HDTimer* timerLayer;
 @property (nonatomic, retain) HDGamePlayRootScene* gamePlayRootScene;
 @property (nonatomic, retain) HDOrbTimer* orbTimer;
+
++(GameManager*) sharedInstance;
 
 -(void) decrementTargets;
 
@@ -155,9 +158,10 @@
 
 -(void) addTarget:(CollisionHandler*) handler andBaseSprite: (NSString*)baseSpriteName andTrackedBy: (NSMutableArray*) trackingArray at: (uint)createTime;
 
-+(GameManager*) sharedInstance;
 +(bool) isRetina;
 +(bool) is16x9;
+
+-(int) currentGameTime;
 
 @end
 

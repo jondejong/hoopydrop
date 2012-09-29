@@ -284,4 +284,8 @@
     [[GameManager sharedInstance] addTarget:[[PurpleThingHandler alloc]init] andBaseSprite:@"purple" andTrackedBy:existingOrbs at:_now];
 }
 
+-(int) currentGameTime {
+    return _now;
+}
+
 @end

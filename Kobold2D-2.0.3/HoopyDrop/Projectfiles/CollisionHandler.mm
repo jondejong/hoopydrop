@@ -17,6 +17,7 @@
     bool _removed;
     int _createTime;
     b2Body* _body;
+    int _removeTime;
     
 }
 
@@ -25,6 +26,7 @@
     self = [super init];
     if (self) {
         _removed = false;
+        _removeTime = 0;
     }
     return self;
 }
@@ -60,7 +62,14 @@
 }
 
 -(void) markRemoved {
+    if(0 == _removeTime) {
+        _removeTime = [[GameManager sharedInstance] currentGameTime];
+    }
     _removed = YES;
+}
+
+-(int) removeTime {
+    return _removeTime;
 }
 
 -(void) removeThisTarget
@@ -75,8 +84,17 @@
 @implementation YellowThingHandler
 
 -(void) handleCollision: (b2Body*) body {
-    [[GameManager sharedInstance] addToScore:[[GameManager sharedInstance] yellowTargetPoints]];
-    [self removeThisTarget];
+    if(![self isRemoved]) {
+        [self markRemoved];
+        [[GameManager sharedInstance] addToScore:[[GameManager sharedInstance] yellowTargetPoints]];
+        [self removeThisTarget];
+    }
+#if DEBUG
+    else {
+        CCLOG(@"Handled a collision on a removed YELLOW target. This shouldn't happen.");
+        CCLOG(@"Added at %i. First removed at %i. It is now %i.", [self createTime], [self removeTime], [[GameManager sharedInstance] currentGameTime]);
+    }
+#endif
 }
 @end
 
