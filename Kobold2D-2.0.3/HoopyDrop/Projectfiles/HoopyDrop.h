@@ -22,6 +22,11 @@
 
 #define UPDATE_TIMER_LOOP_SECONDS .1
 
+// Frequency constants to change Hoopy's expression
+#define NORMAL_RANGE_LOW -2
+#define NORMAL_RANGE_HIGH 2
+#define FREQUENCY_DECREMENT 10 // 10ths of seconds
+
 // Algorthm can be exponential or linear
 #define PLACE_LINEAR_ALGORITHM 1
 
@@ -94,6 +99,8 @@
 -(void) decrementTargets;
 -(void) handleTargetAdded;
 -(int) currentGameTime;
+-(void) handleOrbCollected;
+-(int) frequency;
 @end
 
 @interface BackgroundLayer : CCLayer @end
@@ -155,6 +162,8 @@
 
 -(void) updateTimer: (int) time;
 -(int) getRemainingTime;
+
+-(int) orbCollectionFrequency;
 
 -(void) addTarget:(CollisionHandler*) handler andBaseSprite: (NSString*)baseSpriteName andTrackedBy: (NSMutableArray*) trackingArray at: (uint)createTime;
 

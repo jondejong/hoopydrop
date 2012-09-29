@@ -53,6 +53,7 @@ GameManager* _sharedGameManager;
 }
 
 -(void) removeOrbFromGame: (CCSprite*)sprite {
+    [orbTimer handleOrbCollected];
     [physicsLayer removeOrb: sprite];
 }
 
@@ -182,6 +183,10 @@ GameManager* _sharedGameManager;
 
 -(int) currentGameTime {
     return [orbTimer currentGameTime];
+}
+
+-(int) orbCollectionFrequency {
+    return [orbTimer frequency];
 }
 
 @end

@@ -16,6 +16,10 @@
     // Current game time in 10ths of seconds
     int _now;
     
+    // How frequently is the player collecting orbs?
+    int _frequency;
+    int _lastDecrementTime;
+    
     int _timeTargetsEmpited;
     int _lastTimeOrbPlaced;
     uint _collectedOrbCount;
@@ -51,6 +55,8 @@
         
         _lastLoopTime = 0.0;
         _targetCount = 0;
+        _frequency = 0;
+        _lastDecrementTime = 0;
         
         // Current game time in 10ths of seconds
         _now = 0;
@@ -125,6 +131,13 @@
         } else {
             _now = 1;
         }
+        
+        // Adjust the frequency
+        if(_now - _lastDecrementTime >= FREQUENCY_DECREMENT) {
+            _frequency--;
+            _lastDecrementTime = _now;
+        }
+        
 //        CCLOG(@"Looping %i", _now);
         _lastLoopTime = currentTime;
         
@@ -266,7 +279,6 @@
     if(--_targetCount == 0) {
         _timeTargetsEmpited = _now;
     }
-//    CCLOG(@"_targetCount: %i", _targetCount);
 }
 
 
@@ -286,6 +298,18 @@
 
 -(int) currentGameTime {
     return _now;
+}
+
+-(void) handleOrbCollected {
+    if(_frequency < 0) {
+        _frequency = 0;
+    } else {
+        _frequency++;
+    }
+}
+
+-(int) frequency {
+    return _frequency;
 }
 
 @end

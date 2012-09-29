@@ -9,6 +9,10 @@
 /* Begin PBXBuildFile section */
 		C205A12C160E4F7200A4209C /* button-back-hd.png in Resources */ = {isa = PBXBuildFile; fileRef = C205A12A160E4F7200A4209C /* button-back-hd.png */; };
 		C205A12D160E4F7200A4209C /* button-back.png in Resources */ = {isa = PBXBuildFile; fileRef = C205A12B160E4F7200A4209C /* button-back.png */; };
+		C206BB441617A1BC0046C4DE /* hoopy-hd.plist in Resources */ = {isa = PBXBuildFile; fileRef = C206BB421617A1BC0046C4DE /* hoopy-hd.plist */; };
+		C206BB451617A1BC0046C4DE /* hoopy-hd.png in Resources */ = {isa = PBXBuildFile; fileRef = C206BB431617A1BC0046C4DE /* hoopy-hd.png */; };
+		C206BB491617A24D0046C4DE /* hoopy.plist in Resources */ = {isa = PBXBuildFile; fileRef = C206BB471617A24D0046C4DE /* hoopy.plist */; };
+		C206BB4A1617A24D0046C4DE /* hoopy.png in Resources */ = {isa = PBXBuildFile; fileRef = C206BB481617A24D0046C4DE /* hoopy.png */; };
 		C206D98816001D3400CAA726 /* TextOverlayLayer.mm in Sources */ = {isa = PBXBuildFile; fileRef = C206D98716001D3400CAA726 /* TextOverlayLayer.mm */; };
 		C206D98E16001D7200CAA726 /* GameManager.mm in Sources */ = {isa = PBXBuildFile; fileRef = C206D98D16001D7200CAA726 /* GameManager.mm */; };
 		C220424016113E1200876EDD /* start_screen_bg-hd.png in Resources */ = {isa = PBXBuildFile; fileRef = C220423D16113E1200876EDD /* start_screen_bg-hd.png */; };
@@ -49,8 +53,6 @@
 		C24F50A21612B0E4005435E1 /* hexabump-hd.tmx in Resources */ = {isa = PBXBuildFile; fileRef = C24F50A11612B0E4005435E1 /* hexabump-hd.tmx */; };
 		C24F50A41612B160005435E1 /* hexabump-568@2x.tmx in Resources */ = {isa = PBXBuildFile; fileRef = C24F50A31612B160005435E1 /* hexabump-568@2x.tmx */; };
 		C26773C216001FBA008B2135 /* HDStartLayer.mm in Sources */ = {isa = PBXBuildFile; fileRef = C26773C116001FBA008B2135 /* HDStartLayer.mm */; };
-		C26773C616002E7E008B2135 /* goodball.png in Resources */ = {isa = PBXBuildFile; fileRef = C26773C416002E7E008B2135 /* goodball.png */; };
-		C26773C716002E7E008B2135 /* goodball-hd.png in Resources */ = {isa = PBXBuildFile; fileRef = C26773C516002E7E008B2135 /* goodball-hd.png */; };
 		C26773CE16004144008B2135 /* CollisionHandler.mm in Sources */ = {isa = PBXBuildFile; fileRef = C26773CD16004144008B2135 /* CollisionHandler.mm */; };
 		C26773D1160051A4008B2135 /* DeletableBody.mm in Sources */ = {isa = PBXBuildFile; fileRef = C26773D0160051A4008B2135 /* DeletableBody.mm */; };
 		C26773E11600FD1B008B2135 /* PauseLayer.mm in Sources */ = {isa = PBXBuildFile; fileRef = C26773E01600FD1A008B2135 /* PauseLayer.mm */; };
@@ -105,6 +107,10 @@
 /* Begin PBXFileReference section */
 		C205A12A160E4F7200A4209C /* button-back-hd.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "button-back-hd.png"; sourceTree = "<group>"; };
 		C205A12B160E4F7200A4209C /* button-back.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "button-back.png"; sourceTree = "<group>"; };
+		C206BB421617A1BC0046C4DE /* hoopy-hd.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "hoopy-hd.plist"; sourceTree = "<group>"; };
+		C206BB431617A1BC0046C4DE /* hoopy-hd.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "hoopy-hd.png"; sourceTree = "<group>"; };
+		C206BB471617A24D0046C4DE /* hoopy.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = hoopy.plist; sourceTree = "<group>"; };
+		C206BB481617A24D0046C4DE /* hoopy.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = hoopy.png; sourceTree = "<group>"; };
 		C206D98616001D3400CAA726 /* TextOverlayLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TextOverlayLayer.h; path = Projectfiles/TextOverlayLayer.h; sourceTree = "<group>"; };
 		C206D98716001D3400CAA726 /* TextOverlayLayer.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = TextOverlayLayer.mm; path = Projectfiles/TextOverlayLayer.mm; sourceTree = "<group>"; };
 		C206D98C16001D7200CAA726 /* HoopyDrop.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HoopyDrop.h; sourceTree = "<group>"; };
@@ -150,8 +156,6 @@
 		C24F50A11612B0E4005435E1 /* hexabump-hd.tmx */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; name = "hexabump-hd.tmx"; path = "Resources/hexabump-hd.tmx"; sourceTree = "<group>"; };
 		C24F50A31612B160005435E1 /* hexabump-568@2x.tmx */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; name = "hexabump-568@2x.tmx"; path = "Resources/hexabump-568@2x.tmx"; sourceTree = "<group>"; };
 		C26773C116001FBA008B2135 /* HDStartLayer.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = HDStartLayer.mm; path = Projectfiles/HDStartLayer.mm; sourceTree = "<group>"; };
-		C26773C416002E7E008B2135 /* goodball.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = goodball.png; sourceTree = "<group>"; };
-		C26773C516002E7E008B2135 /* goodball-hd.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "goodball-hd.png"; sourceTree = "<group>"; };
 		C26773CC16004144008B2135 /* CollisionHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CollisionHandler.h; sourceTree = "<group>"; };
 		C26773CD16004144008B2135 /* CollisionHandler.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = CollisionHandler.mm; sourceTree = "<group>"; };
 		C26773D0160051A4008B2135 /* DeletableBody.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = DeletableBody.mm; sourceTree = "<group>"; };
@@ -411,6 +415,10 @@
 		DCC1A39413A94F1A005BD75D /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				C206BB421617A1BC0046C4DE /* hoopy-hd.plist */,
+				C206BB431617A1BC0046C4DE /* hoopy-hd.png */,
+				C206BB471617A24D0046C4DE /* hoopy.plist */,
+				C206BB481617A24D0046C4DE /* hoopy.png */,
 				C239A45D1613F9F1000DEAEA /* hdfont-hd.fnt */,
 				C239A45E1613F9F1000DEAEA /* hdfont-hd.png */,
 				C239A45F1613F9F1000DEAEA /* hdfont.fnt */,
@@ -441,8 +449,6 @@
 				C2F7079E1606736A000764E4 /* abandon.png */,
 				C233C51F1605653D00622E77 /* background-hd.png */,
 				C233C5201605653D00622E77 /* background.png */,
-				C26773C416002E7E008B2135 /* goodball.png */,
-				C26773C516002E7E008B2135 /* goodball-hd.png */,
 				C220426016115A1500876EDD /* start.png */,
 				C220426616115E5200876EDD /* start-hd.png */,
 				DCC1A39513A94F1A005BD75D /* config.lua */,
@@ -536,8 +542,6 @@
 				DCC1A3AF13A94F1A005BD75D /* config.lua in Resources */,
 				DC26D6BE14B9E4D500B6002E /* fps_images-hd.png in Resources */,
 				DC65617D15114BC500E59F8A /* fps_images-ipadhd.png in Resources */,
-				C26773C616002E7E008B2135 /* goodball.png in Resources */,
-				C26773C716002E7E008B2135 /* goodball-hd.png in Resources */,
 				C233C5211605653D00622E77 /* background-hd.png in Resources */,
 				C233C5221605653D00622E77 /* background.png in Resources */,
 				C2F7079F1606736A000764E4 /* abandon-hd.png in Resources */,
@@ -582,6 +586,10 @@
 				C239A4621613F9F1000DEAEA /* hdfont-hd.png in Resources */,
 				C239A4631613F9F1000DEAEA /* hdfont.fnt in Resources */,
 				C239A4641613F9F1000DEAEA /* hdfont.png in Resources */,
+				C206BB441617A1BC0046C4DE /* hoopy-hd.plist in Resources */,
+				C206BB451617A1BC0046C4DE /* hoopy-hd.png in Resources */,
+				C206BB491617A24D0046C4DE /* hoopy.plist in Resources */,
+				C206BB4A1617A24D0046C4DE /* hoopy.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

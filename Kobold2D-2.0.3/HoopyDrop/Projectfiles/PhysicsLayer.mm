@@ -27,6 +27,8 @@ const float PTM_RATIO = 32.0f;
 @implementation PhysicsLayer {
     @private
     NSMutableArray* userDataReferences;
+    int _hoopyExpression;
+    CollisionHandler* _hoopyHandler;
     
 }
 
@@ -38,6 +40,8 @@ const float PTM_RATIO = 32.0f;
 	if ((self = [super init]))
 	{
 		CCLOG(@"%@ init", NSStringFromClass([self class]));
+        
+        _hoopyExpression = kHoopyNormalSprite;
         
         userDataReferences = [NSMutableArray arrayWithCapacity: 10];
         
@@ -84,13 +88,18 @@ const float PTM_RATIO = 32.0f;
 		screenBorderShape.Set(upperLeftCorner, lowerLeftCorner);
 		screenBorderBody->CreateFixture(&screenBorderShape, 0);
 		
-		CCSpriteBatchNode* batch = [CCSpriteBatchNode batchNodeWithFile:@"goodball.png" capacity:1];
-		[self addChild:batch z:0 tag:kTagBatchNode];
+//		CCSpriteBatchNode* batch = [CCSpriteBatchNode batchNodeWithFile:@"goodball.png" capacity:1];
+//        CCSpriteBatchNode* hoopy = [CCSpriteBatchNode batchNodeWithFile:@"hoopy.plist" capacity:1];
+        // Hoopy Himself
+        [[CCSpriteFrameCache sharedSpriteFrameCache] addSpriteFramesWithFile:@"hoopy.plist"];
+        CCSpriteBatchNode* hoopy = [CCSpriteBatchNode batchNodeWithFile:@"hoopy.png"];
+
+		[self addChild:hoopy z:0 tag:kTagBatchNode];
 
 		// Orbs
         [[CCSpriteFrameCache sharedSpriteFrameCache] addSpriteFramesWithFile:@"orbs.plist"];
-        CCSpriteBatchNode *yellowSpriteSheet = [CCSpriteBatchNode batchNodeWithFile:@"orbs.png"];
-        [self addChild:yellowSpriteSheet z:0 tag:kOrbNode];
+        CCSpriteBatchNode *orbSpriteSheet = [CCSpriteBatchNode batchNodeWithFile:@"orbs.png"];
+        [self addChild:orbSpriteSheet z:0 tag:kOrbNode];
         
         [self addNewSpriteAt:CGPointMake(screenSize.width / 2, screenSize.height / 2)];
 	
@@ -146,8 +155,11 @@ const float PTM_RATIO = 32.0f;
 -(CCSprite*) addRandomSpriteAt:(CGPoint)pos
 {
 	CCSpriteBatchNode* batch = (CCSpriteBatchNode*)[self getChildByTag:kTagBatchNode];
-
-	CCSprite* sprite = [CCSprite spriteWithTexture:batch.texture];
+//
+//	CCSprite* sprite = [CCSprite spriteWithTexture:batch.texture];
+//    
+    CCSprite *sprite = [CCSprite spriteWithSpriteFrameName:[NSString stringWithFormat:@"hoopy-normal.png"]];
+    
 	sprite.batchNode = batch;
 	sprite.position = pos;
 	[batch addChild:sprite];
@@ -183,10 +195,10 @@ const float PTM_RATIO = 32.0f;
 	
 	// assign the sprite as userdata so it's easy to get to the sprite when working with the body
     CCSprite* sprite = [self addRandomSpriteAt:pos];
-    CollisionHandler* handler = [[CollisionHandler alloc] init];
-    [handler setSprite:sprite];
-	bodyDef.userData = (__bridge void*)handler;
-    [userDataReferences addObject:handler];
+    _hoopyHandler = [[CollisionHandler alloc] init];
+    [_hoopyHandler setSprite:sprite];
+	bodyDef.userData = (__bridge void*)_hoopyHandler;
+//    [userDataReferences addObject:_hoopyHandler];
 	b2Body* body = world->CreateBody(&bodyDef);
 	
 	[self bodyCreateFixture:body];
@@ -225,6 +237,8 @@ const float PTM_RATIO = 32.0f;
             world->DestroyBody([db body]);
         }
     }
+    
+    [self swapSprite];
 
 	for (b2Body* body = world->GetBodyList(); body != nil; body = body->GetNext())
 	{
@@ -346,6 +360,33 @@ const float PTM_RATIO = 32.0f;
 	world = NULL;
 
 }
+
+-(void) swapSprite {
+    int freq = [[GameManager sharedInstance] orbCollectionFrequency];
+    
+//    CCLOG(@"Frequency: %i", freq);
+    
+    if((freq >= NORMAL_RANGE_LOW && freq < NORMAL_RANGE_HIGH) && kHoopyNormalSprite != _hoopyExpression) {
+        [self changeHoopyTo:@"hoopy-normal.png" denotedBy:kHoopyNormalSprite];
+    } else if (freq < NORMAL_RANGE_LOW && kHoopyFrustratedSprite != _hoopyExpression) {
+        [self changeHoopyTo:@"hoopy-frustrated.png" denotedBy: kHoopyFrustratedSprite];
+    } else if(freq >= NORMAL_RANGE_HIGH && kHoopyExcitedSprite != _hoopyExpression){
+        [self changeHoopyTo:@"hoopy-excited.png" denotedBy: kHoopyExcitedSprite];
+    }
+    
+}
+
+-(void) changeHoopyTo:(NSString*) frameName denotedBy: (NSInteger) expressionConstant {
+    CCSprite* oldExpression = [_hoopyHandler sprite];
+    CCSpriteBatchNode* batch = (CCSpriteBatchNode*)[self getChildByTag:kTagBatchNode];
+    [batch removeChild:oldExpression cleanup:YES];
+    CCSprite *sprite = [CCSprite spriteWithSpriteFrameName:frameName];
+    [batch addChild:sprite];
+    [_hoopyHandler setSprite:sprite];
+    _hoopyExpression = expressionConstant;
+}
+
+
 
 #if DEBUG
 -(void) draw

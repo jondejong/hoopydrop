@@ -16,6 +16,9 @@ enum
 {
 	kTagBatchNode,
     kOrbNode,
+    kHoopyNormalSprite,
+    kHoopyFrustratedSprite,
+    kHoopyExcitedSprite,
 };
 
 @interface PhysicsLayer : CCScene
