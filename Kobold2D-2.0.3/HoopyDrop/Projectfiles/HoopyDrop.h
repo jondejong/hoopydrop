@@ -22,10 +22,13 @@
 
 #define UPDATE_TIMER_LOOP_SECONDS .1
 
+#define EXPRESSION_ANCHOR_POINT ccp(.5, .55)
+
 // Frequency constants to change Hoopy's expression
 #define NORMAL_RANGE_LOW -2
 #define NORMAL_RANGE_HIGH 2
 #define FREQUENCY_DECREMENT 10 // 10ths of seconds
+#define MIN_EXPRESSION_TIME 20 // 10ths of seconds
 
 // Algorthm can be exponential or linear
 #define PLACE_LINEAR_ALGORITHM 1

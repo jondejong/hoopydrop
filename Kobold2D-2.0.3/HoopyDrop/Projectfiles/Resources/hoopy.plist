@@ -7,41 +7,41 @@
             <key>hoopy-excited.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{2,2},{56,65}}</string>
+                <string>{{2,132},{56,63}}</string>
                 <key>offset</key>
                 <string>{0,0}</string>
                 <key>rotated</key>
                 <false/>
                 <key>sourceColorRect</key>
-                <string>{{0,0},{56,65}}</string>
+                <string>{{0,0},{56,63}}</string>
                 <key>sourceSize</key>
-                <string>{56,65}</string>
+                <string>{56,63}</string>
             </dict>
             <key>hoopy-frustrated.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{2,134},{56,63}}</string>
+                <string>{{2,67},{56,63}}</string>
                 <key>offset</key>
-                <string>{0,1}</string>
+                <string>{0,0}</string>
                 <key>rotated</key>
                 <false/>
                 <key>sourceColorRect</key>
                 <string>{{0,0},{56,63}}</string>
                 <key>sourceSize</key>
-                <string>{56,65}</string>
+                <string>{56,63}</string>
             </dict>
             <key>hoopy-normal.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{2,69},{56,63}}</string>
+                <string>{{2,2},{56,63}}</string>
                 <key>offset</key>
-                <string>{0,1}</string>
+                <string>{0,0}</string>
                 <key>rotated</key>
                 <false/>
                 <key>sourceColorRect</key>
                 <string>{{0,0},{56,63}}</string>
                 <key>sourceSize</key>
-                <string>{56,65}</string>
+                <string>{56,63}</string>
             </dict>
         </dict>
         <key>metadata</key>
@@ -53,7 +53,7 @@
             <key>size</key>
             <string>{64,256}</string>
             <key>smartupdate</key>
-            <string>$TexturePacker:SmartUpdate:a7d7f825accde5c2f2d1de8de3a844ee$</string>
+            <string>$TexturePacker:SmartUpdate:a213395a1052d30d042108752fc255ff$</string>
             <key>textureFileName</key>
             <string>hoopy.png</string>
         </dict>

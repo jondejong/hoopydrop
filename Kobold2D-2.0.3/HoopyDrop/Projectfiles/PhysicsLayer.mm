@@ -27,9 +27,11 @@ const float PTM_RATIO = 32.0f;
 @implementation PhysicsLayer {
     @private
     NSMutableArray* userDataReferences;
-    int _hoopyExpression;
-    CollisionHandler* _hoopyHandler;
     
+    int _hoopyExpression;
+    int _lastExpressionChangeGameTime;
+    
+    CollisionHandler* _hoopyHandler;
 }
 
 @synthesize deletableBodies;
@@ -42,6 +44,7 @@ const float PTM_RATIO = 32.0f;
 		CCLOG(@"%@ init", NSStringFromClass([self class]));
         
         _hoopyExpression = kHoopyNormalSprite;
+        _lastExpressionChangeGameTime = 0;
         
         userDataReferences = [NSMutableArray arrayWithCapacity: 10];
         
@@ -155,13 +158,14 @@ const float PTM_RATIO = 32.0f;
 -(CCSprite*) addRandomSpriteAt:(CGPoint)pos
 {
 	CCSpriteBatchNode* batch = (CCSpriteBatchNode*)[self getChildByTag:kTagBatchNode];
-//
-//	CCSprite* sprite = [CCSprite spriteWithTexture:batch.texture];
-//    
     CCSprite *sprite = [CCSprite spriteWithSpriteFrameName:[NSString stringWithFormat:@"hoopy-normal.png"]];
     
 	sprite.batchNode = batch;
 	sprite.position = pos;
+    sprite.anchorPoint = EXPRESSION_ANCHOR_POINT;
+    
+//    CCLOG(@"Anchor: (%f, %f)", sprite.anchorPoint.x, sprite.anchorPoint.y);
+    
 	[batch addChild:sprite];
 	
 	return sprite;
@@ -366,12 +370,15 @@ const float PTM_RATIO = 32.0f;
     
 //    CCLOG(@"Frequency: %i", freq);
     
-    if((freq >= NORMAL_RANGE_LOW && freq < NORMAL_RANGE_HIGH) && kHoopyNormalSprite != _hoopyExpression) {
-        [self changeHoopyTo:@"hoopy-normal.png" denotedBy:kHoopyNormalSprite];
-    } else if (freq < NORMAL_RANGE_LOW && kHoopyFrustratedSprite != _hoopyExpression) {
-        [self changeHoopyTo:@"hoopy-frustrated.png" denotedBy: kHoopyFrustratedSprite];
-    } else if(freq >= NORMAL_RANGE_HIGH && kHoopyExcitedSprite != _hoopyExpression){
-        [self changeHoopyTo:@"hoopy-excited.png" denotedBy: kHoopyExcitedSprite];
+    if([[GameManager sharedInstance] currentGameTime] - _lastExpressionChangeGameTime >= MIN_EXPRESSION_TIME) {
+    
+        if((freq >= NORMAL_RANGE_LOW && freq < NORMAL_RANGE_HIGH) && kHoopyNormalSprite != _hoopyExpression) {
+            [self changeHoopyTo:@"hoopy-normal.png" denotedBy:kHoopyNormalSprite];
+        } else if (freq < NORMAL_RANGE_LOW && kHoopyFrustratedSprite != _hoopyExpression) {
+            [self changeHoopyTo:@"hoopy-frustrated.png" denotedBy: kHoopyFrustratedSprite];
+        } else if(freq >= NORMAL_RANGE_HIGH && kHoopyExcitedSprite != _hoopyExpression){
+            [self changeHoopyTo:@"hoopy-excited.png" denotedBy: kHoopyExcitedSprite];
+        }
     }
     
 }
@@ -381,9 +388,11 @@ const float PTM_RATIO = 32.0f;
     CCSpriteBatchNode* batch = (CCSpriteBatchNode*)[self getChildByTag:kTagBatchNode];
     [batch removeChild:oldExpression cleanup:YES];
     CCSprite *sprite = [CCSprite spriteWithSpriteFrameName:frameName];
+    sprite.anchorPoint = EXPRESSION_ANCHOR_POINT;
     [batch addChild:sprite];
     [_hoopyHandler setSprite:sprite];
     _hoopyExpression = expressionConstant;
+    _lastExpressionChangeGameTime = [[GameManager sharedInstance] currentGameTime];
 }
 
 
