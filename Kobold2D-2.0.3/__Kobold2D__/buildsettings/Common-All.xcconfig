@@ -18,7 +18,6 @@
 SYMROOT = ~/Kobold2D/build
 
 
-
 CODE_SIGN_IDENTITY = 
 CODE_SIGN_IDENTITY[sdk=iphoneos*] = iPhone Developer
 

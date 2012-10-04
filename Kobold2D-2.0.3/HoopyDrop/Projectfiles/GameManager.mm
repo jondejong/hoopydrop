@@ -44,6 +44,10 @@ GameManager* _sharedGameManager;
     return self;
 }
 
+-(void) handleEndGameTransitionEnd {
+    [[CCDirector sharedDirector] popScene];
+}
+
 -(void)updateTimer: (int) time {
     [textOverlayLayer updateTimer:time];
 }
@@ -93,7 +97,16 @@ GameManager* _sharedGameManager;
 
     }
     [[HDStartLayer sharedInstance] refreshDisplayWith:YES];
-    [[CCDirector sharedDirector] popScene];
+    
+    HDGameOverLayer* gameOverLayer = [HDGameOverLayer node];
+    
+    [gamePlayRootScene addChild:gameOverLayer z:OVERLAY_Z];
+    
+    [physicsLayer pauseSchedulerAndActions];
+    [orbTimer pauseSchedulerAndActions];
+    [pauseLayer removeTouchResponse];
+    
+    [gameOverLayer startTransition];
 }
 
 -(void) startGame {

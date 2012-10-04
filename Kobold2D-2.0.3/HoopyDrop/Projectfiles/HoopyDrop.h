@@ -18,7 +18,7 @@
 #define HOOPY_DROP_H
 
 #define DRAW_DEBUG_OUTLINE 0
-#define SECONDS_PER_GAME 60
+#define SECONDS_PER_GAME 5
 
 #define UPDATE_TIMER_LOOP_SECONDS .1
 
@@ -92,6 +92,9 @@
 @interface HelpLayer : CCLayer @end
 @interface LeaderBoardLayer : CCLayer @end
 @interface AboutLayer : CCLayer @end
+@interface HDGameOverLayer : CCLayer
+-(void) startTransition;
+@end
 
 @interface HDOrbTimer : CCScene
 @property (nonatomic, retain) NSMutableArray* existingOrbs;
@@ -107,7 +110,9 @@
 @end
 
 @interface BackgroundLayer : CCLayer @end
-@interface PauseLayer : CCLayer @end
+@interface PauseLayer : CCLayer
+-(void) removeTouchResponse;
+@end
 
 @interface HDGamePlayRootScene : CCScene @end
 
@@ -136,6 +141,8 @@
 @property (nonatomic, retain) HDOrbTimer* orbTimer;
 
 +(GameManager*) sharedInstance;
+
+-(void) handleEndGameTransitionEnd;
 
 -(void) decrementTargets;
 

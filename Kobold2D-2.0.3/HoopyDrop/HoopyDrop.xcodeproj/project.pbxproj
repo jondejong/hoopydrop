@@ -67,6 +67,11 @@
 		C26FF868160A854200190FC7 /* HelpLayer.mm in Sources */ = {isa = PBXBuildFile; fileRef = C26FF867160A854200190FC7 /* HelpLayer.mm */; };
 		C2DA46E1161106C5000AEFF3 /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C2DA46DF161106C5000AEFF3 /* Default@2x.png */; };
 		C2DA46E416110772000AEFF3 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C2DA46E316110772000AEFF3 /* Default-568h@2x.png */; };
+		C2F45585161D21960035942A /* game_over-hd.png in Resources */ = {isa = PBXBuildFile; fileRef = C2F45581161D21960035942A /* game_over-hd.png */; };
+		C2F45586161D21960035942A /* game_over.png in Resources */ = {isa = PBXBuildFile; fileRef = C2F45582161D21960035942A /* game_over.png */; };
+		C2F4558A161D22690035942A /* HDGameOverLayer.mm in Sources */ = {isa = PBXBuildFile; fileRef = C2F45589161D22690035942A /* HDGameOverLayer.mm */; };
+		C2F4558D161D251A0035942A /* game_over-568h-hd.png in Resources */ = {isa = PBXBuildFile; fileRef = C2F4558B161D251A0035942A /* game_over-568h-hd.png */; };
+		C2F4558E161D251A0035942A /* game_over-568h.png in Resources */ = {isa = PBXBuildFile; fileRef = C2F4558C161D251A0035942A /* game_over-568h.png */; };
 		C2F5F763160A7B9F002B8EE9 /* credits-hd.png in Resources */ = {isa = PBXBuildFile; fileRef = C2F5F761160A7B9F002B8EE9 /* credits-hd.png */; };
 		C2F5F764160A7B9F002B8EE9 /* credits.png in Resources */ = {isa = PBXBuildFile; fileRef = C2F5F762160A7B9F002B8EE9 /* credits.png */; };
 		C2F5F768160A7C22002B8EE9 /* leader_board-hd.png in Resources */ = {isa = PBXBuildFile; fileRef = C2F5F766160A7C22002B8EE9 /* leader_board-hd.png */; };
@@ -171,6 +176,11 @@
 		C26FF867160A854200190FC7 /* HelpLayer.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = HelpLayer.mm; sourceTree = "<group>"; };
 		C2DA46DF161106C5000AEFF3 /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Default@2x.png"; path = "Resources/Default@2x.png"; sourceTree = "<group>"; };
 		C2DA46E316110772000AEFF3 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Default-568h@2x.png"; path = "Resources/Default-568h@2x.png"; sourceTree = "<group>"; };
+		C2F45581161D21960035942A /* game_over-hd.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "game_over-hd.png"; path = "Resources/game_over-hd.png"; sourceTree = "<group>"; };
+		C2F45582161D21960035942A /* game_over.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = game_over.png; path = Resources/game_over.png; sourceTree = "<group>"; };
+		C2F45589161D22690035942A /* HDGameOverLayer.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = HDGameOverLayer.mm; path = Projectfiles/HDGameOverLayer.mm; sourceTree = "<group>"; };
+		C2F4558B161D251A0035942A /* game_over-568h-hd.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "game_over-568h-hd.png"; path = "Resources/game_over-568h-hd.png"; sourceTree = "<group>"; };
+		C2F4558C161D251A0035942A /* game_over-568h.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "game_over-568h.png"; path = "Resources/game_over-568h.png"; sourceTree = "<group>"; };
 		C2F5F761160A7B9F002B8EE9 /* credits-hd.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "credits-hd.png"; sourceTree = "<group>"; };
 		C2F5F762160A7B9F002B8EE9 /* credits.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = credits.png; sourceTree = "<group>"; };
 		C2F5F766160A7C22002B8EE9 /* leader_board-hd.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "leader_board-hd.png"; sourceTree = "<group>"; };
@@ -200,7 +210,7 @@
 		DC9C33E713B5024400931BF2 /* BuildSettings-Debug-Mac.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "BuildSettings-Debug-Mac.xcconfig"; sourceTree = "<group>"; };
 		DC9C33E813B5024400931BF2 /* BuildSettings-Mac.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "BuildSettings-Mac.xcconfig"; sourceTree = "<group>"; };
 		DC9C33E913B5024400931BF2 /* BuildSettings-Release-Mac.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "BuildSettings-Release-Mac.xcconfig"; sourceTree = "<group>"; };
-		DCC1A0E313A94ED5005BD75D /* HoopyDrop.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = HoopyDrop.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		DCC1A0E313A94ED5005BD75D /* hoopydrop.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = hoopydrop.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		DCC1A0F913A94ED5005BD75D /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Default.png; path = Resources/Default.png; sourceTree = "<group>"; };
 		DCC1A0FB13A94ED5005BD75D /* fps_images.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = fps_images.png; path = Resources/fps_images.png; sourceTree = "<group>"; };
 		DCC1A0FD13A94ED5005BD75D /* Icon-72.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Icon-72.png"; path = "Resources/Icon-72.png"; sourceTree = "<group>"; };
@@ -264,6 +274,7 @@
 				C24F509F1612AFD0005435E1 /* HDGamePlayBackground.mm */,
 				C246846F160C72D10063DAAD /* LeaderBoardLayer.mm */,
 				C2468473160C76610063DAAD /* AboutLayer.mm */,
+				C2F45589161D22690035942A /* HDGameOverLayer.mm */,
 			);
 			name = DisplayLayers;
 			sourceTree = "<group>";
@@ -306,7 +317,7 @@
 		DCC1A0E413A94ED5005BD75D /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				DCC1A0E313A94ED5005BD75D /* HoopyDrop.app */,
+				DCC1A0E313A94ED5005BD75D /* hoopydrop.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -330,6 +341,10 @@
 		DCC1A0F813A94ED5005BD75D /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				C2F4558B161D251A0035942A /* game_over-568h-hd.png */,
+				C2F4558C161D251A0035942A /* game_over-568h.png */,
+				C2F45581161D21960035942A /* game_over-hd.png */,
+				C2F45582161D21960035942A /* game_over.png */,
 				C24F509A1612AF53005435E1 /* hexabump.png */,
 				C24F509B1612AF53005435E1 /* hexabump.tmx */,
 				C24F50A11612B0E4005435E1 /* hexabump-hd.tmx */,
@@ -496,7 +511,7 @@
 			);
 			name = HoopyDrop;
 			productName = "Hello-World-iOS";
-			productReference = DCC1A0E313A94ED5005BD75D /* HoopyDrop.app */;
+			productReference = DCC1A0E313A94ED5005BD75D /* hoopydrop.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -590,6 +605,10 @@
 				C206BB451617A1BC0046C4DE /* hoopy-hd.png in Resources */,
 				C206BB491617A24D0046C4DE /* hoopy.plist in Resources */,
 				C206BB4A1617A24D0046C4DE /* hoopy.png in Resources */,
+				C2F45585161D21960035942A /* game_over-hd.png in Resources */,
+				C2F45586161D21960035942A /* game_over.png in Resources */,
+				C2F4558D161D251A0035942A /* game_over-568h-hd.png in Resources */,
+				C2F4558E161D251A0035942A /* game_over-568h.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -624,6 +643,7 @@
 				C2468474160C76610063DAAD /* AboutLayer.mm in Sources */,
 				C220424C161151C700876EDD /* ScreenImage.mm in Sources */,
 				C24F50A01612AFD0005435E1 /* HDGamePlayBackground.mm in Sources */,
+				C2F4558A161D22690035942A /* HDGameOverLayer.mm in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -652,14 +672,18 @@
 		DCC1A0DD13A94EC0005BD75D /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CODE_SIGN_IDENTITY = "iPhone Distribution: Jonathan DeJong";
 				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				PROVISIONING_PROFILE = "09FA2C97-68BD-45DF-A36A-67431A2A5CB2";
 			};
 			name = Debug;
 		};
 		DCC1A0DE13A94EC0005BD75D /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CODE_SIGN_IDENTITY = "iPhone Distribution: Jonathan DeJong";
 				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				PROVISIONING_PROFILE = "09FA2C97-68BD-45DF-A36A-67431A2A5CB2";
 			};
 			name = Release;
 		};
@@ -667,12 +691,14 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = DCFA90EF13B4F6F7009DD35A /* BuildSettings-Debug-iOS.xcconfig */;
 			buildSettings = {
+				"CODE_SIGN_IDENTITY[sdk=*]" = "iPhone Developer";
 				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/../__Kobold2D__/libs/GoogleAdMobAdsSDK\"",
 				);
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = hoopydrop;
+				"PROVISIONING_PROFILE[sdk=*]" = "";
 				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
@@ -681,12 +707,14 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = DCFA90F013B4F811009DD35A /* BuildSettings-Release-iOS.xcconfig */;
 			buildSettings = {
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Jonathan DeJong";
 				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/../__Kobold2D__/libs/GoogleAdMobAdsSDK\"",
 				);
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = hoopydrop;
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "09FA2C97-68BD-45DF-A36A-67431A2A5CB2";
 				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
@@ -701,7 +729,7 @@
 				DCC1A0DE13A94EC0005BD75D /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
+			defaultConfigurationName = Debug;
 		};
 		DCC1A25313A94ED7005BD75D /* Build configuration list for PBXNativeTarget "HoopyDrop" */ = {
 			isa = XCConfigurationList;
@@ -710,7 +738,7 @@
 				DCC1A25513A94ED7005BD75D /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
+			defaultConfigurationName = Debug;
 		};
 /* End XCConfigurationList section */
 	};

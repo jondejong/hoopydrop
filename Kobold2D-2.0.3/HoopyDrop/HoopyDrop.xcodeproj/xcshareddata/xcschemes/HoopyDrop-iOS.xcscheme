@@ -15,7 +15,7 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "DCC1A0E213A94ED5005BD75D"
-               BuildableName = "HoopyDrop.app"
+               BuildableName = "hoopydrop.app"
                BlueprintName = "HoopyDrop"
                ReferencedContainer = "container:HoopyDrop.xcodeproj">
             </BuildableReference>
@@ -33,7 +33,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "DCC1A0E213A94ED5005BD75D"
-            BuildableName = "HoopyDrop.app"
+            BuildableName = "hoopydrop.app"
             BlueprintName = "HoopyDrop"
             ReferencedContainer = "container:HoopyDrop.xcodeproj">
          </BuildableReference>
@@ -54,7 +54,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "DCC1A0E213A94ED5005BD75D"
-            BuildableName = "HoopyDrop.app"
+            BuildableName = "hoopydrop.app"
             BlueprintName = "HoopyDrop"
             ReferencedContainer = "container:HoopyDrop.xcodeproj">
          </BuildableReference>
@@ -74,7 +74,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "DCC1A0E213A94ED5005BD75D"
-            BuildableName = "HoopyDrop.app"
+            BuildableName = "hoopydrop.app"
             BlueprintName = "HoopyDrop"
             ReferencedContainer = "container:HoopyDrop.xcodeproj">
          </BuildableReference>
@@ -85,6 +85,7 @@
    </AnalyzeAction>
    <ArchiveAction
       buildConfiguration = "Release"
+      customArchiveName = "HoopyDrop"
       revealArchiveInOrganizer = "YES">
    </ArchiveAction>
 </Scheme>

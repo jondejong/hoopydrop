@@ -63,18 +63,24 @@
     [[GameManager sharedInstance] handleUnpause];
 }
 
+-(void) removeTouchResponse {
+    self.isTouchEnabled = NO;
+}
+
 -(void) update:(ccTime)delta
 {
  
-    KKInput* input = [KKInput sharedInput];
-    if (input.anyTouchEndedThisFrame)
-    {
-        if(paused) {
-            [self handleUnpase];
-            
-        } else {
-            paused = true;
-            [self handlePause];
+    if([self isTouchEnabled]) {
+        KKInput* input = [KKInput sharedInput];
+        if (input.anyTouchEndedThisFrame)
+        {
+            if(paused) {
+                [self handleUnpase];
+                
+            } else {
+                paused = true;
+                [self handlePause];
+            }
         }
     }
     
