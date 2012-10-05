@@ -25,13 +25,13 @@
 //		[CCMenuItemFont setFontSize:28];
 		
 		//score
-		CCLabelBMFont *scoreText = [CCLabelBMFont labelWithString:@"0" fntFile:@"hdfont.fnt"];
+		CCLabelBMFont *scoreText = [CCLabelBMFont labelWithString:@"0" fntFile:@"hdfont-full.fnt"];
 		[scoreText setTag:1];
 		scoreText.position =  ccp(size.width/2.0, size.height - (.05*size.height));
 		
 		//timer
         NSString * timerString = [NSString stringWithFormat:@"%i", [[GameManager sharedInstance] getRemainingTime]];
-		CCLabelBMFont *timerText = [CCLabelBMFont labelWithString:timerString fntFile:@"hdfont.fnt"];
+		CCLabelBMFont *timerText = [CCLabelBMFont labelWithString:timerString fntFile:@"hdfont-full.fnt"];
 		[timerText setTag:2];
 		timerText.position =  ccp(size.width/2.0, .05*size.height);
 		

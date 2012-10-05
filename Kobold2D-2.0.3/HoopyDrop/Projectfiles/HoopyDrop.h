@@ -142,7 +142,7 @@
 
 +(GameManager*) sharedInstance;
 
--(void) handleEndGameTransitionEnd;
+-(void) returnToMenu;
 
 -(void) decrementTargets;
 

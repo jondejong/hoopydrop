@@ -44,7 +44,13 @@ GameManager* _sharedGameManager;
     return self;
 }
 
--(void) handleEndGameTransitionEnd {
+-(void) returnToMenu {
+    if(_score > _allTimeHighScore) {
+        _allTimeHighScore = _score;
+        [self flushAllTimeHighScore];
+        
+    }
+    [[HDStartLayer sharedInstance] refreshDisplayWith:YES];
     [[CCDirector sharedDirector] popScene];
 }
 
@@ -87,16 +93,10 @@ GameManager* _sharedGameManager;
 
 -(void) handleAbandon {
     _score = 0;
-    [self handleEnd];
+    [self returnToMenu];
 }
 
 -(void) handleEnd {
-    if(_score > _allTimeHighScore) {
-        _allTimeHighScore = _score;
-        [self flushAllTimeHighScore];
-
-    }
-    [[HDStartLayer sharedInstance] refreshDisplayWith:YES];
     
     HDGameOverLayer* gameOverLayer = [HDGameOverLayer node];
     

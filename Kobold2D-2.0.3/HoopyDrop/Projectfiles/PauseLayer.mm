@@ -38,6 +38,8 @@
         menu = [CCMenu menuWithItems:startButton, nil];
         menu.position = ccp(size.width/2.0, size.height/2.0);
         
+        [self setIsTouchEnabled:YES];
+        
         [self scheduleUpdate];
     }
     return self;
@@ -64,7 +66,7 @@
 }
 
 -(void) removeTouchResponse {
-    self.isTouchEnabled = NO;
+    [self setIsTouchEnabled: NO];
 }
 
 -(void) update:(ccTime)delta
