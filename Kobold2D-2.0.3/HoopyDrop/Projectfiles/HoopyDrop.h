@@ -93,6 +93,7 @@
 @interface LeaderBoardLayer : CCLayer @end
 @interface AboutLayer : CCLayer @end
 @interface HDGameOverLayer : CCLayer
+@property (nonatomic, retain) CCSprite* overlayTransitionSprite;
 -(void) startTransition;
 @end
 

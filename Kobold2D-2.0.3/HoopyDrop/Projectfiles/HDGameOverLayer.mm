@@ -16,6 +16,8 @@
     bool _scorePlaced;
 }
 
+@synthesize overlayTransitionSprite;
+
 - (id)init
 {
     self = [super init];
@@ -40,12 +42,13 @@
     float now = CACurrentMediaTime();
     if(now - _lastLoopTime >= .2)
     {
-        if(_loopCount < 12)
+        if(_loopCount < 16)
         {
             CCSpriteBatchNode* batch = (CCSpriteBatchNode*) [self getChildByTag:kTagBatchNode];
             CCSprite * sprite = [CCSprite spriteWithTexture: [batch texture]];
             sprite.position = ccp(0,0);
             sprite.anchorPoint = ccp(0,0);
+            self.overlayTransitionSprite = sprite;
             [batch addChild:sprite z:OVERLAY_Z];
         } else if(!_scorePlaced) {
             _scorePlaced = true;
@@ -74,7 +77,7 @@
             [scoreText runAction:[CCSequence actions:moveScoreAction, nil]];
             
         }
-        if(_loopCount == 40)
+        if(_loopCount == 55 )
         {
             [self pauseSchedulerAndActions];
             [[GameManager sharedInstance] returnToMenu];
