@@ -89,7 +89,7 @@
 #define GREEN_ODDS 30
 #define PURPLE_ODDS 10
 
-#define TARGET_RADIUS .3
+#define TARGET_RADIUS .33
 
 #define BACKGROUND_Z 0
 #define TEXT_Z 10
