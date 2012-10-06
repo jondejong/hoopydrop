@@ -86,6 +86,7 @@
 #define TEXT_Z 10
 #define OBJECTS_Z 5
 #define OVERLAY_Z 20
+#define OVERLAY_TEXT_Z 25
 
 @interface HDGamePlayBackground : CCLayer @end
 @interface HDSettingsLayer : CCLayer <UIAlertViewDelegate> @end
