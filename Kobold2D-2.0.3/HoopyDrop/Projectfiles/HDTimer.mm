@@ -7,8 +7,7 @@
 //
 
 #import "HoopyDrop.h"
-#ifndef HD_ORB_TIMER_H
-#define HD_ORB_TIMER_H
+#import "SimpleAudioEngine.h"
 
 @implementation HDTimer {
     @private
@@ -22,6 +21,9 @@
     if (self) {
         countTime = SECONDS_PER_GAME;
         lastUpdateTime = CACurrentMediaTime();
+        
+        // Set Up Audio
+        [[SimpleAudioEngine sharedEngine] preloadEffect:@"alarm.air"];
     }
     return self;
 }
@@ -49,6 +51,10 @@
 		countTime--;
 		[[GameManager sharedInstance] updateTimer:countTime];
 	}
+    
+    if(countTime > 0 && countTime <= 10) {
+        [[SimpleAudioEngine sharedEngine] playEffect:@"alarm.aif"];
+    }
 	
 	if (countTime == 0) {
         [self unschedule: @selector(tick:)];
@@ -59,4 +65,4 @@
 
 @end
 
-#endif
+

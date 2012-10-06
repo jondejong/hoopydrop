@@ -7,6 +7,7 @@
 //
 
 #import "HoopyDrop.h"
+#import "SimpleAudioEngine.h"
 
 @implementation HDOrbTimer{
 @private
@@ -90,6 +91,9 @@
 #endif
         
         [self updateGameWithNewOrbPointValues];
+        
+        
+        
     }
     return self;
 }
