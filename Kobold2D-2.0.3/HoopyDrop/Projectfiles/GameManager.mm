@@ -10,6 +10,7 @@
 #import "PhysicsLayer.h"
 #import "TextOverlayLayer.h"
 #import "PDKeychainBindings.h"
+#include "SimpleAudioEngine.h"
 
 @implementation GameManager {
     
@@ -40,6 +41,9 @@ GameManager* _sharedGameManager;
         if(highScoreString) {
             _allTimeHighScore = [highScoreString intValue];
         }
+        // Set Up Audio
+        [[SimpleAudioEngine sharedEngine] preloadEffect:@"alarm.aif"];
+        [[SimpleAudioEngine sharedEngine] preloadEffect:@"game_over.aif"];
     }
     return self;
 }

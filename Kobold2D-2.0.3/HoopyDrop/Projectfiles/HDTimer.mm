@@ -20,10 +20,8 @@
     self = [super init];
     if (self) {
         countTime = SECONDS_PER_GAME;
-        lastUpdateTime = CACurrentMediaTime();
-        
-        // Set Up Audio
-        [[SimpleAudioEngine sharedEngine] preloadEffect:@"alarm.air"];
+        lastUpdateTime = CACurrentMediaTime();        
+
     }
     return self;
 }
@@ -57,6 +55,7 @@
     }
 	
 	if (countTime == 0) {
+        [[SimpleAudioEngine sharedEngine] playEffect:@"game_over.aif"];
         [self unschedule: @selector(tick:)];
         [[GameManager sharedInstance] handleEnd];
     }
