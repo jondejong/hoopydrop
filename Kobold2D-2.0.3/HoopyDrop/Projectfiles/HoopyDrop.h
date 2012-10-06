@@ -26,6 +26,13 @@
 
 #define SCREEN_BUFFER_PERCENTAGE .1
 
+// End of game animation controls
+#define OVERLAY_ALPHA_CHANNEL_INCREMENTS 5
+#define OVERLAY_INTERVALS 40
+#define SCORE_DROP_SECONDS 2
+#define SCORE_LINESPACING 45
+#define TOTAL_LOOPCOUNT 120
+
 // Frequency constants to change Hoopy's expression
 #define NORMAL_RANGE_LOW -2
 #define NORMAL_RANGE_HIGH 2
@@ -97,6 +104,8 @@
 @interface AboutLayer : CCLayer @end
 @interface HDGameOverLayer : CCLayer
 @property (nonatomic, retain) CCSprite* overlayTransitionSprite;
+@property (nonatomic, retain) CCLabelBMFont* scoreLabelText;
+@property (nonatomic, retain) CCLabelBMFont* scoreText;
 -(void) startTransition;
 @end
 

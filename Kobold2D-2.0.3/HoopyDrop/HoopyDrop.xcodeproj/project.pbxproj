@@ -61,6 +61,7 @@
 		C26FF868160A854200190FC7 /* HelpLayer.mm in Sources */ = {isa = PBXBuildFile; fileRef = C26FF867160A854200190FC7 /* HelpLayer.mm */; };
 		C28511A516209F5400C59AF9 /* alarm.aif in Resources */ = {isa = PBXBuildFile; fileRef = C28511A416209F5400C59AF9 /* alarm.aif */; };
 		C28511A81620A78B00C59AF9 /* game_over.aif in Resources */ = {isa = PBXBuildFile; fileRef = C28511A71620A78B00C59AF9 /* game_over.aif */; };
+		C28511AB1620C1F000C59AF9 /* TouchUtil.mm in Sources */ = {isa = PBXBuildFile; fileRef = C28511AA1620C1F000C59AF9 /* TouchUtil.mm */; };
 		C288C9B0161E84DB00DF85CC /* hoopy-hd.plist in Resources */ = {isa = PBXBuildFile; fileRef = C288C9AE161E84DB00DF85CC /* hoopy-hd.plist */; };
 		C288C9B1161E84DB00DF85CC /* hoopy-hd.png in Resources */ = {isa = PBXBuildFile; fileRef = C288C9AF161E84DB00DF85CC /* hoopy-hd.png */; };
 		C288C9D2161E8D3000DF85CC /* hdfont-full-hd.fnt in Resources */ = {isa = PBXBuildFile; fileRef = C288C9CE161E8D3000DF85CC /* hdfont-full-hd.fnt */; };
@@ -172,6 +173,7 @@
 		C26FF867160A854200190FC7 /* HelpLayer.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = HelpLayer.mm; sourceTree = "<group>"; };
 		C28511A416209F5400C59AF9 /* alarm.aif */ = {isa = PBXFileReference; lastKnownFileType = file; path = alarm.aif; sourceTree = "<group>"; };
 		C28511A71620A78B00C59AF9 /* game_over.aif */ = {isa = PBXFileReference; lastKnownFileType = file; path = game_over.aif; sourceTree = "<group>"; };
+		C28511AA1620C1F000C59AF9 /* TouchUtil.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = TouchUtil.mm; path = Projectfiles/TouchUtil.mm; sourceTree = "<group>"; };
 		C288C9AE161E84DB00DF85CC /* hoopy-hd.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "hoopy-hd.plist"; sourceTree = "<group>"; };
 		C288C9AF161E84DB00DF85CC /* hoopy-hd.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "hoopy-hd.png"; sourceTree = "<group>"; };
 		C288C9CE161E8D3000DF85CC /* hdfont-full-hd.fnt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "hdfont-full-hd.fnt"; sourceTree = "<group>"; };
@@ -288,6 +290,7 @@
 			children = (
 				C220424B161151C700876EDD /* ScreenImage.mm */,
 				C2204253161154C900876EDD /* HDUtil.h */,
+				C28511AA1620C1F000C59AF9 /* TouchUtil.mm */,
 			);
 			name = Util;
 			sourceTree = "<group>";
@@ -652,6 +655,7 @@
 				C220424C161151C700876EDD /* ScreenImage.mm in Sources */,
 				C24F50A01612AFD0005435E1 /* HDGamePlayBackground.mm in Sources */,
 				C2F4558A161D22690035942A /* HDGameOverLayer.mm in Sources */,
+				C28511AB1620C1F000C59AF9 /* TouchUtil.mm in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

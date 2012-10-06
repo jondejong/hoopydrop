@@ -7,9 +7,16 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "KKInput.h"
 
 @interface ScreenImage : NSObject
 
 +(NSString*)convertImageName:(NSString*)baseName;
+
+@end
+
+@interface TouchUtil : CCLayer
+
++(bool) wasIntentiallyTouched;
 
 @end
