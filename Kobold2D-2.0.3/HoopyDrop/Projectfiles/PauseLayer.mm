@@ -8,6 +8,8 @@
 
 #import "HoopyDrop.h"
 #import "HDUtil.h"
+#import "KKInput.h"
+#import "KKInputTouch.h"
 
 @implementation PauseLayer {
     @private
@@ -73,15 +75,38 @@
 {
  
     if([self isTouchEnabled]) {
-        KKInput* input = [KKInput sharedInput];
+        KKInput* input = [KKInput sharedInput];        
         if (input.anyTouchEndedThisFrame)
         {
-            if(paused) {
-                [self handleUnpase];
+            bool inArea = NO;
+            CCArray* touches = [KKInput sharedInput].touches;
+            KKTouch* touch;
+            CCARRAY_FOREACH(touches, touch)
+            {
+                if(touch && touch->isInvalid == NO) \
+                {
+                    CGSize size = [[CCDirector sharedDirector] winSize];
+                    CGPoint loc = [touch location];
+                    float maxX = (size.height - SCREEN_BUFFER_PERCENTAGE * size.height);
+                    float minX = SCREEN_BUFFER_PERCENTAGE * size.height;
+                    float maxY = (size.width - SCREEN_BUFFER_PERCENTAGE * size.width);
+                    float minY = SCREEN_BUFFER_PERCENTAGE * size.width;
+                    
+                    if(loc.x >= minX && loc.x <= maxX && loc.y >= minY && loc.y <= maxY)
+                    {
+                        inArea = YES;
+                    }
+                }
                 
-            } else {
-                paused = true;
-                [self handlePause];
+            }
+            if(inArea) {
+                if(paused) {
+                    [self handleUnpase];
+                    
+                } else {
+                    paused = true;
+                    [self handlePause];
+                }
             }
         }
     }

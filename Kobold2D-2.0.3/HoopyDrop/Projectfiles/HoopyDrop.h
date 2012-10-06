@@ -24,6 +24,8 @@
 
 #define EXPRESSION_ANCHOR_POINT ccp(.5, .55)
 
+#define SCREEN_BUFFER_PERCENTAGE .1
+
 // Frequency constants to change Hoopy's expression
 #define NORMAL_RANGE_LOW -2
 #define NORMAL_RANGE_HIGH 2
