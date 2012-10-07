@@ -51,11 +51,11 @@
 	}
     
     if(countTime > 0 && countTime <= 10) {
-        [[SimpleAudioEngine sharedEngine] playEffect:@"alarm.aif"];
+        [[GameManager sharedInstance] fireSound:kHDSoundAlarm];
     }
 	
 	if (countTime == 0) {
-        [[SimpleAudioEngine sharedEngine] playEffect:@"game_over.aif"];
+        [[GameManager sharedInstance] fireSound:kHDSoundGameOver];
         [self unschedule: @selector(tick:)];
         [[GameManager sharedInstance] handleEnd];
     }

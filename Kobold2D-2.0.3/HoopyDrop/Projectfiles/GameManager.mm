@@ -20,6 +20,7 @@
     uint _greenTargetPoints;
     uint _purpleTargetPoints;
     uint _allTimeHighScore;
+    bool _soundsOn;
 }
 GameManager* _sharedGameManager;
 
@@ -37,6 +38,15 @@ GameManager* _sharedGameManager;
         _sharedGameManager = self;
         _score = 0;
         NSString * highScoreString = [[PDKeychainBindings sharedKeychainBindings] stringForKey:HIGH_SCORE_KEYCHAIN_KEY];
+        NSString * soundsOn = [[PDKeychainBindings sharedKeychainBindings] stringForKey:SOUNDS_ON_KEYCHAIN_KEY];
+        
+        _soundsOn = YES;
+        if(soundsOn) {
+            if(![@"TRUE" isEqualToString:soundsOn]) {
+                _soundsOn = NO;
+            }
+        }
+        
         _allTimeHighScore = 0;
         if(highScoreString) {
             _allTimeHighScore = [highScoreString intValue];
@@ -204,6 +214,36 @@ GameManager* _sharedGameManager;
 
 -(int) orbCollectionFrequency {
     return [orbTimer frequency];
+}
+
+-(void) fireSound:(int)soundTag {
+    if(_soundsOn) {
+        switch (soundTag) {
+            case kHDSoundAlarm:
+                [[SimpleAudioEngine sharedEngine] playEffect:@"alarm.aif"];
+                break;
+                
+            case kHDSoundGameOver:
+                [[SimpleAudioEngine sharedEngine] playEffect:@"game_over.aif"];
+                break;
+        }
+    }
+}
+
+-(bool)isSoundOn {
+    return _soundsOn;
+}
+
+-(void) toggleSounds {
+    NSString* soundsOn;
+    if(_soundsOn) {
+        _soundsOn = NO;
+        soundsOn = @"FALSE";
+    } else {
+        _soundsOn = YES;
+        soundsOn = @"TRUE";
+    }
+    [[PDKeychainBindings sharedKeychainBindings] setString:soundsOn forKey:SOUNDS_ON_KEYCHAIN_KEY];
 }
 
 @end

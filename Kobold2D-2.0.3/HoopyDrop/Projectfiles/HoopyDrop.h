@@ -12,10 +12,11 @@
 #import "PhysicsLayer.h"
 #import "CollisionHandler.h"
 
-#define HIGH_SCORE_KEYCHAIN_KEY @"hoopyDropAllTimeHighScore"
-
 #ifndef HOOPY_DROP_H
 #define HOOPY_DROP_H
+
+#define HIGH_SCORE_KEYCHAIN_KEY @"hoopyDropAllTimeHighScore"
+#define SOUNDS_ON_KEYCHAIN_KEY @"hoopyDropSoundsOn"
 
 #define DRAW_DEBUG_OUTLINE 0
 #define SECONDS_PER_GAME 60
@@ -97,8 +98,19 @@
 #define OVERLAY_Z 20
 #define OVERLAY_TEXT_Z 25
 
+
+// Sounds
+enum {
+    kHDSoundAlarm,
+    kHDSoundGameOver,
+};
+
 @interface HDGamePlayBackground : CCLayer @end
-@interface HDSettingsLayer : CCLayer <UIAlertViewDelegate> @end
+@interface HDSettingsLayer : CCLayer <UIAlertViewDelegate>
+@property (nonatomic, retain) CCMenuItemFont* soundsOnMenuItem;
+@property (nonatomic, retain) CCMenuItemFont* soundsOffMenuItem;
+@property (nonatomic, retain) CCMenu* resetMenu;
+@end
 @interface HelpLayer : CCLayer @end
 @interface LeaderBoardLayer : CCLayer @end
 @interface AboutLayer : CCLayer @end
@@ -154,6 +166,10 @@
 @property (nonatomic, retain) HDOrbTimer* orbTimer;
 
 +(GameManager*) sharedInstance;
++(bool) isRetina;
++(bool) is16x9;
+
+-(void) fireSound:(int) soundTag;
 
 -(void) returnToMenu;
 
@@ -190,11 +206,9 @@
 
 -(void) addTarget:(CollisionHandler*) handler andBaseSprite: (NSString*)baseSpriteName andTrackedBy: (NSMutableArray*) trackingArray at: (uint)createTime;
 
-+(bool) isRetina;
-+(bool) is16x9;
-
+-(bool)isSoundOn;
 -(int) currentGameTime;
-
+-(void) toggleSounds;
 @end
 
 @interface DeletableBody : NSObject
