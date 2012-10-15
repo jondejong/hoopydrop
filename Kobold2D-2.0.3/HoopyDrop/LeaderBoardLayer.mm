@@ -36,25 +36,25 @@
         CCSpriteBatchNode* backBar = [CCSpriteBatchNode batchNodeWithFile:@"score-back.png" capacity:10];
         [self addChild:backBar z:OBJECTS_Z];
         
-        float nextY = 0;
+        float nextY = size.height - 75;
         
         CCSprite* barSprite = [CCSprite spriteWithTexture:[sepBar texture]];
         barSprite.position = CGPointMake(0, nextY);
         barSprite.anchorPoint = CGPointMake(0, 0);
         [sepBar addChild:barSprite z:OBJECTS_Z];
-        nextY += 5;
+        nextY -= 35;
         
         for(int i=0; i<10; i++) {
             CCSprite* barSprite = [CCSprite spriteWithTexture:[sepBar texture]];
             CCSprite* backBarSprite = [CCSprite spriteWithTexture:[backBar  texture]];
             backBarSprite.position = CGPointMake(0, nextY);
             backBarSprite.anchorPoint = CGPointMake(0, 0);
-            nextY += 35;
+            nextY -= 5;
             barSprite.position = CGPointMake(0, nextY);
             barSprite.anchorPoint = CGPointMake(0, 0);
             [sepBar addChild:barSprite z:OBJECTS_Z];
             [backBar addChild:backBarSprite z:OBJECTS_Z];
-            nextY += 5;
+            nextY -= 35;
         }
         
         resetMenu.position = ccp(12, size.height - 35);
@@ -65,7 +65,7 @@
         [self addChild:screenLabel z:OBJECTS_Z];
         
         int count = 1;
-        nextY -= 25;
+        nextY = size.height - 95;
         for(NSNumber* score in [[GameManager sharedInstance] highScores]) {
             NSString* scoreString = [NSString stringWithFormat:@"%i: %i", count, [score integerValue]];
             CCLabelTTF *scoreLabel = [CCLabelTTF labelWithString:scoreString fontName:@"Marker Felt" fontSize:24];
