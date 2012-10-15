@@ -31,7 +31,7 @@
 -(void) createMenu {
     CGSize size = [[CCDirector sharedDirector] winSize];
     
-    _resetHighScoreMenuItem = [CCMenuItemFont itemWithString:@"Reset High Score" target:self selector:@selector(handleHighScoreReset)];
+    _resetHighScoreMenuItem = [CCMenuItemFont itemWithString:@"Reset High Scores" target:self selector:@selector(handleHighScoreReset)];
     _goBackMenuItem = [CCMenuItemFont itemWithString:@"Go Back" target:self selector:@selector(handleGoBack)];
     self.soundsOnMenuItem = [CCMenuItemFont itemWithString:@"Turn Sounds On" target: self selector:@selector(toggleSounds)];
     self.soundsOffMenuItem = [CCMenuItemFont itemWithString:@"Turn Sounds Off" target: self selector:@selector(toggleSounds)];
