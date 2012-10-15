@@ -16,19 +16,20 @@
     if (self) {
         CGSize size = [[CCDirector sharedDirector] winSize];
         
-        CCLabelTTF *screenLabel = [CCLabelTTF labelWithString:@"High Scores:" fontName:@"Marker Felt" fontSize:24];
+        CCSprite* buttonBack = [CCSprite spriteWithFile:@"button-back.png"];
+        buttonBack.position = ccp(size.width/2, size.height - 35);
+        [self addChild: buttonBack z:BACKGROUND_Z+1];
         
+        CCLabelTTF *screenLabel = [CCLabelTTF labelWithString:@"High Scores" fontName:@"Marker Felt" fontSize:24];
         
-        CCMenuItemFont* goBackMenuItem = [CCMenuItemFont itemWithString:@"GB" target:self selector:@selector(handleGoBack)];
+        CCSprite * homeButtonSprite = [CCSprite spriteWithFile:@"home_button.png"];
+        CCSprite * homeButtonSelectedSprite = [CCSprite spriteWithFile:@"home_button_sel.png"];
         
-        [goBackMenuItem setFontSize:20];
-        [goBackMenuItem setFontName:@"Marker Felt"];
+        CCMenuItemSprite* goBackMenuItem = [CCMenuItemSprite itemWithNormalSprite:homeButtonSprite selectedSprite:homeButtonSelectedSprite target:self selector:@selector(handleGoBack)];
         
+        goBackMenuItem.position = CGPointMake(20, 0);
         CCMenu* resetMenu = [CCMenu menuWithItems:goBackMenuItem, nil];
-        
-        
-//        [resetMenu alignItemsVerticallyWithPadding:15];
-        
+
         CCSpriteBatchNode* sepBar = [CCSpriteBatchNode batchNodeWithFile:@"score_sep.png" capacity:11];
         [self addChild:sepBar z:OBJECTS_Z];
         
@@ -56,8 +57,8 @@
             nextY += 5;
         }
         
-        resetMenu.position = ccp(12, (size.height - nextY)/2 + nextY);
-        screenLabel.position = ccp(size.width/2, (size.height - nextY)/2 + nextY);
+        resetMenu.position = ccp(12, size.height - 35);
+        screenLabel.position = ccp(size.width/2, size.height - 35);
         
         [self addChild:[BackgroundLayer node] z:BACKGROUND_Z];
         [self addChild:resetMenu z:OBJECTS_Z];
