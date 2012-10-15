@@ -67,13 +67,14 @@
         int count = 1;
         nextY = size.height - 95;
         for(NSNumber* score in [[GameManager sharedInstance] highScores]) {
-            NSString* scoreString = [NSString stringWithFormat:@"%i: %i", count, [score integerValue]];
-            CCLabelTTF *scoreLabel = [CCLabelTTF labelWithString:scoreString fontName:@"Marker Felt" fontSize:24];
+            CCLabelTTF *scoreLabel = [CCLabelTTF labelWithString:[NSString stringWithFormat:@"%i", [score integerValue]] fontName:@"Marker Felt" fontSize:24];
+            CCLabelTTF *number = [CCLabelTTF labelWithString:[NSString stringWithFormat:@"%i:", count] fontName:@"Marker Felt" fontSize:24];
             scoreLabel.position = ccp(size.width/2, nextY);
+            number.position = ccp(20, nextY);
             nextY-=40;
             count++;
             [self addChild:scoreLabel z:OVERLAY_TEXT_Z];
-            
+            [self addChild:number z:OVERLAY_TEXT_Z];
         }
         
     }
