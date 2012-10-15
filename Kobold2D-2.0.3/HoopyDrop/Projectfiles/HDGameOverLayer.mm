@@ -91,6 +91,8 @@
             [scoreLabelText runAction:[CCSequence actions:moveLabelAction, doneHandler, nil]];
             [scoreText runAction:[CCSequence actions:moveScoreAction, nil]];
             
+            [self addScorePosition];
+            
         }
         if(_loopCount >= TOTAL_LOOPCOUNT )
         {
@@ -101,6 +103,25 @@
         _loopCount++;
     }
     
+}
+
+-(void) addScorePosition {
+    CGSize screenSize = [CCDirector sharedDirector].winSize;
+    int scorePos = [[GameManager sharedInstance] scorePosition];
+    if(scorePos > 0) {
+        NSString* pos = [NSString stringWithFormat:@"#%i", scorePos];
+        CCLabelBMFont* scorePositionText = [CCLabelBMFont labelWithString:pos fntFile:@"hdfont-full.fnt" ];
+        scorePositionText.position = CGPointMake(screenSize.width/2, screenSize.height/2 - 2* SCORE_LINESPACING);
+        
+        CCLabelBMFont* scorePositionDescriptionText = [CCLabelBMFont labelWithString:@"All Time" fntFile:@"hdfont-full-small.fnt"];
+        CCLabelBMFont* scorePositionDescriptionTextLine2 = [CCLabelBMFont labelWithString:@"High Score!" fntFile:@"hdfont-full-small.fnt"];
+        scorePositionDescriptionText.position = CGPointMake(screenSize.width/2, screenSize.height/2 - 3* SCORE_LINESPACING);
+        scorePositionDescriptionTextLine2.position = CGPointMake(screenSize.width/2, screenSize.height/2 - 4* SCORE_LINESPACING);
+        
+        [self addChild:scorePositionText z:OVERLAY_TEXT_Z];
+        [self addChild:scorePositionDescriptionText z:OVERLAY_TEXT_Z];
+        [self addChild:scorePositionDescriptionTextLine2 z:OVERLAY_TEXT_Z];
+    }
 }
 
 -(void) handleScoresDoneMoving {
@@ -135,6 +156,7 @@
             self.overlayTransitionSprite = sprite;
             [batch addChild:sprite z:OVERLAY_Z];
             [self placeScoresAtFinish];
+            [self addScorePosition];
             _scorePlaced = true;
             _loopCount = OVERLAY_INTERVALS;
         }

@@ -216,11 +216,13 @@ GameManager* _sharedGameManager;
 }
 
 -(void) resetAllTimeHighScores {
-    NSMutableArray* highScores = [NSMutableArray arrayWithCapacity:10];
-    for(int i=0; i<10; i++){
-        [highScores addObject:[NSNumber numberWithInt:0]];
+    bool soundOn = [persistantData isSoundEffectsOn];
+    self.persistantData = [[HDPersistantData alloc] init];
+    if(soundOn) {
+        [persistantData setSoundEffectsOn];
+    } else {
+        [persistantData setSoundEffectsOff];
     }
-    [persistantData setHighScores:highScores];
     [self flushPersistantData];
 }
 
@@ -299,6 +301,17 @@ GameManager* _sharedGameManager;
 
 -(NSArray*) highScores {
     return  [persistantData highScores];
+}
+
+-(int) scorePosition {
+    int count = 1;
+    for(NSNumber* highScore in [persistantData highScores]) {
+        if(_score >= [highScore unsignedIntValue]) {
+            return count;
+        }
+        count++;
+    }
+    return -1;
 }
 
 @end

@@ -47,11 +47,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "HoopyDrop/Projectfiles/HDGameOverLayer.mm"
-         timestampString = "371249591.47343"
+         timestampString = "371967279.622394"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "107"
-         endingLineNumber = "107"
+         startingLineNumber = "128"
+         endingLineNumber = "128"
          landmarkName = "-handleScoresDoneMoving"
          landmarkType = "5">
       </FileBreakpoint>
@@ -60,18 +60,18 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "HoopyDrop/Projectfiles/HDGameOverLayer.mm"
-         timestampString = "371249741.932645"
+         timestampString = "371967279.622394"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "114"
-         endingLineNumber = "114"
+         startingLineNumber = "135"
+         endingLineNumber = "135"
          landmarkName = "-handleTouch"
          landmarkType = "5">
       </FileBreakpoint>
    </FileBreakpoints>
    <ExceptionBreakpoints>
       <ExceptionBreakpoint
-         shouldBeEnabled = "No"
+         shouldBeEnabled = "Yes"
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          scope = "0"

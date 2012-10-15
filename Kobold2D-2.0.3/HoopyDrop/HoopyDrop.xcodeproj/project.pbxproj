@@ -22,6 +22,14 @@
 		C2172CF3162BA48C006D6EE4 /* home_button_sel.png in Resources */ = {isa = PBXBuildFile; fileRef = C2172CEF162BA48C006D6EE4 /* home_button_sel.png */; };
 		C2172CF4162BA48C006D6EE4 /* home_button-hd.png in Resources */ = {isa = PBXBuildFile; fileRef = C2172CF0162BA48C006D6EE4 /* home_button-hd.png */; };
 		C2172CF5162BA48C006D6EE4 /* home_button.png in Resources */ = {isa = PBXBuildFile; fileRef = C2172CF1162BA48C006D6EE4 /* home_button.png */; };
+		C2172D02162BBF99006D6EE4 /* hdfont-full-hd.fnt in Resources */ = {isa = PBXBuildFile; fileRef = C2172CFE162BBF99006D6EE4 /* hdfont-full-hd.fnt */; };
+		C2172D03162BBF99006D6EE4 /* hdfont-full-hd.png in Resources */ = {isa = PBXBuildFile; fileRef = C2172CFF162BBF99006D6EE4 /* hdfont-full-hd.png */; };
+		C2172D04162BBF99006D6EE4 /* hdfont-full.fnt in Resources */ = {isa = PBXBuildFile; fileRef = C2172D00162BBF99006D6EE4 /* hdfont-full.fnt */; };
+		C2172D05162BBF99006D6EE4 /* hdfont-full.png in Resources */ = {isa = PBXBuildFile; fileRef = C2172D01162BBF99006D6EE4 /* hdfont-full.png */; };
+		C2172D0A162BC262006D6EE4 /* hdfont-full-small-hd.fnt in Resources */ = {isa = PBXBuildFile; fileRef = C2172D06162BC262006D6EE4 /* hdfont-full-small-hd.fnt */; };
+		C2172D0B162BC262006D6EE4 /* hdfont-full-small-hd.png in Resources */ = {isa = PBXBuildFile; fileRef = C2172D07162BC262006D6EE4 /* hdfont-full-small-hd.png */; };
+		C2172D0C162BC262006D6EE4 /* hdfont-full-small.fnt in Resources */ = {isa = PBXBuildFile; fileRef = C2172D08162BC262006D6EE4 /* hdfont-full-small.fnt */; };
+		C2172D0D162BC262006D6EE4 /* hdfont-full-small.png in Resources */ = {isa = PBXBuildFile; fileRef = C2172D09162BC262006D6EE4 /* hdfont-full-small.png */; };
 		C220424016113E1200876EDD /* start_screen_bg-hd.png in Resources */ = {isa = PBXBuildFile; fileRef = C220423D16113E1200876EDD /* start_screen_bg-hd.png */; };
 		C220424116113E1200876EDD /* start_screen_bg.png in Resources */ = {isa = PBXBuildFile; fileRef = C220423E16113E1200876EDD /* start_screen_bg.png */; };
 		C220424C161151C700876EDD /* ScreenImage.mm in Sources */ = {isa = PBXBuildFile; fileRef = C220424B161151C700876EDD /* ScreenImage.mm */; };
@@ -73,10 +81,6 @@
 		C28511AB1620C1F000C59AF9 /* TouchUtil.mm in Sources */ = {isa = PBXBuildFile; fileRef = C28511AA1620C1F000C59AF9 /* TouchUtil.mm */; };
 		C288C9B0161E84DB00DF85CC /* hoopy-hd.plist in Resources */ = {isa = PBXBuildFile; fileRef = C288C9AE161E84DB00DF85CC /* hoopy-hd.plist */; };
 		C288C9B1161E84DB00DF85CC /* hoopy-hd.png in Resources */ = {isa = PBXBuildFile; fileRef = C288C9AF161E84DB00DF85CC /* hoopy-hd.png */; };
-		C288C9D2161E8D3000DF85CC /* hdfont-full-hd.fnt in Resources */ = {isa = PBXBuildFile; fileRef = C288C9CE161E8D3000DF85CC /* hdfont-full-hd.fnt */; };
-		C288C9D3161E8D3000DF85CC /* hdfont-full-hd.png in Resources */ = {isa = PBXBuildFile; fileRef = C288C9CF161E8D3000DF85CC /* hdfont-full-hd.png */; };
-		C288C9D4161E8D3000DF85CC /* hdfont-full.fnt in Resources */ = {isa = PBXBuildFile; fileRef = C288C9D0161E8D3000DF85CC /* hdfont-full.fnt */; };
-		C288C9D5161E8D3000DF85CC /* hdfont-full.png in Resources */ = {isa = PBXBuildFile; fileRef = C288C9D1161E8D3000DF85CC /* hdfont-full.png */; };
 		C2DA46E1161106C5000AEFF3 /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C2DA46DF161106C5000AEFF3 /* Default@2x.png */; };
 		C2DA46E416110772000AEFF3 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C2DA46E316110772000AEFF3 /* Default-568h@2x.png */; };
 		C2F45585161D21960035942A /* game_over-hd.png in Resources */ = {isa = PBXBuildFile; fileRef = C2F45581161D21960035942A /* game_over-hd.png */; };
@@ -140,6 +144,14 @@
 		C2172CEF162BA48C006D6EE4 /* home_button_sel.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = home_button_sel.png; sourceTree = "<group>"; };
 		C2172CF0162BA48C006D6EE4 /* home_button-hd.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "home_button-hd.png"; sourceTree = "<group>"; };
 		C2172CF1162BA48C006D6EE4 /* home_button.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = home_button.png; sourceTree = "<group>"; };
+		C2172CFE162BBF99006D6EE4 /* hdfont-full-hd.fnt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "hdfont-full-hd.fnt"; sourceTree = "<group>"; };
+		C2172CFF162BBF99006D6EE4 /* hdfont-full-hd.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "hdfont-full-hd.png"; sourceTree = "<group>"; };
+		C2172D00162BBF99006D6EE4 /* hdfont-full.fnt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "hdfont-full.fnt"; sourceTree = "<group>"; };
+		C2172D01162BBF99006D6EE4 /* hdfont-full.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "hdfont-full.png"; sourceTree = "<group>"; };
+		C2172D06162BC262006D6EE4 /* hdfont-full-small-hd.fnt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "hdfont-full-small-hd.fnt"; sourceTree = "<group>"; };
+		C2172D07162BC262006D6EE4 /* hdfont-full-small-hd.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "hdfont-full-small-hd.png"; sourceTree = "<group>"; };
+		C2172D08162BC262006D6EE4 /* hdfont-full-small.fnt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "hdfont-full-small.fnt"; sourceTree = "<group>"; };
+		C2172D09162BC262006D6EE4 /* hdfont-full-small.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "hdfont-full-small.png"; sourceTree = "<group>"; };
 		C220423D16113E1200876EDD /* start_screen_bg-hd.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "start_screen_bg-hd.png"; path = "Resources/start_screen_bg-hd.png"; sourceTree = "<group>"; };
 		C220423E16113E1200876EDD /* start_screen_bg.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = start_screen_bg.png; path = Resources/start_screen_bg.png; sourceTree = "<group>"; };
 		C220424B161151C700876EDD /* ScreenImage.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = ScreenImage.mm; path = Projectfiles/ScreenImage.mm; sourceTree = "<group>"; };
@@ -195,10 +207,6 @@
 		C28511AA1620C1F000C59AF9 /* TouchUtil.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = TouchUtil.mm; path = Projectfiles/TouchUtil.mm; sourceTree = "<group>"; };
 		C288C9AE161E84DB00DF85CC /* hoopy-hd.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "hoopy-hd.plist"; sourceTree = "<group>"; };
 		C288C9AF161E84DB00DF85CC /* hoopy-hd.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "hoopy-hd.png"; sourceTree = "<group>"; };
-		C288C9CE161E8D3000DF85CC /* hdfont-full-hd.fnt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "hdfont-full-hd.fnt"; sourceTree = "<group>"; };
-		C288C9CF161E8D3000DF85CC /* hdfont-full-hd.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "hdfont-full-hd.png"; sourceTree = "<group>"; };
-		C288C9D0161E8D3000DF85CC /* hdfont-full.fnt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "hdfont-full.fnt"; sourceTree = "<group>"; };
-		C288C9D1161E8D3000DF85CC /* hdfont-full.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "hdfont-full.png"; sourceTree = "<group>"; };
 		C2DA46DF161106C5000AEFF3 /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Default@2x.png"; path = "Resources/Default@2x.png"; sourceTree = "<group>"; };
 		C2DA46E316110772000AEFF3 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Default-568h@2x.png"; path = "Resources/Default-568h@2x.png"; sourceTree = "<group>"; };
 		C2F45581161D21960035942A /* game_over-hd.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "game_over-hd.png"; path = "Resources/game_over-hd.png"; sourceTree = "<group>"; };
@@ -468,10 +476,14 @@
 				C2172CF1162BA48C006D6EE4 /* home_button.png */,
 				C28511A416209F5400C59AF9 /* alarm.aif */,
 				C28511A71620A78B00C59AF9 /* game_over.aif */,
-				C288C9CE161E8D3000DF85CC /* hdfont-full-hd.fnt */,
-				C288C9CF161E8D3000DF85CC /* hdfont-full-hd.png */,
-				C288C9D0161E8D3000DF85CC /* hdfont-full.fnt */,
-				C288C9D1161E8D3000DF85CC /* hdfont-full.png */,
+				C2172CFE162BBF99006D6EE4 /* hdfont-full-hd.fnt */,
+				C2172CFF162BBF99006D6EE4 /* hdfont-full-hd.png */,
+				C2172D00162BBF99006D6EE4 /* hdfont-full.fnt */,
+				C2172D01162BBF99006D6EE4 /* hdfont-full.png */,
+				C2172D06162BC262006D6EE4 /* hdfont-full-small-hd.fnt */,
+				C2172D07162BC262006D6EE4 /* hdfont-full-small-hd.png */,
+				C2172D08162BC262006D6EE4 /* hdfont-full-small.fnt */,
+				C2172D09162BC262006D6EE4 /* hdfont-full-small.png */,
 				C288C9AE161E84DB00DF85CC /* hoopy-hd.plist */,
 				C288C9AF161E84DB00DF85CC /* hoopy-hd.png */,
 				C206BB471617A24D0046C4DE /* hoopy.plist */,
@@ -643,10 +655,6 @@
 				C2F4558E161D251A0035942A /* game_over-568h.png in Resources */,
 				C288C9B0161E84DB00DF85CC /* hoopy-hd.plist in Resources */,
 				C288C9B1161E84DB00DF85CC /* hoopy-hd.png in Resources */,
-				C288C9D2161E8D3000DF85CC /* hdfont-full-hd.fnt in Resources */,
-				C288C9D3161E8D3000DF85CC /* hdfont-full-hd.png in Resources */,
-				C288C9D4161E8D3000DF85CC /* hdfont-full.fnt in Resources */,
-				C288C9D5161E8D3000DF85CC /* hdfont-full.png in Resources */,
 				C28511A516209F5400C59AF9 /* alarm.aif in Resources */,
 				C28511A81620A78B00C59AF9 /* game_over.aif in Resources */,
 				C2172CE8162B6515006D6EE4 /* score-back-hd.png in Resources */,
@@ -657,6 +665,14 @@
 				C2172CF3162BA48C006D6EE4 /* home_button_sel.png in Resources */,
 				C2172CF4162BA48C006D6EE4 /* home_button-hd.png in Resources */,
 				C2172CF5162BA48C006D6EE4 /* home_button.png in Resources */,
+				C2172D02162BBF99006D6EE4 /* hdfont-full-hd.fnt in Resources */,
+				C2172D03162BBF99006D6EE4 /* hdfont-full-hd.png in Resources */,
+				C2172D04162BBF99006D6EE4 /* hdfont-full.fnt in Resources */,
+				C2172D05162BBF99006D6EE4 /* hdfont-full.png in Resources */,
+				C2172D0A162BC262006D6EE4 /* hdfont-full-small-hd.fnt in Resources */,
+				C2172D0B162BC262006D6EE4 /* hdfont-full-small-hd.png in Resources */,
+				C2172D0C162BC262006D6EE4 /* hdfont-full-small.fnt in Resources */,
+				C2172D0D162BC262006D6EE4 /* hdfont-full-small.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

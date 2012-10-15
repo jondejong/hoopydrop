@@ -170,6 +170,7 @@ enum {
 +(bool) isRetina;
 +(bool) is16x9;
 
+-(int) scorePosition;
 -(NSArray*) highScores;
 -(void) fireSound:(int) soundTag;
 
