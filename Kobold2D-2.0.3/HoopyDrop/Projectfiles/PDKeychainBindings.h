@@ -17,7 +17,7 @@
 + (PDKeychainBindings *)sharedKeychainBindings;
 
 - (id)objectForKey:(NSString *)defaultName;
-- (void)setObject:(NSString *)value forKey:(NSString *)defaultName;
+- (void)setObject:(id)value forKey:(NSString *)defaultName;
 - (void)setString:(NSString *)value forKey:(NSString *)defaultName;
 - (void)removeObjectForKey:(NSString *)defaultName;
 

@@ -11,15 +11,15 @@
 #import "Box2D.h"
 #import "PhysicsLayer.h"
 #import "CollisionHandler.h"
+#import "HDPersistantData.h"
 
 #ifndef HOOPY_DROP_H
 #define HOOPY_DROP_H
 
-#define HIGH_SCORE_KEYCHAIN_KEY @"hoopyDropAllTimeHighScore"
-#define SOUNDS_ON_KEYCHAIN_KEY @"hoopyDropSoundsOn"
+#define PERSISTANT_DATA_KEYCHAIN_KEY @"HoopyDropPersistantData"
 
 #define DRAW_DEBUG_OUTLINE 0
-#define SECONDS_PER_GAME 60
+#define SECONDS_PER_GAME 60w
 
 #define UPDATE_TIMER_LOOP_SECONDS .1
 
@@ -164,11 +164,13 @@ enum {
 @property (nonatomic, retain) HDTimer* timerLayer;
 @property (nonatomic, retain) HDGamePlayRootScene* gamePlayRootScene;
 @property (nonatomic, retain) HDOrbTimer* orbTimer;
+@property (nonatomic, retain) HDPersistantData* persistantData;
 
 +(GameManager*) sharedInstance;
 +(bool) isRetina;
 +(bool) is16x9;
 
+-(NSArray*) highScores;
 -(void) fireSound:(int) soundTag;
 
 -(void) returnToMenu;
@@ -176,7 +178,7 @@ enum {
 -(void) decrementTargets;
 
 -(uint) allTimeHighScore;
--(void) resetAllTimeHighScore;
+-(void) resetAllTimeHighScores;
 
 -(void) handleTargetAdded;
 

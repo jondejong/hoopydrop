@@ -112,7 +112,7 @@ const float PTM_RATIO = 32.0f;
         
         [[UIApplication sharedApplication] setIdleTimerDisabled:YES];
 	}
-
+    
 	return self;
 }
 
@@ -275,6 +275,7 @@ const float PTM_RATIO = 32.0f;
 
 -(CGPoint) createRandomPoint {
     CGSize screenSize = [CCDirector sharedDirector].winSize;
+
     int x = (arc4random() % ((int)screenSize.width - (int)PTM_RATIO)) + (int)(.5 * PTM_RATIO);
     int y = (arc4random() % ((int)screenSize.height - (int)PTM_RATIO)) + (int)(.5 * PTM_RATIO);
     return CGPointMake(x, y);

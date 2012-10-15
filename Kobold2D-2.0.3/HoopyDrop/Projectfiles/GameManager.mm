@@ -10,7 +10,8 @@
 #import "PhysicsLayer.h"
 #import "TextOverlayLayer.h"
 #import "PDKeychainBindings.h"
-#include "SimpleAudioEngine.h"
+#import "SimpleAudioEngine.h"
+#import "HDPersistantData.h" 
 
 @implementation GameManager {
     
@@ -19,8 +20,8 @@
     uint _yellowTargetPoints;
     uint _greenTargetPoints;
     uint _purpleTargetPoints;
-    uint _allTimeHighScore;
-    bool _soundsOn;
+
+    
 }
 GameManager* _sharedGameManager;
 
@@ -30,6 +31,7 @@ GameManager* _sharedGameManager;
 @synthesize timerLayer;
 @synthesize gamePlayRootScene;
 @synthesize orbTimer;
+@synthesize persistantData;
 
 - (id)init
 {
@@ -37,20 +39,11 @@ GameManager* _sharedGameManager;
     if (self) {
         _sharedGameManager = self;
         _score = 0;
-        NSString * highScoreString = [[PDKeychainBindings sharedKeychainBindings] stringForKey:HIGH_SCORE_KEYCHAIN_KEY];
-        NSString * soundsOn = [[PDKeychainBindings sharedKeychainBindings] stringForKey:SOUNDS_ON_KEYCHAIN_KEY];
         
-        _soundsOn = YES;
-        if(soundsOn) {
-            if(![@"TRUE" isEqualToString:soundsOn]) {
-                _soundsOn = NO;
-            }
-        }
+        NSString* dataString = [[PDKeychainBindings sharedKeychainBindings] objectForKey:PERSISTANT_DATA_KEYCHAIN_KEY];
         
-        _allTimeHighScore = 0;
-        if(highScoreString) {
-            _allTimeHighScore = [highScoreString intValue];
-        }
+        self.persistantData = [self parsePersistantData:dataString];
+
         // Set Up Audio
         [[SimpleAudioEngine sharedEngine] preloadEffect:@"alarm.aif"];
         [[SimpleAudioEngine sharedEngine] preloadEffect:@"game_over.aif"];
@@ -58,10 +51,59 @@ GameManager* _sharedGameManager;
     return self;
 }
 
+-(HDPersistantData*) parsePersistantData: (NSString *) dataString {
+    HDPersistantData* data = [[HDPersistantData alloc] init];
+    CCLOG(@"datastring: %@", dataString);
+    if(dataString) {
+        NSArray* dataArray = [dataString componentsSeparatedByString:@":"];
+        
+        NSString* sounds = [dataArray objectAtIndex:1];
+        if([sounds isEqualToString:@"YES"]) {
+            [data setSoundEffectsOn];
+        } else {
+            [data setSoundEffectsOff];
+        }
+        
+        NSMutableArray* scores = [NSMutableArray arrayWithCapacity:10];
+        
+        for(int i=1; i<11; i++) {
+            NSString* score = [dataArray objectAtIndex:i];
+            
+            CCLOG(@"Object at %i: %@", i, score);
+            
+            [scores addObject:[NSNumber numberWithInt:[score integerValue]] ];
+        }
+        [data setHighScores:scores];
+    }
+    
+    return data;
+}
+
 -(void) returnToMenu {
-    if(_score > _allTimeHighScore) {
-        _allTimeHighScore = _score;
-        [self flushAllTimeHighScore];
+    
+    // TODO: THIS LOGIC NEEDS TO BE OH SO DIFFERENT
+    NSNumber* lowestHighScore = [[persistantData highScores] objectAtIndex:9];
+    
+    if(_score > [lowestHighScore unsignedIntegerValue]) {
+        // Deal with this!!!
+        bool scoreAdded = NO;
+        int index=0;
+
+        NSMutableArray * newScores = [NSMutableArray arrayWithCapacity:10];
+        for(int count=0; count<10; count++) {
+            NSNumber* score = (NSNumber*)[[persistantData highScores] objectAtIndex:index];
+            if(!scoreAdded && _score >= [score unsignedIntegerValue]) {
+                //OK, handle this
+                scoreAdded = YES;
+                [NSNumber numberWithInt:_score];
+                [newScores addObject:[NSNumber numberWithInt:_score]];
+            } else {
+                index++;
+                [newScores addObject: score];
+            }
+        }
+        [persistantData setHighScores:newScores];
+        [self flushPersistantData];
         
     }
     [[HDStartLayer sharedInstance] refreshDisplayWith:YES];
@@ -169,12 +211,17 @@ GameManager* _sharedGameManager;
 }
 
 -(uint) allTimeHighScore {
-    return _allTimeHighScore;
+    NSNumber* score =  (NSNumber*)[[persistantData highScores] objectAtIndex:0];
+    return [score unsignedIntegerValue];
 }
 
--(void) resetAllTimeHighScore {
-    _allTimeHighScore = 0;
-    [self flushAllTimeHighScore];
+-(void) resetAllTimeHighScores {
+    NSMutableArray* highScores = [NSMutableArray arrayWithCapacity:10];
+    for(int i=0; i<10; i++){
+        [highScores addObject:[NSNumber numberWithInt:0]];
+    }
+    [persistantData setHighScores:highScores];
+    [self flushPersistantData];
 }
 
 -(void) addTarget:(CollisionHandler*) handler andBaseSprite: (NSString*)baseSpriteName andTrackedBy: (NSMutableArray*) trackingArray at:(uint) createTime {
@@ -203,8 +250,15 @@ GameManager* _sharedGameManager;
     return _score;
 }
 
--(void) flushAllTimeHighScore  {
-    [[PDKeychainBindings sharedKeychainBindings] setString:[NSString stringWithFormat:@"%i", _score] forKey:HIGH_SCORE_KEYCHAIN_KEY];
+-(void) flushPersistantData  {
+    NSMutableString* dataString = [[NSMutableString alloc] init];
+    [dataString appendFormat:@"%s:", [persistantData isSoundEffectsOn] ? "YES" : "NO" ];
+    
+    for(NSNumber * score in [persistantData highScores]) {
+        [dataString appendFormat:@"%i:", [score integerValue]];
+    }
+    
+    [[PDKeychainBindings sharedKeychainBindings] setObject: dataString forKey:PERSISTANT_DATA_KEYCHAIN_KEY];
     [[HDStartLayer sharedInstance] refreshDisplayWith:NO];
 }
 
@@ -217,7 +271,7 @@ GameManager* _sharedGameManager;
 }
 
 -(void) fireSound:(int)soundTag {
-    if(_soundsOn) {
+    if([persistantData isSoundEffectsOn]) {
         switch (soundTag) {
             case kHDSoundAlarm:
                 [[SimpleAudioEngine sharedEngine] playEffect:@"alarm.aif"];
@@ -230,20 +284,21 @@ GameManager* _sharedGameManager;
     }
 }
 
--(bool)isSoundOn {
-    return _soundsOn;
+-(bool) isSoundOn {
+    return [persistantData isSoundEffectsOn];
 }
 
 -(void) toggleSounds {
-    NSString* soundsOn;
-    if(_soundsOn) {
-        _soundsOn = NO;
-        soundsOn = @"FALSE";
+    if([persistantData isSoundEffectsOn]) {
+        [persistantData setSoundEffectsOff];
     } else {
-        _soundsOn = YES;
-        soundsOn = @"TRUE";
+        [persistantData setSoundEffectsOn];
     }
-    [[PDKeychainBindings sharedKeychainBindings] setString:soundsOn forKey:SOUNDS_ON_KEYCHAIN_KEY];
+    [self flushPersistantData];
+}
+
+-(NSArray*) highScores {
+    return  [persistantData highScores];
 }
 
 @end

@@ -7,12 +7,17 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		C204587316251B13007E6D0C /* HDPersistantData.mm in Sources */ = {isa = PBXBuildFile; fileRef = C204587216251B13007E6D0C /* HDPersistantData.mm */; };
 		C205A12C160E4F7200A4209C /* button-back-hd.png in Resources */ = {isa = PBXBuildFile; fileRef = C205A12A160E4F7200A4209C /* button-back-hd.png */; };
 		C205A12D160E4F7200A4209C /* button-back.png in Resources */ = {isa = PBXBuildFile; fileRef = C205A12B160E4F7200A4209C /* button-back.png */; };
 		C206BB491617A24D0046C4DE /* hoopy.plist in Resources */ = {isa = PBXBuildFile; fileRef = C206BB471617A24D0046C4DE /* hoopy.plist */; };
 		C206BB4A1617A24D0046C4DE /* hoopy.png in Resources */ = {isa = PBXBuildFile; fileRef = C206BB481617A24D0046C4DE /* hoopy.png */; };
 		C206D98816001D3400CAA726 /* TextOverlayLayer.mm in Sources */ = {isa = PBXBuildFile; fileRef = C206D98716001D3400CAA726 /* TextOverlayLayer.mm */; };
 		C206D98E16001D7200CAA726 /* GameManager.mm in Sources */ = {isa = PBXBuildFile; fileRef = C206D98D16001D7200CAA726 /* GameManager.mm */; };
+		C2172CE8162B6515006D6EE4 /* score-back-hd.png in Resources */ = {isa = PBXBuildFile; fileRef = C2172CE6162B6515006D6EE4 /* score-back-hd.png */; };
+		C2172CE9162B6515006D6EE4 /* score-back.png in Resources */ = {isa = PBXBuildFile; fileRef = C2172CE7162B6515006D6EE4 /* score-back.png */; };
+		C2172CEC162B65F5006D6EE4 /* score_sep-hd.png in Resources */ = {isa = PBXBuildFile; fileRef = C2172CEA162B65F5006D6EE4 /* score_sep-hd.png */; };
+		C2172CED162B65F5006D6EE4 /* score_sep.png in Resources */ = {isa = PBXBuildFile; fileRef = C2172CEB162B65F5006D6EE4 /* score_sep.png */; };
 		C220424016113E1200876EDD /* start_screen_bg-hd.png in Resources */ = {isa = PBXBuildFile; fileRef = C220423D16113E1200876EDD /* start_screen_bg-hd.png */; };
 		C220424116113E1200876EDD /* start_screen_bg.png in Resources */ = {isa = PBXBuildFile; fileRef = C220423E16113E1200876EDD /* start_screen_bg.png */; };
 		C220424C161151C700876EDD /* ScreenImage.mm in Sources */ = {isa = PBXBuildFile; fileRef = C220424B161151C700876EDD /* ScreenImage.mm */; };
@@ -113,6 +118,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		C204587116251B13007E6D0C /* HDPersistantData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HDPersistantData.h; path = Projectfiles/HDPersistantData.h; sourceTree = "<group>"; };
+		C204587216251B13007E6D0C /* HDPersistantData.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = HDPersistantData.mm; path = Projectfiles/HDPersistantData.mm; sourceTree = "<group>"; };
 		C205A12A160E4F7200A4209C /* button-back-hd.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "button-back-hd.png"; sourceTree = "<group>"; };
 		C205A12B160E4F7200A4209C /* button-back.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "button-back.png"; sourceTree = "<group>"; };
 		C206BB471617A24D0046C4DE /* hoopy.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = hoopy.plist; sourceTree = "<group>"; };
@@ -121,6 +128,10 @@
 		C206D98716001D3400CAA726 /* TextOverlayLayer.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = TextOverlayLayer.mm; path = Projectfiles/TextOverlayLayer.mm; sourceTree = "<group>"; };
 		C206D98C16001D7200CAA726 /* HoopyDrop.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HoopyDrop.h; sourceTree = "<group>"; };
 		C206D98D16001D7200CAA726 /* GameManager.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = GameManager.mm; sourceTree = "<group>"; };
+		C2172CE6162B6515006D6EE4 /* score-back-hd.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "score-back-hd.png"; path = "Resources/score-back-hd.png"; sourceTree = "<group>"; };
+		C2172CE7162B6515006D6EE4 /* score-back.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "score-back.png"; path = "Resources/score-back.png"; sourceTree = "<group>"; };
+		C2172CEA162B65F5006D6EE4 /* score_sep-hd.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "score_sep-hd.png"; path = "Resources/score_sep-hd.png"; sourceTree = "<group>"; };
+		C2172CEB162B65F5006D6EE4 /* score_sep.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = score_sep.png; path = Resources/score_sep.png; sourceTree = "<group>"; };
 		C220423D16113E1200876EDD /* start_screen_bg-hd.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "start_screen_bg-hd.png"; path = "Resources/start_screen_bg-hd.png"; sourceTree = "<group>"; };
 		C220423E16113E1200876EDD /* start_screen_bg.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = start_screen_bg.png; path = Resources/start_screen_bg.png; sourceTree = "<group>"; };
 		C220424B161151C700876EDD /* ScreenImage.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = ScreenImage.mm; path = Projectfiles/ScreenImage.mm; sourceTree = "<group>"; };
@@ -299,9 +310,12 @@
 			isa = PBXGroup;
 			children = (
 				C24A84601607E42700F769D4 /* PDKeychainBindings.h */,
+				C2204249161151AF00876EDD /* Util */,
 				C24A84611607E42700F769D4 /* PDKeychainBindings.m */,
 				C24A84631607E46200F769D4 /* PDKeychainBindingsController.h */,
 				C24A84641607E46200F769D4 /* PDKeychainBindingsController.m */,
+				C204587116251B13007E6D0C /* HDPersistantData.h */,
+				C204587216251B13007E6D0C /* HDPersistantData.mm */,
 			);
 			name = Keychain;
 			sourceTree = "<group>";
@@ -309,7 +323,6 @@
 		DCC1A0D613A94EC0005BD75D = {
 			isa = PBXGroup;
 			children = (
-				C2204249161151AF00876EDD /* Util */,
 				C24A84581607E3A400F769D4 /* Keychain */,
 				C206D98516001CFF00CAA726 /* DisplayLayers */,
 				DCC1A38C13A94F1A005BD75D /* Projectfiles */,
@@ -348,6 +361,10 @@
 		DCC1A0F813A94ED5005BD75D /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				C2172CE6162B6515006D6EE4 /* score-back-hd.png */,
+				C2172CE7162B6515006D6EE4 /* score-back.png */,
+				C2172CEA162B65F5006D6EE4 /* score_sep-hd.png */,
+				C2172CEB162B65F5006D6EE4 /* score_sep.png */,
 				C2F4558B161D251A0035942A /* game_over-568h-hd.png */,
 				C2F4558C161D251A0035942A /* game_over-568h.png */,
 				C2F45581161D21960035942A /* game_over-hd.png */,
@@ -620,6 +637,10 @@
 				C288C9D5161E8D3000DF85CC /* hdfont-full.png in Resources */,
 				C28511A516209F5400C59AF9 /* alarm.aif in Resources */,
 				C28511A81620A78B00C59AF9 /* game_over.aif in Resources */,
+				C2172CE8162B6515006D6EE4 /* score-back-hd.png in Resources */,
+				C2172CE9162B6515006D6EE4 /* score-back.png in Resources */,
+				C2172CEC162B65F5006D6EE4 /* score_sep-hd.png in Resources */,
+				C2172CED162B65F5006D6EE4 /* score_sep.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -656,6 +677,7 @@
 				C24F50A01612AFD0005435E1 /* HDGamePlayBackground.mm in Sources */,
 				C2F4558A161D22690035942A /* HDGameOverLayer.mm in Sources */,
 				C28511AB1620C1F000C59AF9 /* TouchUtil.mm in Sources */,
+				C204587316251B13007E6D0C /* HDPersistantData.mm in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -695,7 +717,7 @@
 			buildSettings = {
 				CODE_SIGN_IDENTITY = "iPhone Distribution: Jonathan DeJong";
 				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
-				PROVISIONING_PROFILE = "09FA2C97-68BD-45DF-A36A-67431A2A5CB2";
+				PROVISIONING_PROFILE = "A5A29CE1-92BC-4AE6-B623-0959422DBC43";
 			};
 			name = Release;
 		};
@@ -726,7 +748,7 @@
 					"\"$(SRCROOT)/../__Kobold2D__/libs/GoogleAdMobAdsSDK\"",
 				);
 				PRODUCT_NAME = hoopydrop;
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "09FA2C97-68BD-45DF-A36A-67431A2A5CB2";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "A5A29CE1-92BC-4AE6-B623-0959422DBC43";
 				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;

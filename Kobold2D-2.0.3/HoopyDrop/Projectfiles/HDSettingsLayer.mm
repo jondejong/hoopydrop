@@ -83,7 +83,7 @@
     
     if([title isEqualToString:@"OK"])
     {
-        [[GameManager sharedInstance]resetAllTimeHighScore];
+        [[GameManager sharedInstance]resetAllTimeHighScores];
     }
 }
 

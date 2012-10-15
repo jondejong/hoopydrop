@@ -21,7 +21,7 @@
     return [[PDKeychainBindingsController sharedKeychainBindingsController] valueForKeyPath:[NSString stringWithFormat:@"values.%@",defaultName]];
 }
 
-- (void)setObject:(NSString *)value forKey:(NSString *)defaultName {
+- (void)setObject:(id)value forKey:(NSString *)defaultName {
     [[PDKeychainBindingsController sharedKeychainBindingsController] setValue:value forKeyPath:[NSString stringWithFormat:@"values.%@",defaultName]];
 }
 
