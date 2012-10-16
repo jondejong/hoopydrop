@@ -27,7 +27,7 @@
         
         CCMenuItemSprite* goBackMenuItem = [CCMenuItemSprite itemWithNormalSprite:homeButtonSprite selectedSprite:homeButtonSelectedSprite target:self selector:@selector(handleGoBack)];
         
-        goBackMenuItem.position = CGPointMake(20, 0);
+        goBackMenuItem.position = CGPointMake(30, 0);
         CCMenu* resetMenu = [CCMenu menuWithItems:goBackMenuItem, nil];
 
         CCSpriteBatchNode* sepBar = [CCSpriteBatchNode batchNodeWithFile:@"score_sep.png" capacity:11];
@@ -36,7 +36,25 @@
         CCSpriteBatchNode* backBar = [CCSpriteBatchNode batchNodeWithFile:@"score-back.png" capacity:10];
         [self addChild:backBar z:OBJECTS_Z];
         
-        float nextY = size.height/2 + 140;
+        float nextY = size.height/2 + 145;
+        
+        // Add side walls
+        CCSpriteBatchNode* wallBatch = [CCSpriteBatchNode batchNodeWithFile:@"score_wall.png" capacity:2];
+        [self addChild:wallBatch z:OBJECTS_Z];
+
+        CCSprite * leftWall = [CCSprite spriteWithTexture:[wallBatch texture]];
+        CCSprite * rightWall = [CCSprite spriteWithTexture:[wallBatch texture]];
+        
+        leftWall.position = ccp(size.width/2 - 130, nextY);
+        leftWall.anchorPoint = ccp(1, 1);
+        
+        rightWall.position = ccp(size.width/2 + 130, nextY);
+        rightWall.anchorPoint = ccp(0, 1);
+        
+        [wallBatch addChild:leftWall];
+        [wallBatch addChild:rightWall];
+        
+        nextY -= 5;
         
         CCSprite* barSprite = [CCSprite spriteWithTexture:[sepBar texture]];
         barSprite.position = CGPointMake(size.width/2, nextY);
