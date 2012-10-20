@@ -1,5 +1,5 @@
 //
-//  GameManager.h
+//  HoopyDrop.h
 //  HoopyDrop
 //
 //  Created by Jon DeJong on 9/11/12.
@@ -105,6 +105,12 @@ enum {
     kHDSoundGameOver,
 };
 
+@interface RemovableSprite : CCNode
+@property (nonatomic, retain) CCSprite* sprite;
+@property (nonatomic, retain) CCNode* parentNode;
+-(void) remove;
+@end
+
 @interface HDGamePlayBackground : CCLayer @end
 @interface HDSettingsLayer : CCLayer <UIAlertViewDelegate>
 @property (nonatomic, retain) CCMenuItemFont* soundsOnMenuItem;
@@ -184,6 +190,7 @@ enum {
 -(void) handleTargetAdded;
 
 -(void) removeOrbFromGame: (CCSprite*)sprite;
+-(void) removeOrbFromGame: (CCSprite*)sprite withColor: (NSString*) baseSpriteName;
 
 -(void) handlePause;
 -(void) handleUnpause;

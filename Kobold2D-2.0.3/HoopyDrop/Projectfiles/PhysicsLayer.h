@@ -34,6 +34,7 @@ enum
 -(void) handlePause;
 -(void) handleUnpause;
 -(void) removeOrb: (CCSprite*) sprite;
+-(void) removeOrb: (CCSprite*) sprite withColor: (NSString*) baseSpriteName;
 -(void) addTarget:(CollisionHandler*) handler andBaseSprite: (NSString*)baseSpriteName andTrackedBy: (NSMutableArray*) trackingArray at: (uint) createTime;
 
 @end

@@ -79,6 +79,13 @@
     [self markRemoved];
 }
 
+-(void) removeThisTargetWithColor: (NSString*) baseSpriteName
+{
+    [[GameManager sharedInstance] removeOrbFromGame: [self sprite] withColor:baseSpriteName];
+    [[GameManager sharedInstance] markBodyForDeletion: _body];
+    [self markRemoved];
+}
+
 @end
 
 @implementation YellowThingHandler
@@ -87,7 +94,7 @@
     if(![self isRemoved]) {
         [self markRemoved];
         [[GameManager sharedInstance] addToScore:[[GameManager sharedInstance] yellowTargetPoints]];
-        [self removeThisTarget];
+        [self removeMe];
     }
 #if DEBUG
     else {
@@ -96,22 +103,34 @@
     }
 #endif
 }
+
+-(void) removeMe
+{
+    [self removeThisTargetWithColor:@"yellow"];
+}
 @end
 
 @implementation GreenThingHandler
 
 -(void) handleCollision: (b2Body*) body {
     [[GameManager sharedInstance] addToScore:[[GameManager sharedInstance] greenTargetPoints]];
-    [self removeThisTarget];
+    [self removeMe];
 }
-
+-(void) removeMe
+{
+    [self removeThisTargetWithColor:@"green"];
+}
 @end
 
 @implementation PurpleThingHandler
 
 -(void) handleCollision: (b2Body*) body {
     [[GameManager sharedInstance] addToScore:[[GameManager sharedInstance] purpleTargetPoints]];
-    [self removeThisTarget];
+    [self removeMe];
 }
 
+-(void) removeMe
+{
+    [self removeThisTargetWithColor:@"purple"];
+}
 @end

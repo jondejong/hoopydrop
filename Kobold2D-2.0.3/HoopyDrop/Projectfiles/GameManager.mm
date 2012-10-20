@@ -118,9 +118,16 @@ GameManager* _sharedGameManager;
     return [timerLayer remainingTime];
 }
 
--(void) removeOrbFromGame: (CCSprite*)sprite {
+-(void) removeOrbFromGame:(CCSprite *)sprite
+{
     [orbTimer handleOrbCollected];
     [physicsLayer removeOrb: sprite];
+}
+
+-(void) removeOrbFromGame: (CCSprite*)sprite withColor: (NSString*) baseSpriteName
+{
+    [orbTimer handleOrbCollected];
+    [physicsLayer removeOrb: sprite withColor:baseSpriteName];
 }
 
 -(void) markBodyForDeletion: (b2Body*) body {

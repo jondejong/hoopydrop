@@ -342,12 +342,57 @@ const float PTM_RATIO = 32.0f;
     [self resumeSchedulerAndActions];
 }
 
--(void) removeOrb: (CCSprite*) sprite {
+-(void) removeOrb: (CCSprite*) sprite
+{
     CCSpriteBatchNode* orbSprite = (CCSpriteBatchNode*)[self getChildByTag:kOrbNode];
     [orbSprite removeChild:sprite cleanup:YES];
     [[GameManager sharedInstance] decrementTargets];
 }
 
+-(void) removeOrb: (CCSprite*) sprite withColor: (NSString*) baseSpriteName
+{
+    CCSpriteBatchNode* orbSprite = (CCSpriteBatchNode*)[self getChildByTag:kOrbNode];
+    
+    CGPoint pos = sprite.position;
+    
+    [self removeOrb:sprite];
+    
+    NSMutableArray *animFrames = [NSMutableArray array];
+    
+    [animFrames addObject: [[CCSpriteFrameCache sharedSpriteFrameCache] spriteFrameByName:[NSString stringWithFormat:@"%@4.png", baseSpriteName]]];
+    [animFrames addObject: [[CCSpriteFrameCache sharedSpriteFrameCache] spriteFrameByName:[NSString stringWithFormat:@"%@5.png", baseSpriteName]]];
+    [animFrames addObject: [[CCSpriteFrameCache sharedSpriteFrameCache] spriteFrameByName:[NSString stringWithFormat:@"%@6.png", baseSpriteName]]];
+    [animFrames addObject: [[CCSpriteFrameCache sharedSpriteFrameCache] spriteFrameByName:[NSString stringWithFormat:@"%@7.png", baseSpriteName]]];
+    [animFrames addObject: [[CCSpriteFrameCache sharedSpriteFrameCache] spriteFrameByName:[NSString stringWithFormat:@"%@8.png", baseSpriteName]]];
+    [animFrames addObject: [[CCSpriteFrameCache sharedSpriteFrameCache] spriteFrameByName:[NSString stringWithFormat:@"%@9.png", baseSpriteName]]];
+    
+    CCAnimation *animation = [CCAnimation animationWithSpriteFrames:animFrames delay:0.03f];
+    
+    CCSprite *explodeSprite = [CCSprite spriteWithSpriteFrameName:[NSString stringWithFormat:@"%@4.png", baseSpriteName]];
+    
+    explodeSprite.position = pos;
+    
+    [orbSprite addChild:explodeSprite];
+    
+    RemovableSprite* removeableSprite = [[RemovableSprite alloc] init];
+    removeableSprite.sprite = explodeSprite;
+    removeableSprite.parentNode = orbSprite;
+    
+    [self addChild:removeableSprite];
+    
+    CCCallFunc* doneHandler = [CCCallFunc actionWithTarget:removeableSprite selector:@selector(remove)];
+    
+//    CCAnimation* animation = [CCAnimate actionWithAnimation:animation];
+    
+    [explodeSprite runAction:[CCSequence actions: [CCAnimate actionWithAnimation:animation], doneHandler, nil]];
+    
+}
+
+-(void) handleExplodeOver: (CCSprite*) sprite {
+    CCSpriteBatchNode* orbSprite = (CCSpriteBatchNode*)[self getChildByTag:kOrbNode];
+    
+    [orbSprite removeChild:sprite cleanup:YES];
+}
 
 - (void)dealloc
 {

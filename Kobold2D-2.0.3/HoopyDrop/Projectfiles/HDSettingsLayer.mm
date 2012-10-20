@@ -8,7 +8,8 @@
 
 #import "HoopyDrop.h"
 
-@implementation HDSettingsLayer {
+@implementation HDSettingsLayer
+{
     @private
     CCMenuItemFont* _goBackMenuItem;
     CCMenuItemFont* _resetHighScoreMenuItem;
@@ -28,7 +29,8 @@
     return self;
 }
 
--(void) createMenu {
+-(void) createMenu
+{
     CGSize size = [[CCDirector sharedDirector] winSize];
     
     _resetHighScoreMenuItem = [CCMenuItemFont itemWithString:@"Reset High Scores" target:self selector:@selector(handleHighScoreReset)];
@@ -57,23 +59,26 @@
     [self addChild:resetMenu z:OBJECTS_Z];
 }
 
--(void) toggleSounds {
+-(void) toggleSounds
+{
     [[GameManager sharedInstance] toggleSounds];
     [self removeChild:resetMenu cleanup:YES];
     [self createMenu];
     
 }
 
--(void) handleGoBack {
+-(void) handleGoBack
+{
     [[CCDirector sharedDirector] popScene];
 }
 
--(void)handleHighScoreReset {
+-(void)handleHighScoreReset
+{
     UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Are you sure?"
                                                     message:@"This will set your all time high score back to ZERO!!"
                                                    delegate:self
-                                          cancelButtonTitle:@"OK"
-                                          otherButtonTitles:@"NO!", nil];
+                                          cancelButtonTitle:@"NO!"
+                                          otherButtonTitles:@"OK", nil];
     [alert show];
 }
 

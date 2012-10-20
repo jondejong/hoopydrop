@@ -20,6 +20,7 @@
 -(bool) isRemoved;
 -(void) markRemoved;
 -(void) removeThisTarget;
+-(void) removeThisTargetWithColor: (NSString*) baseSpriteName;
 -(int) removeTime;
 
 @end
