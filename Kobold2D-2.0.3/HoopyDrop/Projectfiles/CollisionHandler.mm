@@ -18,7 +18,7 @@
     int _createTime;
     b2Body* _body;
     int _removeTime;
-    
+    int _type;
 }
 
 - (id)init
@@ -27,8 +27,13 @@
     if (self) {
         _removed = false;
         _removeTime = 0;
+        _type = -1;
     }
     return self;
+}
+
+-(void) setType: (int)type {
+    _type = type;
 }
 
 -(void) handleCollision: (b2Body*) body {

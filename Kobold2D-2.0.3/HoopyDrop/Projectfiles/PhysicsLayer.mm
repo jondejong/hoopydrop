@@ -26,13 +26,14 @@ const float PTM_RATIO = 32.0f;
 
 @implementation PhysicsLayer {
     @private
-    NSMutableArray* userDataReferences;
+    NSMutableArray* _userDataReferences;
     
     int _hoopyExpression;
     int _lastExpressionChangeGameTime;
     
     CollisionHandler* _hoopyHandler;
     CollisionHandler* _bombIconHandler;
+
 }
 
 @synthesize deletableBodies;
@@ -47,7 +48,7 @@ const float PTM_RATIO = 32.0f;
         _hoopyExpression = kHoopyNormalSprite;
         _lastExpressionChangeGameTime = 0;
         
-        userDataReferences = [NSMutableArray arrayWithCapacity: 10];
+        _userDataReferences = [NSMutableArray arrayWithCapacity: 10];
         
         self.deletableBodies = [NSMutableArray arrayWithCapacity:10];
 
@@ -96,8 +97,11 @@ const float PTM_RATIO = 32.0f;
         // Hoopy Himself
         [[CCSpriteFrameCache sharedSpriteFrameCache] addSpriteFramesWithFile:@"hoopy.plist"];
         CCSpriteBatchNode* hoopy = [CCSpriteBatchNode batchNodeWithFile:@"hoopy.png"];
-
-		[self addChild:hoopy z:0 tag:kTagBatchNode];
+        
+        [self addChild:hoopy z:0 tag:kTagBatchNode];
+        
+        CCSpriteBatchNode* bombBatch = [CCSpriteBatchNode batchNodeWithFile:@"bomb_icon.png"];
+        [self addChild:bombBatch z:0 tag:kBombTargetBatchNode];
 
 		// Orbs
         [[CCSpriteFrameCache sharedSpriteFrameCache] addSpriteFramesWithFile:@"orbs.plist"];
@@ -200,6 +204,7 @@ const float PTM_RATIO = 32.0f;
 	// assign the sprite as userdata so it's easy to get to the sprite when working with the body
     CCSprite* sprite = [self addRandomSpriteAt:pos];
     _hoopyHandler = [[CollisionHandler alloc] init];
+    [_hoopyHandler setType:1];
     [_hoopyHandler setSprite:sprite];
 	bodyDef.userData = (__bridge void*)_hoopyHandler;
 //    [userDataReferences addObject:_hoopyHandler];
@@ -336,10 +341,26 @@ const float PTM_RATIO = 32.0f;
 
 -(void) handlePause {
     [self pauseSchedulerAndActions];
+    
+    CCNode* bombNode = [self getChildByTag:kBombTargetBatchNode];
+    
+    if(bombNode) {
+        for(CCNode* child in [bombNode children]) {
+            [child pauseSchedulerAndActions];
+        }
+    }
+
 }
 
 -(void) handleUnpause {
     [self resumeSchedulerAndActions];
+    CCNode* bombNode = [self getChildByTag:kBombTargetBatchNode];
+    
+    if(bombNode) {
+        for(CCNode* child in [bombNode children]) {
+            [child resumeSchedulerAndActions];
+        }
+    }
 }
 
 -(void) removeOrb: (CCSprite*) sprite
@@ -388,9 +409,9 @@ const float PTM_RATIO = 32.0f;
     
 }
 
--(void) handleExplodeOver: (CCSprite*) sprite {
+-(void) handleExplodeOver: (CCSprite*) sprite
+{
     CCSpriteBatchNode* orbSprite = (CCSpriteBatchNode*)[self getChildByTag:kOrbNode];
-    
     [orbSprite removeChild:sprite cleanup:YES];
 }
 
@@ -446,6 +467,7 @@ const float PTM_RATIO = 32.0f;
     CCSprite* button = [CCSprite spriteWithFile:@"bomb_button.png"];
     button.anchorPoint = ccp(.5, .35);
     button.position = ccp(275, 50);
+
     [self addChild:button z:OVERLAY_Z - 1 tag:kBombButtonSprite];
 }
 
@@ -461,18 +483,22 @@ const float PTM_RATIO = 32.0f;
 
 -(void) removeBombTarget
 {
-//    world->DestroyBody([_bombIconHandler body]);
-    [self removeChild:[_bombIconHandler sprite] cleanup:YES];
+    [[self getChildByTag:kBombTargetBatchNode] removeAllChildrenWithCleanup:YES];
 }
 
 -(void) addBombTargetWithTime: (uint) createTime
 {    
     CGPoint pos = [self createRandomPoint];
-    CCSprite* bomb = [CCSprite spriteWithFile:@"bomb_icon.png"];
+    
+    CCSpriteBatchNode* batchNode = (CCSpriteBatchNode*)[self getChildByTag:kBombTargetBatchNode];
+    CCSprite* bomb = [CCSprite spriteWithTexture:[batchNode texture]];
+    
     bomb.anchorPoint = ccp(.5, .35);
     bomb.position = pos;
+    [bomb runAction:[CCRepeatForever actionWithAction:[CCRotateTo actionWithDuration:1 angle:720]]];
+    [batchNode addChild:bomb z:OBJECTS_Z];
     
-    // Create a body definition and set it to be a dynamic body
+    // Create a body definition and set it to be a static body
 	b2BodyDef bodyDef;
     bodyDef.type = b2_staticBody;
 	
@@ -480,19 +506,19 @@ const float PTM_RATIO = 32.0f;
 	bodyDef.position = [self toMeters:pos];
     
     _bombIconHandler = [[BombIconHandler alloc] init];
-    [_bombIconHandler setSprite:bomb];
-    
+
 	bodyDef.userData = (__bridge void*)_bombIconHandler;
-    
     b2Body* body = world->CreateBody(&bodyDef);
+    
     [_bombIconHandler setBody:body];
     [_bombIconHandler setCreateTime:createTime];
+    [_bombIconHandler setType:2];
     
-    // Define another box shape for our dynamic body.
+    // Define another ball shape for our static body.
     b2CircleShape ballShape;
     ballShape.m_radius = .5;
 	
-    // Define the dynamic body fixture.
+    // Define the static body fixture.
     b2FixtureDef fixtureDef;
     fixtureDef.shape = &ballShape;
     fixtureDef.density = 1.0f;
@@ -502,7 +528,6 @@ const float PTM_RATIO = 32.0f;
     
     body->CreateFixture(&fixtureDef);
     
-    [self addChild:bomb z:OBJECTS_Z];
 }
 
 #if DEBUG

@@ -20,6 +20,7 @@ enum
     kHoopyFrustratedSprite,
     kHoopyExcitedSprite,
     kBombButtonSprite,
+    kBombTargetBatchNode,
 };
 
 @interface PhysicsLayer : CCScene

@@ -18,7 +18,7 @@
 
 #define PERSISTANT_DATA_KEYCHAIN_KEY @"HoopyDropPersistantData"
 
-#define DRAW_DEBUG_OUTLINE 1
+#define DRAW_DEBUG_OUTLINE 0
 
 #define SECONDS_PER_GAME 60
 

@@ -22,6 +22,7 @@
 -(void) removeThisTarget;
 -(void) removeThisTargetWithColor: (NSString*) baseSpriteName;
 -(int) removeTime;
+-(void) setType: (int)type;
 
 @end
 

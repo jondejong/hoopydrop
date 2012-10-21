@@ -11,16 +11,18 @@
 
 @implementation HDTimer {
     @private
-    int countTime;
-    float lastUpdateTime;
+    int _countTime;
+    float _lastUpdateTime;
+    bool _bombTargetAdded;
 }
 
 - (id)init
 {
     self = [super init];
     if (self) {
-        countTime = SECONDS_PER_GAME;
-        lastUpdateTime = CACurrentMediaTime();        
+        _countTime = SECONDS_PER_GAME;
+        _lastUpdateTime = CACurrentMediaTime();
+        _bombTargetAdded = NO;
 
     }
     return self;
@@ -35,26 +37,31 @@
 }
 
 -(void)unpause {
-    lastUpdateTime = CACurrentMediaTime();
+    _lastUpdateTime = CACurrentMediaTime();
     [self resumeSchedulerAndActions];
 }
 
 -(int)remainingTime {
-    return countTime;
+    return _countTime;
 }
 
 -(void) tick: (ccTime) dt
 {	
-	if (CACurrentMediaTime() - lastUpdateTime >= 1) {
-		countTime--;
-		[[GameManager sharedInstance] updateTimer:countTime];
+	if (CACurrentMediaTime() - _lastUpdateTime >= 1) {
+		_countTime--;
+		[[GameManager sharedInstance] updateTimer:_countTime];
 	}
     
-    if(countTime > 0 && countTime <= 10) {
+    if(_countTime <= 58 && !_bombTargetAdded) {
+        _bombTargetAdded = YES;
+        [[GameManager sharedInstance] addBombTargetWithTime:_countTime];
+    }
+    
+    if(_countTime > 0 && _countTime <= 10) {
         [[GameManager sharedInstance] fireSound:kHDSoundAlarm];
     }
 	
-	if (countTime == 0) {
+	if (_countTime == 0) {
         [[GameManager sharedInstance] fireSound:kHDSoundGameOver];
         [self unschedule: @selector(tick:)];
         [[GameManager sharedInstance] handleEnd];

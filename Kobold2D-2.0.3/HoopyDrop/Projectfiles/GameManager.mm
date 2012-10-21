@@ -235,8 +235,6 @@ GameManager* _sharedGameManager;
     [[CCDirector sharedDirector] pushScene: gamePlayRootScene];
     [orbTimer start];
     [timerLayer start];
-    
-    [self addBombTargetWithTime:0];
 
 }
 

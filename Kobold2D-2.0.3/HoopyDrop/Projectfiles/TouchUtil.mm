@@ -24,10 +24,12 @@
             {
                 CGSize size = [[CCDirector sharedDirector] winSize];
                 CGPoint loc = [touch location];
-                float maxX = (size.height - SCREEN_BUFFER_PERCENTAGE * size.height);
-                float minX = SCREEN_BUFFER_PERCENTAGE * size.height;
-                float maxY = (size.width - SCREEN_BUFFER_PERCENTAGE * size.width);
-                float minY = SCREEN_BUFFER_PERCENTAGE * size.width;
+                float maxX = (size.width - SCREEN_BUFFER_PERCENTAGE * size.width);
+                float minX = SCREEN_BUFFER_PERCENTAGE * size.width;
+                float maxY = (size.height - SCREEN_BUFFER_PERCENTAGE * size.height);
+                float minY = SCREEN_BUFFER_PERCENTAGE * size.height;
+                
+                CCLOG(@"Looking for touches from (%f, %f) to (%f, %f)", minX, minY, maxX, maxY);
                 
                 if(loc.x >= minX && loc.x <= maxX && loc.y >= minY && loc.y <= maxY)
                 {
