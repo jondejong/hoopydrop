@@ -88,9 +88,20 @@
 
 @end
 
+@implementation BombIconHandler
+
+-(void) handleCollision: (b2Body*) body
+{
+    [[GameManager sharedInstance] markBodyForDeletion:[self body]];
+    [[GameManager sharedInstance] handleBombTargetHit];
+}
+
+@end
+
 @implementation YellowThingHandler
 
--(void) handleCollision: (b2Body*) body {
+-(void) handleCollision: (b2Body*) body
+{
     if(![self isRemoved]) {
         [self markRemoved];
         [[GameManager sharedInstance] addToScore:[[GameManager sharedInstance] yellowTargetPoints]];

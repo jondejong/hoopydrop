@@ -62,6 +62,17 @@ GameManager* _sharedGameManager;
     [pauseLayer addBombButton];
 }
 
+-(void) addBombTargetWithTime: (uint) createTime
+{
+    [physicsLayer addBombTargetWithTime:0];
+}
+
+-(void) handleBombTargetHit
+{
+    [physicsLayer removeBombTarget];
+    [self addBombButton];
+}
+
 -(void) explodeBomb
 {
     if(!_exploded)
@@ -225,7 +236,7 @@ GameManager* _sharedGameManager;
     [orbTimer start];
     [timerLayer start];
     
-    [self addBombButton];
+    [self addBombTargetWithTime:0];
 
 }
 

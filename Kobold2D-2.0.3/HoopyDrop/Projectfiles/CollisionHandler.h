@@ -29,3 +29,5 @@
 @interface GreenThingHandler : CollisionHandler @end
 @interface PurpleThingHandler : CollisionHandler @end
 
+@interface BombIconHandler : CollisionHandler @end
+

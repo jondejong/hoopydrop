@@ -32,6 +32,7 @@ const float PTM_RATIO = 32.0f;
     int _lastExpressionChangeGameTime;
     
     CollisionHandler* _hoopyHandler;
+    CollisionHandler* _bombIconHandler;
 }
 
 @synthesize deletableBodies;
@@ -456,6 +457,52 @@ const float PTM_RATIO = 32.0f;
 -(CCNode*) bombButtonNode
 {
     return [self getChildByTag:kBombButtonSprite];
+}
+
+-(void) removeBombTarget
+{
+//    world->DestroyBody([_bombIconHandler body]);
+    [self removeChild:[_bombIconHandler sprite] cleanup:YES];
+}
+
+-(void) addBombTargetWithTime: (uint) createTime
+{    
+    CGPoint pos = [self createRandomPoint];
+    CCSprite* bomb = [CCSprite spriteWithFile:@"bomb_icon.png"];
+    bomb.anchorPoint = ccp(.5, .35);
+    bomb.position = pos;
+    
+    // Create a body definition and set it to be a dynamic body
+	b2BodyDef bodyDef;
+    bodyDef.type = b2_staticBody;
+	
+	// position must be converted to meters
+	bodyDef.position = [self toMeters:pos];
+    
+    _bombIconHandler = [[BombIconHandler alloc] init];
+    [_bombIconHandler setSprite:bomb];
+    
+	bodyDef.userData = (__bridge void*)_bombIconHandler;
+    
+    b2Body* body = world->CreateBody(&bodyDef);
+    [_bombIconHandler setBody:body];
+    [_bombIconHandler setCreateTime:createTime];
+    
+    // Define another box shape for our dynamic body.
+    b2CircleShape ballShape;
+    ballShape.m_radius = .5;
+	
+    // Define the dynamic body fixture.
+    b2FixtureDef fixtureDef;
+    fixtureDef.shape = &ballShape;
+    fixtureDef.density = 1.0f;
+    fixtureDef.friction = 0.3f;
+    fixtureDef.restitution = 0.7f;
+    fixtureDef.isSensor = true;
+    
+    body->CreateFixture(&fixtureDef);
+    
+    [self addChild:bomb z:OBJECTS_Z];
 }
 
 #if DEBUG

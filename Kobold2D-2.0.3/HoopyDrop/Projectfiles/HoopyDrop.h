@@ -18,7 +18,8 @@
 
 #define PERSISTANT_DATA_KEYCHAIN_KEY @"HoopyDropPersistantData"
 
-#define DRAW_DEBUG_OUTLINE 0
+#define DRAW_DEBUG_OUTLINE 1
+
 #define SECONDS_PER_GAME 60
 
 #define UPDATE_TIMER_LOOP_SECONDS .1
@@ -178,6 +179,8 @@ enum {
 +(bool) isRetina;
 +(bool) is16x9;
 
+-(void) addBombTargetWithTime: (uint) createTime;
+-(void) handleBombTargetHit;
 -(void) explodeBomb;
 -(void) addBombButton;
 -(CCNode*) bombButtonNode;

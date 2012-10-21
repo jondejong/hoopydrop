@@ -31,6 +31,8 @@ enum
 
 @property (nonatomic, retain) NSMutableArray* deletableBodies;
 
+-(void) removeBombTarget;
+-(void) addBombTargetWithTime: (uint) createTime;
 -(CCNode*) bombButtonNode;
 -(void) addBombButton;
 -(void) removeBombButton;
