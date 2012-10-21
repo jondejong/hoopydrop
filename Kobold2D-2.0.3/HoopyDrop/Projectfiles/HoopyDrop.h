@@ -143,6 +143,8 @@ enum {
 @interface BackgroundLayer : CCLayer @end
 @interface PauseLayer : CCLayer
 -(void) removeTouchResponse;
+-(void) addBombButton;
+-(void) removeBombButton;
 @end
 
 @interface HDGamePlayRootScene : CCScene @end
@@ -175,6 +177,10 @@ enum {
 +(GameManager*) sharedInstance;
 +(bool) isRetina;
 +(bool) is16x9;
+
+-(void) explodeBomb;
+-(void) addBombButton;
+-(CCNode*) bombButtonNode;
 
 -(int) scorePosition;
 -(NSArray*) highScores;

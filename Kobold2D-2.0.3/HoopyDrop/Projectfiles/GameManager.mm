@@ -20,7 +20,7 @@
     uint _yellowTargetPoints;
     uint _greenTargetPoints;
     uint _purpleTargetPoints;
-
+    bool _exploded;
     
 }
 GameManager* _sharedGameManager;
@@ -39,6 +39,7 @@ GameManager* _sharedGameManager;
     if (self) {
         _sharedGameManager = self;
         _score = 0;
+        _exploded = NO;
         
         NSString* dataString = [[PDKeychainBindings sharedKeychainBindings] objectForKey:PERSISTANT_DATA_KEYCHAIN_KEY];
         
@@ -49,6 +50,32 @@ GameManager* _sharedGameManager;
         [[SimpleAudioEngine sharedEngine] preloadEffect:@"game_over.aif"];
     }
     return self;
+}
+
+-(CCNode*) bombButtonNode {
+    return [physicsLayer bombButtonNode];
+}
+
+-(void) addBombButton
+{
+    [physicsLayer addBombButton];
+    [pauseLayer addBombButton];
+}
+
+-(void) explodeBomb
+{
+    if(!_exploded)
+    {
+        _exploded = YES;
+        [physicsLayer removeBombButton];
+        for(CollisionHandler* handler in[orbTimer existingOrbs])
+        {
+            if(![handler isRemoved])
+            {
+                [handler handleCollision:nil];
+            }
+        }
+    }
 }
 
 -(HDPersistantData*) parsePersistantData: (NSString *) dataString {
@@ -81,11 +108,10 @@ GameManager* _sharedGameManager;
 
 -(void) returnToMenu {
     
-    // TODO: THIS LOGIC NEEDS TO BE OH SO DIFFERENT
     NSNumber* lowestHighScore = [[persistantData highScores] objectAtIndex:9];
     
     if(_score > [lowestHighScore unsignedIntegerValue]) {
-        // Deal with this!!!
+
         bool scoreAdded = NO;
         int index=0;
 
@@ -175,6 +201,7 @@ GameManager* _sharedGameManager;
 -(void) startGame {
     
     _score = 0;
+    _exploded = false;
     
     self.gamePlayRootScene = [HDGamePlayRootScene node];
     
@@ -197,6 +224,8 @@ GameManager* _sharedGameManager;
     [[CCDirector sharedDirector] pushScene: gamePlayRootScene];
     [orbTimer start];
     [timerLayer start];
+    
+    [self addBombButton];
 
 }
 

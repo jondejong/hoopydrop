@@ -21,11 +21,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "HoopyDrop/Projectfiles/GameManager.mm"
-         timestampString = "372450579.031549"
+         timestampString = "372470818.253708"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "190"
-         endingLineNumber = "190"
+         startingLineNumber = "217"
+         endingLineNumber = "217"
          landmarkName = "-startGame"
          landmarkType = "5">
       </FileBreakpoint>
@@ -71,7 +71,7 @@
    </FileBreakpoints>
    <ExceptionBreakpoints>
       <ExceptionBreakpoint
-         shouldBeEnabled = "Yes"
+         shouldBeEnabled = "No"
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          scope = "0"

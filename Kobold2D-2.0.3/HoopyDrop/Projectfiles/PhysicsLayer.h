@@ -19,6 +19,7 @@ enum
     kHoopyNormalSprite,
     kHoopyFrustratedSprite,
     kHoopyExcitedSprite,
+    kBombButtonSprite,
 };
 
 @interface PhysicsLayer : CCScene
@@ -30,7 +31,9 @@ enum
 
 @property (nonatomic, retain) NSMutableArray* deletableBodies;
 
-
+-(CCNode*) bombButtonNode;
+-(void) addBombButton;
+-(void) removeBombButton;
 -(void) handlePause;
 -(void) handleUnpause;
 -(void) removeOrb: (CCSprite*) sprite;

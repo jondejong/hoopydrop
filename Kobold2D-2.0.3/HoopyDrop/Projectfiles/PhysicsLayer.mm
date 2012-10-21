@@ -91,8 +91,7 @@ const float PTM_RATIO = 32.0f;
 		screenBorderShape.Set(upperLeftCorner, lowerLeftCorner);
 		screenBorderBody->CreateFixture(&screenBorderShape, 0);
 		
-//		CCSpriteBatchNode* batch = [CCSpriteBatchNode batchNodeWithFile:@"goodball.png" capacity:1];
-//        CCSpriteBatchNode* hoopy = [CCSpriteBatchNode batchNodeWithFile:@"hoopy.plist" capacity:1];
+
         // Hoopy Himself
         [[CCSpriteFrameCache sharedSpriteFrameCache] addSpriteFramesWithFile:@"hoopy.plist"];
         CCSpriteBatchNode* hoopy = [CCSpriteBatchNode batchNodeWithFile:@"hoopy.png"];
@@ -111,7 +110,7 @@ const float PTM_RATIO = 32.0f;
 		[KKInput sharedInput].accelerometerActive = YES;
         
         [[UIApplication sharedApplication] setIdleTimerDisabled:YES];
-	}
+    }
     
 	return self;
 }
@@ -411,11 +410,10 @@ const float PTM_RATIO = 32.0f;
 
 }
 
--(void) swapSprite {
+-(void) swapSprite
+{
     int freq = [[GameManager sharedInstance] orbCollectionFrequency];
-    
-//    CCLOG(@"Frequency: %i", freq);
-    
+        
     if([[GameManager sharedInstance] currentGameTime] - _lastExpressionChangeGameTime >= MIN_EXPRESSION_TIME) {
     
         if((freq >= NORMAL_RANGE_LOW && freq < NORMAL_RANGE_HIGH) && kHoopyNormalSprite != _hoopyExpression) {
@@ -429,7 +427,8 @@ const float PTM_RATIO = 32.0f;
     
 }
 
--(void) changeHoopyTo:(NSString*) frameName denotedBy: (NSInteger) expressionConstant {
+-(void) changeHoopyTo:(NSString*) frameName denotedBy: (NSInteger) expressionConstant
+{
     CCSprite* oldExpression = [_hoopyHandler sprite];
     CCSpriteBatchNode* batch = (CCSpriteBatchNode*)[self getChildByTag:kTagBatchNode];
     [batch removeChild:oldExpression cleanup:YES];
@@ -441,7 +440,23 @@ const float PTM_RATIO = 32.0f;
     _lastExpressionChangeGameTime = [[GameManager sharedInstance] currentGameTime];
 }
 
+-(void) addBombButton
+{
+    CCSprite* button = [CCSprite spriteWithFile:@"bomb_button.png"];
+    button.anchorPoint = ccp(.5, .35);
+    button.position = ccp(275, 50);
+    [self addChild:button z:OVERLAY_Z - 1 tag:kBombButtonSprite];
+}
 
+-(void) removeBombButton
+{
+    [self removeChildByTag:kBombButtonSprite cleanup:YES];
+}
+
+-(CCNode*) bombButtonNode
+{
+    return [self getChildByTag:kBombButtonSprite];
+}
 
 #if DEBUG
 -(void) draw

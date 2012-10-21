@@ -17,6 +17,7 @@
     CCSprite* faderOverlay;
     CCMenu* menu;
     CCLabelTTF *pausedText;
+    bool bombButtonAdded;
 }
 
 - (id)init
@@ -39,6 +40,8 @@
         
         menu = [CCMenu menuWithItems:startButton, nil];
         menu.position = ccp(size.width/2.0, size.height/2.0);
+        
+        bombButtonAdded = NO;
         
         [self setIsTouchEnabled:YES];
         
@@ -71,10 +74,32 @@
     [self setIsTouchEnabled: NO];
 }
 
+-(void) addBombButton;
+{
+    bombButtonAdded = YES;
+}
+
+-(void) removeBombButton
+{
+    bombButtonAdded = NO;
+}
+
 -(void) update:(ccTime)delta
 {
     if([self isTouchEnabled]) {
-        if([TouchUtil wasIntentiallyTouched]) {
+        
+        bool bombButtonPressed = NO;
+        if(bombButtonAdded) {
+            // Check to see if the button was pressed
+             KKInput* input = [KKInput sharedInput];
+            if ([input isAnyTouchOnNode:[[GameManager sharedInstance]bombButtonNode] touchPhase:KKTouchPhaseEnded])
+            {
+                [[GameManager sharedInstance] explodeBomb];
+                bombButtonPressed = YES;
+            }
+        }
+        
+        if(!bombButtonPressed && [TouchUtil wasIntentiallyTouched]) {
             if(paused) {
                 [self handleUnpase];
                 
