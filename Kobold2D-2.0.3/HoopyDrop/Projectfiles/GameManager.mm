@@ -79,7 +79,7 @@ GameManager* _sharedGameManager;
 
 -(void) handleBombTargetHit
 {
-//    [physicsLayer removeBombTarget];
+    [physicsLayer explodeBombTarget];
     [self addBombButton];
 }
 

@@ -32,6 +32,7 @@ enum
 
 @property (nonatomic, retain) NSMutableArray* deletableBodies;
 
+-(void) explodeBombTarget;
 -(void) removeBombTarget;
 -(void) removeBombTargetSprite;
 -(void) addBombTargetWithTime: (uint) createTime;

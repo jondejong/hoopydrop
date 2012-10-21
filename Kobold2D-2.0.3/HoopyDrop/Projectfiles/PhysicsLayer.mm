@@ -34,6 +34,7 @@ const float PTM_RATIO = 32.0f;
     CollisionHandler* _hoopyHandler;
     CollisionHandler* _bombIconHandler;
 
+    CGPoint _bombTargetPoint;
 }
 
 @synthesize deletableBodies;
@@ -51,6 +52,8 @@ const float PTM_RATIO = 32.0f;
         _userDataReferences = [NSMutableArray arrayWithCapacity: 10];
         
         self.deletableBodies = [NSMutableArray arrayWithCapacity:10];
+        
+        _bombTargetPoint = ccp(0,0);
 
 		glClearColor(0.1f, 0.0f, 0.2f, 1.0f);
 		
@@ -403,8 +406,6 @@ const float PTM_RATIO = 32.0f;
     
     CCCallFunc* doneHandler = [CCCallFunc actionWithTarget:removeableSprite selector:@selector(remove)];
     
-//    CCAnimation* animation = [CCAnimate actionWithAnimation:animation];
-    
     [explodeSprite runAction:[CCSequence actions: [CCAnimate actionWithAnimation:animation], doneHandler, nil]];
     
 }
@@ -491,15 +492,45 @@ const float PTM_RATIO = 32.0f;
     [[self getChildByTag:kBombTargetBatchNode] removeAllChildrenWithCleanup:YES];
 }
 
+-(void) explodeBombTarget
+{
+    NSMutableArray *animFrames = [NSMutableArray array];
+    
+    [animFrames addObject: [[CCSpriteFrameCache sharedSpriteFrameCache] spriteFrameByName:@"red1.png"]];
+    [animFrames addObject: [[CCSpriteFrameCache sharedSpriteFrameCache] spriteFrameByName:@"red2.png"]];
+    [animFrames addObject: [[CCSpriteFrameCache sharedSpriteFrameCache] spriteFrameByName:@"red3.png"]];
+    [animFrames addObject: [[CCSpriteFrameCache sharedSpriteFrameCache] spriteFrameByName:@"red4.png"]];
+    [animFrames addObject: [[CCSpriteFrameCache sharedSpriteFrameCache] spriteFrameByName:@"red5.png"]];
+    
+    CCAnimation *animation = [CCAnimation animationWithSpriteFrames:animFrames delay:0.03f];
+    
+    CCSprite *explodeSprite = [CCSprite spriteWithSpriteFrameName:@"red1.png"];
+    
+    explodeSprite.position = _bombTargetPoint;
+    
+    CCSpriteBatchNode* orbSprite = (CCSpriteBatchNode*)[self getChildByTag:kOrbNode];
+    [orbSprite addChild:explodeSprite];
+    
+    RemovableSprite* removeableSprite = [[RemovableSprite alloc] init];
+    removeableSprite.sprite = explodeSprite;
+    removeableSprite.parentNode = orbSprite;
+    
+    [self addChild:removeableSprite];
+    
+    CCCallFunc* doneHandler = [CCCallFunc actionWithTarget:removeableSprite selector:@selector(remove)];
+    
+    [explodeSprite runAction:[CCSequence actions: [CCAnimate actionWithAnimation:animation], doneHandler, nil]];
+}
+
 -(void) addBombTargetWithTime: (uint) createTime
 {    
-    CGPoint pos = [self createRandomPoint];
+    _bombTargetPoint = [self createRandomPoint];
     
     CCSpriteBatchNode* batchNode = (CCSpriteBatchNode*)[self getChildByTag:kBombTargetBatchNode];
     CCSprite* bomb = [CCSprite spriteWithTexture:[batchNode texture]];
     
     bomb.anchorPoint = ccp(.5, .35);
-    bomb.position = pos;
+    bomb.position = _bombTargetPoint;
     [bomb runAction:[CCRepeatForever actionWithAction:[CCRotateTo actionWithDuration:1 angle:720]]];
     [batchNode addChild:bomb z:OBJECTS_Z];
     
@@ -508,7 +539,7 @@ const float PTM_RATIO = 32.0f;
     bodyDef.type = b2_staticBody;
 	
 	// position must be converted to meters
-	bodyDef.position = [self toMeters:pos];
+	bodyDef.position = [self toMeters:_bombTargetPoint];
     
     _bombIconHandler = [[BombIconHandler alloc] init];
 
