@@ -57,6 +57,10 @@ GameManager* _sharedGameManager;
     [physicsLayer removeBombTarget];
 }
 
+-(void) removeBombTargetSprite{
+    [physicsLayer removeBombTargetSprite];
+}
+
 -(CCNode*) bombButtonNode
 {
     return [physicsLayer bombButtonNode];
@@ -75,7 +79,7 @@ GameManager* _sharedGameManager;
 
 -(void) handleBombTargetHit
 {
-    [physicsLayer removeBombTarget];
+//    [physicsLayer removeBombTarget];
     [self addBombButton];
 }
 

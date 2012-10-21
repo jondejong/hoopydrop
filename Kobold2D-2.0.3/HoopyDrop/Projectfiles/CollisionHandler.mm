@@ -25,7 +25,7 @@
 {
     self = [super init];
     if (self) {
-        _removed = false;
+        _removed = NO;
         _removeTime = 0;
         _type = -1;
     }
@@ -79,16 +79,20 @@
 
 -(void) removeThisTarget
 {
-    [[GameManager sharedInstance] removeOrbFromGame: [self sprite]];
-    [[GameManager sharedInstance] markBodyForDeletion: _body];
-    [self markRemoved];
+    if(!_removed) {
+        [[GameManager sharedInstance] removeOrbFromGame: [self sprite]];
+        [[GameManager sharedInstance] markBodyForDeletion: _body];
+        [self markRemoved];
+    }
 }
 
 -(void) removeThisTargetWithColor: (NSString*) baseSpriteName
 {
-    [[GameManager sharedInstance] removeOrbFromGame: [self sprite] withColor:baseSpriteName];
-    [[GameManager sharedInstance] markBodyForDeletion: _body];
-    [self markRemoved];
+    if(!_removed) {
+        [[GameManager sharedInstance] removeOrbFromGame: [self sprite] withColor:baseSpriteName];
+        [[GameManager sharedInstance] markBodyForDeletion: _body];
+        [self markRemoved];
+    }
 }
 
 @end
@@ -97,8 +101,17 @@
 
 -(void) handleCollision: (b2Body*) body
 {
-    [[GameManager sharedInstance] markBodyForDeletion:[self body]];
+    [self removeThisTarget];
     [[GameManager sharedInstance] handleBombTargetHit];
+}
+
+-(void) removeThisTarget
+{
+    if(![self isRemoved]) {
+        [[GameManager sharedInstance] markBodyForDeletion:[self body]];
+        [[GameManager sharedInstance] removeBombTargetSprite];
+        [self markRemoved];
+    }
 }
 
 @end
@@ -108,7 +121,6 @@
 -(void) handleCollision: (b2Body*) body
 {
     if(![self isRemoved]) {
-        [self markRemoved];
         [[GameManager sharedInstance] addToScore:[[GameManager sharedInstance] yellowTargetPoints]];
         [self removeMe];
     }
@@ -129,8 +141,17 @@
 @implementation GreenThingHandler
 
 -(void) handleCollision: (b2Body*) body {
-    [[GameManager sharedInstance] addToScore:[[GameManager sharedInstance] greenTargetPoints]];
-    [self removeMe];
+    if(![self isRemoved]) {
+        [[GameManager sharedInstance] addToScore:[[GameManager sharedInstance] greenTargetPoints]];
+        [self removeMe];
+    }
+#if DEBUG
+    else {
+        CCLOG(@"Handled a collision on a removed YELLOW target. This shouldn't happen.");
+        CCLOG(@"Added at %i. First removed at %i. It is now %i.", [self createTime], [self removeTime], [[GameManager sharedInstance] currentGameTime]);
+    }
+#endif
+
 }
 -(void) removeMe
 {
@@ -141,8 +162,16 @@
 @implementation PurpleThingHandler
 
 -(void) handleCollision: (b2Body*) body {
-    [[GameManager sharedInstance] addToScore:[[GameManager sharedInstance] purpleTargetPoints]];
-    [self removeMe];
+    if(![self isRemoved]) {
+        [[GameManager sharedInstance] addToScore:[[GameManager sharedInstance] purpleTargetPoints]];
+        [self removeMe];
+    }
+#if DEBUG
+    else {
+        CCLOG(@"Handled a collision on a removed YELLOW target. This shouldn't happen.");
+        CCLOG(@"Added at %i. First removed at %i. It is now %i.", [self createTime], [self removeTime], [[GameManager sharedInstance] currentGameTime]);
+    }
+#endif
 }
 
 -(void) removeMe

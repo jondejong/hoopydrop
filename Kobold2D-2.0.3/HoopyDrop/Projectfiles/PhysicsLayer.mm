@@ -483,7 +483,11 @@ const float PTM_RATIO = 32.0f;
 
 -(void) removeBombTarget
 {
-    [[GameManager sharedInstance] markBodyForDeletion:[_bombIconHandler body]];
+    [_bombIconHandler removeThisTarget];
+}
+
+-(void) removeBombTargetSprite
+{
     [[self getChildByTag:kBombTargetBatchNode] removeAllChildrenWithCleanup:YES];
 }
 
