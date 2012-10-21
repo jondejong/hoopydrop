@@ -91,9 +91,7 @@
 #endif
         
         [self updateGameWithNewOrbPointValues];
-        
-        
-        
+
     }
     return self;
 }

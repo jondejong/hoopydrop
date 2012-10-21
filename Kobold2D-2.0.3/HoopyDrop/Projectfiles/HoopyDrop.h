@@ -28,6 +28,11 @@
 
 #define SCREEN_BUFFER_PERCENTAGE .1
 
+// Goodie Targets
+#define GOODIE_BEGIN_TIME 55
+#define GOODIE_END_TIME 12
+#define GOODIE_EXPIRE_SECONDS 2
+
 // End of game animation controls
 #define OVERLAY_ALPHA_CHANNEL_INCREMENTS 5
 #define OVERLAY_INTERVALS 40
@@ -179,6 +184,7 @@ enum {
 +(bool) isRetina;
 +(bool) is16x9;
 
+-(void) removeBombTarget;
 -(void) addBombTargetWithTime: (uint) createTime;
 -(void) handleBombTargetHit;
 -(void) explodeBomb;

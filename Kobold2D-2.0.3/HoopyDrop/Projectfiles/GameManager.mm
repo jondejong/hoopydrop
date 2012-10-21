@@ -52,7 +52,13 @@ GameManager* _sharedGameManager;
     return self;
 }
 
--(CCNode*) bombButtonNode {
+-(void)removeBombTarget
+{
+    [physicsLayer removeBombTarget];
+}
+
+-(CCNode*) bombButtonNode
+{
     return [physicsLayer bombButtonNode];
 }
 
