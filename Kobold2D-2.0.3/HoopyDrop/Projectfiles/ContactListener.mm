@@ -17,11 +17,11 @@ void ContactListener::BeginContact(b2Contact* contact)
 	CollisionHandler* colB = (__bridge CollisionHandler*)bodyB->GetUserData();
     
     if(colA != nil) {
-        [colA handleCollision: bodyA];
+        [colA handleCollisionWith:colB];
     }
     
     if(colB != nil) {
-        [colB handleCollision: bodyB];
+        [colB handleCollisionWith:colA];
     }
 
 }

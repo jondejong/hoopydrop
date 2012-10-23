@@ -111,6 +111,13 @@ enum {
     kHDSoundGameOver,
 };
 
+// Body Types
+enum {
+    kHoopyBodyType,
+    kOrbBodyType,
+    kGoodieBodyType,
+};
+
 @interface RemovableSprite : CCNode
 @property (nonatomic, retain) CCSprite* sprite;
 @property (nonatomic, retain) CCNode* parentNode;

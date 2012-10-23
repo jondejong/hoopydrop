@@ -14,7 +14,7 @@
 -(void) setSprite: (CCSprite*) sprite;
 -(void) setBody: (b2Body*) body;
 -(b2Body*) body;
--(void) handleCollision: (b2Body*) body;
+-(void) handleCollisionWith: (CollisionHandler*) otherHandler;
 -(int) createTime;
 -(void) setCreateTime: (int)time;
 -(bool) isRemoved;
@@ -23,6 +23,7 @@
 -(void) removeThisTargetWithColor: (NSString*) baseSpriteName;
 -(int) removeTime;
 -(void) setType: (int)type;
+-(int) bodyType;
 
 @end
 
