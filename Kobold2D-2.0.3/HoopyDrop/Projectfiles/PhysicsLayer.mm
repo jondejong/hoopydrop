@@ -293,11 +293,11 @@ const float PTM_RATIO = 32.0f;
 
 -(CGPoint) createRandomPoint:(bool) large {
     CGSize screenSize = [CCDirector sharedDirector].winSize;
-
-    int addition = large ? 0 : (int)(.5 * PTM_RATIO);
     
-    int x = (arc4random() % ((int)screenSize.width - (int)PTM_RATIO)) + addition;
-    int y = (arc4random() % ((int)screenSize.height - (int)PTM_RATIO)) + addition;
+    int buffer = large ? 2 : 1;
+    
+    int x = (arc4random() % ((int)screenSize.width - (buffer *(int)PTM_RATIO))) + (int)(buffer *(.5 * PTM_RATIO));
+    int y = (arc4random() % ((int)screenSize.height - (buffer *(int)PTM_RATIO))) + (int)(buffer *(.5 * PTM_RATIO));
     return CGPointMake(x, y);
 }
 
@@ -495,7 +495,7 @@ const float PTM_RATIO = 32.0f;
     sprite.anchorPoint = [shapeCache anchorPointForShape:shapeName];
     
     [[self getChildByTag:kGoodiesSpriteSheet] addChild:sprite z:OBJECTS_Z tag:kExtraSecondsSprite];
-    body->ApplyAngularImpulse(.2);
+    body->ApplyAngularImpulse(.5);
 }
 
 -(void) removeExtraSecondsTargetSprite
@@ -608,7 +608,7 @@ const float PTM_RATIO = 32.0f;
     bomb.anchorPoint = [shapeCache anchorPointForShape:@"tnt_icon"];
     
     [[self getChildByTag:kGoodiesSpriteSheet] addChild:bomb z:OBJECTS_Z];
-    body->ApplyAngularImpulse(1.7);
+    body->ApplyAngularImpulse(1.4);
 
 }
 
