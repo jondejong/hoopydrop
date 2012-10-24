@@ -35,6 +35,7 @@ const float PTM_RATIO = 32.0f;
     CollisionHandler* _hoopyHandler;
     CollisionHandler* _bombIconHandler;
 
+    bool _bombButtonAdded;
     CGPoint _bombTargetPoint;
 }
 
@@ -55,6 +56,7 @@ const float PTM_RATIO = 32.0f;
         self.deletableBodies = [NSMutableArray arrayWithCapacity:10];
         
         _bombTargetPoint = ccp(0,0);
+        _bombButtonAdded = NO;
 
 		glClearColor(0.1f, 0.0f, 0.2f, 1.0f);
 		
@@ -453,11 +455,16 @@ const float PTM_RATIO = 32.0f;
 
 -(void) addBombButton
 {
-    CCSprite* button = [CCSprite spriteWithFile:@"tnt_button.png"];
-    button.anchorPoint = ccp(.5, .35);
-    button.position = ccp(275, 50);
-
-    [self addChild:button z:OVERLAY_Z - 1 tag:kBombButtonSprite];
+    if(!_bombButtonAdded) {
+        _bombButtonAdded = YES;
+        CCSprite* button = [CCSprite spriteWithFile:@"tnt_button.png"];
+        button.anchorPoint = ccp(.5, .35);
+        button.position = ccp(275, 50);
+        
+        [self addChild:button z:OVERLAY_Z - 1 tag:kBombButtonSprite];
+    } else {
+        CCLOG(@"Attempted to add the bomb button twice.");
+    }
 }
 
 -(void) removeBombButton
@@ -512,7 +519,6 @@ const float PTM_RATIO = 32.0f;
 
 -(void) addBombTargetWithTime: (uint) createTime
 {
-    
     _bombTargetPoint = [self createRandomPoint];
     CCSpriteBatchNode* batchNode = (CCSpriteBatchNode*)[self getChildByTag:kBombTargetBatchNode];
     CCSprite* bomb = [CCSprite spriteWithTexture:[batchNode texture]];

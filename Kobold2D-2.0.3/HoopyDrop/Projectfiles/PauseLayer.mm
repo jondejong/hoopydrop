@@ -66,7 +66,7 @@
     _paused = NO;
     [self removeChild:_faderOverlay cleanup:YES];
     [self removeChild:_pausedText cleanup:YES];
-    [self removeChild:_menu cleanup:NO];
+    [self removeChild:_menu cleanup:YES];
     [[GameManager sharedInstance] handleUnpause];
 }
 
