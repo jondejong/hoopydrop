@@ -34,9 +34,12 @@ const float PTM_RATIO = 32.0f;
     
     CollisionHandler* _hoopyHandler;
     CollisionHandler* _bombIconHandler;
+    CollisionHandler* _extraTimeIconHandler;
 
     bool _bombButtonAdded;
     CGPoint _bombTargetPoint;
+    
+    CGPoint _extraSecondsTargetPoint;
 }
 
 @synthesize deletableBodies;
@@ -100,16 +103,18 @@ const float PTM_RATIO = 32.0f;
 		screenBorderBody->CreateFixture(&screenBorderShape, 0);
         
         // Shapes
-        [[GB2ShapeCache sharedShapeCache] addShapesWithFile:@"goodies.plist"];
+        [[GB2ShapeCache sharedShapeCache] addShapesWithFile:@"goodie_shapes.plist"];
 		
+        // Goodies
+        [[CCSpriteFrameCache sharedSpriteFrameCache] addSpriteFramesWithFile:@"goodies.plist"];
+        CCSpriteBatchNode *goodiesSpriteSheet = [CCSpriteBatchNode batchNodeWithFile:@"goodies.png"];
+        [self addChild:goodiesSpriteSheet z:0 tag:kGoodiesSpriteSheet];
+        
         // Hoopy Himself
         [[CCSpriteFrameCache sharedSpriteFrameCache] addSpriteFramesWithFile:@"hoopy.plist"];
         CCSpriteBatchNode* hoopy = [CCSpriteBatchNode batchNodeWithFile:@"hoopy.png"];
         
         [self addChild:hoopy z:0 tag:kTagBatchNode];
-        
-        CCSpriteBatchNode* bombBatch = [CCSpriteBatchNode batchNodeWithFile:@"tnt_icon.png"];
-        [self addChild:bombBatch z:0 tag:kBombTargetBatchNode];
 
 		// Orbs
         [[CCSpriteFrameCache sharedSpriteFrameCache] addSpriteFramesWithFile:@"orbs.plist"];
@@ -453,15 +458,58 @@ const float PTM_RATIO = 32.0f;
     _lastExpressionChangeGameTime = [[GameManager sharedInstance] currentGameTime];
 }
 
+
+-(void) addExtraSecondsTargetWithTime: (uint) createTime
+{
+    _extraSecondsTargetPoint = [self createRandomPoint];
+    
+    CCSprite *sprite = [CCSprite spriteWithSpriteFrameName:@"plus_five.png"];
+    
+    sprite.position = _extraSecondsTargetPoint;
+    
+    b2BodyDef bodyDef;
+    bodyDef.type = b2_dynamicBody;
+    bodyDef.gravityScale = 0;
+	bodyDef.fixedRotation = false;
+    
+	// position must be converted to meters
+	bodyDef.position = [self toMeters:_extraSecondsTargetPoint];
+    
+    _extraTimeIconHandler = [[ExtraSecondsIconHandler alloc] init];
+    
+	bodyDef.userData = (__bridge void*)_extraTimeIconHandler;
+    b2Body* body = world->CreateBody(&bodyDef);
+    
+    [_extraTimeIconHandler setSprite:sprite];
+    [_extraTimeIconHandler setBody:body];
+    [_extraTimeIconHandler setCreateTime:createTime];
+    [_extraTimeIconHandler setType:kGoodieBodyType];
+    
+    GB2ShapeCache* shapeCache = [GB2ShapeCache sharedShapeCache];
+    
+//    NSString* shapeName =  [NSString stringWithFormat:@"plus_five%@", ([GameManager isRetina] ? @"-hd" : @"") ];
+    NSString* shapeName = @"plus_five";
+    [shapeCache addFixturesToBody:body forShapeName: shapeName];
+    sprite.anchorPoint = [shapeCache anchorPointForShape:shapeName];
+    
+    [[self getChildByTag:kGoodiesSpriteSheet] addChild:sprite z:OBJECTS_Z tag:kExtraSecondsSprite];
+    body->ApplyAngularImpulse(.2);
+}
+
+-(void) removeExtraSecondsTargetSprite
+{
+     [[self getChildByTag:kGoodiesSpriteSheet] removeChildByTag:kExtraSecondsSprite cleanup:YES];
+}
+
 -(void) addBombButton
 {
     if(!_bombButtonAdded) {
         _bombButtonAdded = YES;
-        CCSprite* button = [CCSprite spriteWithFile:@"tnt_button.png"];
+        CCSprite *button = [CCSprite spriteWithSpriteFrameName:@"tnt_button.png"];
         button.anchorPoint = ccp(.5, .35);
         button.position = ccp(275, 50);
         
-        [self addChild:button z:OVERLAY_Z - 1 tag:kBombButtonSprite];
+        [[self getChildByTag:kGoodiesSpriteSheet] addChild:button z:OBJECTS_Z tag:kBombButtonSprite];
     } else {
         CCLOG(@"Attempted to add the bomb button twice.");
     }
@@ -469,12 +517,12 @@ const float PTM_RATIO = 32.0f;
 
 -(void) removeBombButton
 {
-    [self removeChildByTag:kBombButtonSprite cleanup:YES];
+    [[self getChildByTag:kGoodiesSpriteSheet] removeChildByTag:kBombButtonSprite cleanup:YES];
 }
 
 -(CCNode*) bombButtonNode
 {
-    return [self getChildByTag:kBombButtonSprite];
+    return [[self getChildByTag:kGoodiesSpriteSheet] getChildByTag:kBombButtonSprite];
 }
 
 -(void) removeBombTarget
@@ -482,12 +530,12 @@ const float PTM_RATIO = 32.0f;
     [_bombIconHandler removeThisTarget];
 }
 
--(void) removeBombTargetSprite
+-(void) removeTargetSprite: (CCSprite*) sprite
 {
-    [[self getChildByTag:kBombTargetBatchNode] removeAllChildrenWithCleanup:YES];
+    [[self getChildByTag:kGoodiesSpriteSheet] removeChild:sprite cleanup:YES];
 }
 
--(void) explodeBombTarget
+-(void) explodeGoodieTargetAtLocation: (CGPoint) pos
 {
     NSMutableArray *animFrames = [NSMutableArray array];
     
@@ -501,7 +549,7 @@ const float PTM_RATIO = 32.0f;
     
     CCSprite *explodeSprite = [CCSprite spriteWithSpriteFrameName:@"red1.png"];
     
-    explodeSprite.position = _bombTargetPoint;
+    explodeSprite.position = pos;
     
     CCSpriteBatchNode* orbSprite = (CCSpriteBatchNode*)[self getChildByTag:kOrbNode];
     [orbSprite addChild:explodeSprite];
@@ -517,11 +565,21 @@ const float PTM_RATIO = 32.0f;
     [explodeSprite runAction:[CCSequence actions: [CCAnimate actionWithAnimation:animation], doneHandler, nil]];
 }
 
+-(void) explodeBombTarget
+{
+    [self explodeGoodieTargetAtLocation:_bombTargetPoint];
+}
+
+-(void) explodeExtraTimeTarget
+{
+    [self explodeGoodieTargetAtLocation:_extraSecondsTargetPoint];
+}
+
 -(void) addBombTargetWithTime: (uint) createTime
 {
     _bombTargetPoint = [self createRandomPoint];
-    CCSpriteBatchNode* batchNode = (CCSpriteBatchNode*)[self getChildByTag:kBombTargetBatchNode];
-    CCSprite* bomb = [CCSprite spriteWithTexture:[batchNode texture]];
+    
+    CCSprite *bomb = [CCSprite spriteWithSpriteFrameName:@"tnt_icon.png"];
 
     bomb.position = _bombTargetPoint;
     
@@ -545,10 +603,9 @@ const float PTM_RATIO = 32.0f;
     
     GB2ShapeCache* shapeCache = [GB2ShapeCache sharedShapeCache];
     [shapeCache addFixturesToBody:body forShapeName: @"tnt_icon"];
-    
     bomb.anchorPoint = [shapeCache anchorPointForShape:@"tnt_icon"];
     
-    [batchNode addChild:bomb z:OBJECTS_Z];
+    [[self getChildByTag:kGoodiesSpriteSheet] addChild:bomb z:OBJECTS_Z];
     body->ApplyAngularImpulse(1.7);
 
 }

@@ -7,80 +7,80 @@
             <key>bolt_button.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{2,2},{55,115}}</string>
+                <string>{{2,2},{111,230}}</string>
                 <key>offset</key>
                 <string>{0,0}</string>
                 <key>rotated</key>
                 <true/>
                 <key>sourceColorRect</key>
-                <string>{{0,0},{55,115}}</string>
+                <string>{{0,0},{111,230}}</string>
                 <key>sourceSize</key>
-                <string>{55,115}</string>
+                <string>{111,230}</string>
             </dict>
             <key>bolt_icon.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{76,136},{17,35}}</string>
+                <string>{{146,267},{34,70}}</string>
                 <key>offset</key>
                 <string>{0,0}</string>
                 <key>rotated</key>
                 <true/>
                 <key>sourceColorRect</key>
-                <string>{{0,0},{17,35}}</string>
+                <string>{{0,0},{34,70}}</string>
                 <key>sourceSize</key>
-                <string>{17,35}</string>
+                <string>{34,70}</string>
             </dict>
             <key>bomb_icon.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{2,191},{35,51}}</string>
+                <string>{{2,376},{70,103}}</string>
                 <key>offset</key>
                 <string>{0,0}</string>
                 <key>rotated</key>
                 <false/>
                 <key>sourceColorRect</key>
-                <string>{{0,0},{35,51}}</string>
+                <string>{{0,0},{70,103}}</string>
                 <key>sourceSize</key>
-                <string>{35,51}</string>
+                <string>{70,103}</string>
             </dict>
             <key>plus_five.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{39,136},{35,35}}</string>
+                <string>{{74,267},{70,70}}</string>
                 <key>offset</key>
                 <string>{0,0}</string>
                 <key>rotated</key>
                 <false/>
                 <key>sourceColorRect</key>
-                <string>{{0,0},{35,35}}</string>
+                <string>{{0,0},{70,70}}</string>
                 <key>sourceSize</key>
-                <string>{35,35}</string>
+                <string>{70,70}</string>
             </dict>
             <key>tnt_button.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{2,59},{75,114}}</string>
+                <string>{{2,115},{150,229}}</string>
                 <key>offset</key>
                 <string>{0,0}</string>
                 <key>rotated</key>
                 <true/>
                 <key>sourceColorRect</key>
-                <string>{{0,0},{75,114}}</string>
+                <string>{{0,0},{150,229}}</string>
                 <key>sourceSize</key>
-                <string>{75,114}</string>
+                <string>{150,229}</string>
             </dict>
             <key>tnt_icon.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{2,136},{35,53}}</string>
+                <string>{{2,267},{70,107}}</string>
                 <key>offset</key>
                 <string>{0,0}</string>
                 <key>rotated</key>
                 <false/>
                 <key>sourceColorRect</key>
-                <string>{{0,0},{35,53}}</string>
+                <string>{{0,0},{70,107}}</string>
                 <key>sourceSize</key>
-                <string>{35,53}</string>
+                <string>{70,107}</string>
             </dict>
         </dict>
         <key>metadata</key>
@@ -88,11 +88,11 @@
             <key>format</key>
             <integer>2</integer>
             <key>realTextureFileName</key>
-            <string>goodies.png</string>
+            <string>goodies-hd.png</string>
             <key>size</key>
-            <string>{128,256}</string>
+            <string>{256,512}</string>
             <key>smartupdate</key>
-            <string>$TexturePacker:SmartUpdate:cd604d29919cd67c9273407f7475bb2a$</string>
+            <string>$TexturePacker:SmartUpdate:5c30bd91d5d0fc9ed706d0bde9ea9f72$</string>
             <key>textureFileName</key>
             <string>goodies.png</string>
         </dict>

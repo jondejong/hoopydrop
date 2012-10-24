@@ -21,6 +21,7 @@
     uint _greenTargetPoints;
     uint _purpleTargetPoints;
     bool _exploded;
+    bool _extraTimeAdded;
     
 }
 GameManager* _sharedGameManager;
@@ -40,6 +41,7 @@ GameManager* _sharedGameManager;
         _sharedGameManager = self;
         _score = 0;
         _exploded = NO;
+        _extraTimeAdded = NO;
         
         NSString* dataString = [[PDKeychainBindings sharedKeychainBindings] objectForKey:PERSISTANT_DATA_KEYCHAIN_KEY];
         
@@ -57,8 +59,8 @@ GameManager* _sharedGameManager;
     [physicsLayer removeBombTarget];
 }
 
--(void) removeBombTargetSprite{
-    [physicsLayer removeBombTargetSprite];
+-(void) removeBombTargetSprite: (CCSprite*) sprite{
+    [physicsLayer removeTargetSprite: sprite];
 }
 
 -(CCNode*) bombButtonNode
@@ -81,6 +83,24 @@ GameManager* _sharedGameManager;
 {
     [physicsLayer explodeBombTarget];
     [self addBombButton];
+}
+
+-(void) handleExtraTimeTargetHit
+{
+    if(!_extraTimeAdded){
+        _extraTimeAdded = YES;
+        [physicsLayer removeExtraSecondsTargetSprite];
+        [physicsLayer explodeExtraTimeTarget];
+        [timerLayer addTime:TIME_ADDED_IN_SECONDS];
+    }
+}
+
+-(void) addExtraTimeTargetWithTime: (uint)createTime {
+    [physicsLayer addExtraSecondsTargetWithTime:createTime];
+}
+
+-(void) removeExtraTimeTarget {
+    [physicsLayer removeExtraSecondsTargetSprite];
 }
 
 -(void) explodeBomb
@@ -224,7 +244,8 @@ GameManager* _sharedGameManager;
 -(void) startGame {
     
     _score = 0;
-    _exploded = false;
+    _exploded = NO;
+    _extraTimeAdded = NO;
     
     self.gamePlayRootScene = [HDGamePlayRootScene node];
     

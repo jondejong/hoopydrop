@@ -33,4 +33,6 @@
 @interface PurpleThingHandler : CollisionHandler @end
 
 @interface BombIconHandler : CollisionHandler @end
+@interface ExtraSecondsIconHandler : CollisionHandler @end
+
 

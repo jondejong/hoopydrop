@@ -93,9 +93,9 @@
 -(void) removeThisTarget
 {
     if(!_removed) {
+        [self markRemoved];
         [[GameManager sharedInstance] removeOrbFromGame: [self sprite]];
         [[GameManager sharedInstance] markBodyForDeletion: _body];
-        [self markRemoved];
     }
 }
 
@@ -122,12 +122,33 @@
 {
     if(![self isRemoved]) {
         [[GameManager sharedInstance] markBodyForDeletion:[self body]];
-        [[GameManager sharedInstance] removeBombTargetSprite];
+        [[GameManager sharedInstance] removeBombTargetSprite:[self sprite]];
         [self markRemoved];
     }
 }
 
 @end
+
+
+@implementation ExtraSecondsIconHandler
+
+-(void) doHandleCollisionWith: (CollisionHandler*) otherHandler
+{
+    [self removeThisTarget];
+    [[GameManager sharedInstance] handleExtraTimeTargetHit];
+}
+
+-(void) removeThisTarget
+{
+    if(![self isRemoved]) {
+        [self markRemoved];
+        [[GameManager sharedInstance] markBodyForDeletion:[self body]];
+//        [[GameManager sharedInstance] removeBombTargetSprite:[self sprite]];
+    }
+}
+
+@end
+
 
 @implementation YellowThingHandler
 

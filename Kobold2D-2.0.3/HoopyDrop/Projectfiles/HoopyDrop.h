@@ -33,6 +33,8 @@
 #define GOODIE_END_TIME 12
 #define GOODIE_EXPIRE_SECONDS 2
 
+#define TIME_ADDED_IN_SECONDS 5
+
 // End of game animation controls
 #define OVERLAY_ALPHA_CHANNEL_INCREMENTS 5
 #define OVERLAY_INTERVALS 40
@@ -173,6 +175,7 @@ enum {
 -(void) pause;
 -(void) unpause;
 -(int) remainingTime;
+-(void) addTime: (int) time;
 @end
 
 @interface HDStartLayer : CCLayer  {
@@ -196,7 +199,11 @@ enum {
 +(bool) isRetina;
 +(bool) is16x9;
 
--(void) removeBombTargetSprite;
+-(void) addExtraTimeTargetWithTime: (uint)createTime;
+-(void) handleExtraTimeTargetHit;
+-(void) removeExtraTimeTarget;
+
+-(void) removeBombTargetSprite: (CCSprite*) sprite;
 -(void) removeBombTarget;
 -(void) addBombTargetWithTime: (uint) createTime;
 -(void) handleBombTargetHit;
