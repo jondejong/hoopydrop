@@ -291,11 +291,13 @@ const float PTM_RATIO = 32.0f;
 	return ccpMult(CGPointMake(vec.x, vec.y), PTM_RATIO);
 }
 
--(CGPoint) createRandomPoint {
+-(CGPoint) createRandomPoint:(bool) large {
     CGSize screenSize = [CCDirector sharedDirector].winSize;
 
-    int x = (arc4random() % ((int)screenSize.width - (int)PTM_RATIO)) + (int)(.5 * PTM_RATIO);
-    int y = (arc4random() % ((int)screenSize.height - (int)PTM_RATIO)) + (int)(.5 * PTM_RATIO);
+    int addition = large ? 0 : (int)(.5 * PTM_RATIO);
+    
+    int x = (arc4random() % ((int)screenSize.width - (int)PTM_RATIO)) + addition;
+    int y = (arc4random() % ((int)screenSize.height - (int)PTM_RATIO)) + addition;
     return CGPointMake(x, y);
 }
 
@@ -310,7 +312,7 @@ const float PTM_RATIO = 32.0f;
     
     CCAnimation *animation = [CCAnimation animationWithSpriteFrames:animFrames delay:0.07f];
     
-    CGPoint pos = [self createRandomPoint];
+    CGPoint pos = [self createRandomPoint: NO];
     
     CCSprite *sprite = [CCSprite spriteWithSpriteFrameName:[NSString stringWithFormat:@"%@1.png", baseSpriteName]];
     
@@ -461,7 +463,7 @@ const float PTM_RATIO = 32.0f;
 
 -(void) addExtraSecondsTargetWithTime: (uint) createTime
 {
-    _extraSecondsTargetPoint = [self createRandomPoint];
+    _extraSecondsTargetPoint = [self createRandomPoint: YES];
     
     CCSprite *sprite = [CCSprite spriteWithSpriteFrameName:@"plus_five.png"];
     
@@ -577,7 +579,7 @@ const float PTM_RATIO = 32.0f;
 
 -(void) addBombTargetWithTime: (uint) createTime
 {
-    _bombTargetPoint = [self createRandomPoint];
+    _bombTargetPoint = [self createRandomPoint: YES];
     
     CCSprite *bomb = [CCSprite spriteWithSpriteFrameName:@"tnt_icon.png"];
 
