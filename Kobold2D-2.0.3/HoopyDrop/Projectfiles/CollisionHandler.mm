@@ -42,6 +42,14 @@
 
 -(void) handleCollisionWith: (CollisionHandler*) otherHandler
 {
+    if(otherHandler && [otherHandler bodyType] == kHoopyBodyType) {
+        [self doHandleCollisionWith:otherHandler];
+    }
+}
+
+-(void) doHandleCollisionWith: (CollisionHandler*) otherHandler
+{
+    
 }
 
 -(void) setBody: (b2Body*) body {
@@ -104,12 +112,10 @@
 
 @implementation BombIconHandler
 
--(void) handleCollisionWith: (CollisionHandler*) otherHandler
+-(void) doHandleCollisionWith: (CollisionHandler*) otherHandler
 {
-    if(otherHandler && [otherHandler bodyType] == kHoopyBodyType) {
-        [self removeThisTarget];
-        [[GameManager sharedInstance] handleBombTargetHit];
-    }
+    [self removeThisTarget];
+    [[GameManager sharedInstance] handleBombTargetHit];
 }
 
 -(void) removeThisTarget
@@ -125,7 +131,7 @@
 
 @implementation YellowThingHandler
 
--(void) handleCollisionWith: (CollisionHandler*) otherHandler
+-(void) doHandleCollisionWith: (CollisionHandler*) otherHandler
 {
     if(![self isRemoved]) {
         [[GameManager sharedInstance] addToScore:[[GameManager sharedInstance] yellowTargetPoints]];
@@ -147,7 +153,7 @@
 
 @implementation GreenThingHandler
 
--(void) handleCollisionWith: (CollisionHandler*) otherHandler
+-(void) doHandleCollisionWith: (CollisionHandler*) otherHandler
 {
     if(![self isRemoved]) {
         [[GameManager sharedInstance] addToScore:[[GameManager sharedInstance] greenTargetPoints]];
@@ -169,7 +175,7 @@
 
 @implementation PurpleThingHandler
 
--(void) handleCollisionWith: (CollisionHandler*) otherHandler
+-(void) doHandleCollisionWith: (CollisionHandler*) otherHandler
 {
     if(![self isRemoved]) {
         [[GameManager sharedInstance] addToScore:[[GameManager sharedInstance] purpleTargetPoints]];

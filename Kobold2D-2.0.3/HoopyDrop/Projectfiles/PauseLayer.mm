@@ -13,35 +13,35 @@
 
 @implementation PauseLayer {
 @private
-    bool paused;
-    CCSprite* faderOverlay;
-    CCMenu* menu;
-    CCLabelTTF *pausedText;
-    bool bombButtonAdded;
+    bool _paused;
+    CCSprite* _faderOverlay;
+    CCMenu* _menu;
+    CCLabelTTF* _pausedText;
+    bool _bombButtonAdded;
 }
 
 - (id)init
 {
     self = [super init];
     if (self) {
-        paused = false;
-        faderOverlay = [CCSprite spriteWithFile:[ScreenImage convertImageName:@"faderOverlay"]];
-        faderOverlay.position = ccp(0,0);
-        faderOverlay.anchorPoint = ccp(0,0);
+        _paused = false;
+        _faderOverlay = [CCSprite spriteWithFile:[ScreenImage convertImageName:@"faderOverlay"]];
+        _faderOverlay.position = ccp(0,0);
+        _faderOverlay.anchorPoint = ccp(0,0);
         
-        pausedText = [CCLabelTTF labelWithString:@"Paused" fontName:@"Marker Felt" fontSize:48];
+        _pausedText = [CCLabelTTF labelWithString:@"Paused" fontName:@"Marker Felt" fontSize:48];
         CGSize size = [[CCDirector sharedDirector] winSize];
-        pausedText.position = ccp(size.width/2.0, size.height/1.2);
+        _pausedText.position = ccp(size.width/2.0, size.height/1.2);
         
         CCSprite* abandonSprite = [CCSprite spriteWithFile:@"abandon.png"];
         CCSprite* abandonSpriteSelected = [CCSprite spriteWithFile:@"abandon.png"];
         
         CCMenuItemSprite * startButton = [CCMenuItemSprite itemWithNormalSprite:abandonSprite selectedSprite:abandonSpriteSelected target:self selector:@selector(handleEnd)];
         
-        menu = [CCMenu menuWithItems:startButton, nil];
-        menu.position = ccp(size.width/2.0, size.height/2.0);
+        _menu = [CCMenu menuWithItems:startButton, nil];
+        _menu.position = ccp(size.width/2.0, size.height/2.0);
         
-        bombButtonAdded = NO;
+        _bombButtonAdded = NO;
         
         [self setIsTouchEnabled:YES];
         
@@ -55,18 +55,18 @@
 }
 
 -(void) handlePause {
-    [self addChild:faderOverlay];
-    [self addChild: pausedText];
-    [self addChild: menu];
+    _paused = YES;
+    [self addChild: _faderOverlay];
+    [self addChild: _pausedText];
+    [self addChild: _menu];
     [[GameManager sharedInstance] handlePause];
 }
 
 -(void) handleUnpase {
-    paused = false;
-    [self removeChild:faderOverlay cleanup:YES];
-    [self removeChild:pausedText cleanup:YES];
-    [self removeChild:menu cleanup:NO
-     ];
+    _paused = NO;
+    [self removeChild:_faderOverlay cleanup:YES];
+    [self removeChild:_pausedText cleanup:YES];
+    [self removeChild:_menu cleanup:NO];
     [[GameManager sharedInstance] handleUnpause];
 }
 
@@ -76,12 +76,12 @@
 
 -(void) addBombButton;
 {
-    bombButtonAdded = YES;
+    _bombButtonAdded = YES;
 }
 
 -(void) removeBombButton
 {
-    bombButtonAdded = NO;
+    _bombButtonAdded = NO;
 }
 
 -(void) update:(ccTime)delta
@@ -89,22 +89,23 @@
     if([self isTouchEnabled]) {
         
         bool bombButtonPressed = NO;
-        if(bombButtonAdded) {
-            // Check to see if the button was pressed
-             KKInput* input = [KKInput sharedInput];
-            if ([input isAnyTouchOnNode:[[GameManager sharedInstance]bombButtonNode] touchPhase:KKTouchPhaseEnded])
-            {
-                [[GameManager sharedInstance] explodeBomb];
-                bombButtonPressed = YES;
+        if(!_paused){
+            if(_bombButtonAdded) {
+                // Check to see if the button was pressed
+                KKInput* input = [KKInput sharedInput];
+                if ([input isAnyTouchOnNode:[[GameManager sharedInstance]bombButtonNode] touchPhase:KKTouchPhaseEnded])
+                {
+                    [[GameManager sharedInstance] explodeBomb];
+                    bombButtonPressed = YES;
+                }
             }
         }
         
         if(!bombButtonPressed && [TouchUtil wasIntentiallyTouched]) {
-            if(paused) {
+            if(_paused) {
                 [self handleUnpase];
                 
             } else {
-                paused = true;
                 [self handlePause];
             }
         }

@@ -15,6 +15,7 @@
 -(void) setBody: (b2Body*) body;
 -(b2Body*) body;
 -(void) handleCollisionWith: (CollisionHandler*) otherHandler;
+-(void) doHandleCollisionWith: (CollisionHandler*) otherHandler;
 -(int) createTime;
 -(void) setCreateTime: (int)time;
 -(bool) isRemoved;

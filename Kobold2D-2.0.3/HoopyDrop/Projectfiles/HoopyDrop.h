@@ -29,9 +29,9 @@
 #define SCREEN_BUFFER_PERCENTAGE .1
 
 // Goodie Targets
-#define GOODIE_BEGIN_TIME 50
-#define GOODIE_END_TIME 12
-#define GOODIE_EXPIRE_SECONDS 2
+#define GOODIE_BEGIN_TIME 59
+#define GOODIE_END_TIME 58
+#define GOODIE_EXPIRE_SECONDS 20
 
 // End of game animation controls
 #define OVERLAY_ALPHA_CHANNEL_INCREMENTS 5

@@ -94,6 +94,7 @@ GameManager* _sharedGameManager;
             if(![handler isRemoved])
             {
                 CollisionHandler* fakeHoopyHandler = [[CollisionHandler alloc] init];
+                [fakeHoopyHandler setType:kHoopyBodyType];
                 [handler handleCollisionWith:fakeHoopyHandler];
             }
         }
