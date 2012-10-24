@@ -15,7 +15,6 @@
 @private
     bool _paused;
     CCSprite* _faderOverlay;
-    CCMenu* _menu;
     CCLabelTTF* _pausedText;
     bool _bombButtonAdded;
 }
@@ -32,14 +31,6 @@
         _pausedText = [CCLabelTTF labelWithString:@"Paused" fontName:@"Marker Felt" fontSize:48];
         CGSize size = [[CCDirector sharedDirector] winSize];
         _pausedText.position = ccp(size.width/2.0, size.height/1.2);
-        
-        CCSprite* abandonSprite = [CCSprite spriteWithFile:@"abandon.png"];
-        CCSprite* abandonSpriteSelected = [CCSprite spriteWithFile:@"abandon.png"];
-        
-        CCMenuItemSprite * startButton = [CCMenuItemSprite itemWithNormalSprite:abandonSprite selectedSprite:abandonSpriteSelected target:self selector:@selector(handleEnd)];
-        
-        _menu = [CCMenu menuWithItems:startButton, nil];
-        _menu.position = ccp(size.width/2.0, size.height/2.0);
         
         _bombButtonAdded = NO;
         
@@ -58,15 +49,28 @@
     _paused = YES;
     [self addChild: _faderOverlay];
     [self addChild: _pausedText];
-    [self addChild: _menu];
+    [self createMenu];
     [[GameManager sharedInstance] handlePause];
+}
+
+-(void) createMenu {
+    CCSprite* abandonSprite = [CCSprite spriteWithFile:@"abandon.png"];
+    CCSprite* abandonSpriteSelected = [CCSprite spriteWithFile:@"abandon.png"];
+    
+    CCMenuItemSprite * endButton = [CCMenuItemSprite itemWithNormalSprite:abandonSprite selectedSprite:abandonSpriteSelected target:self selector:@selector(handleEnd)];
+    
+    CCMenu* menu = [CCMenu menuWithItems:endButton, nil];
+    
+    CGSize size = [[CCDirector sharedDirector] winSize];
+    menu.position = ccp(size.width/2.0, size.height/2.0);
+    [self addChild:menu z:OVERLAY_TEXT_Z tag:kPauseMenuNode];
 }
 
 -(void) handleUnpase {
     _paused = NO;
     [self removeChild:_faderOverlay cleanup:YES];
     [self removeChild:_pausedText cleanup:YES];
-    [self removeChild:_menu cleanup:YES];
+    [self removeChildByTag:kPauseMenuNode cleanup:YES];
     [[GameManager sharedInstance] handleUnpause];
 }
 

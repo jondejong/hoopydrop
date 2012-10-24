@@ -118,6 +118,11 @@ enum {
     kGoodieBodyType,
 };
 
+// Layers and nodes
+enum {
+    kPauseMenuNode,
+};
+
 @interface RemovableSprite : CCNode
 @property (nonatomic, retain) CCSprite* sprite;
 @property (nonatomic, retain) CCNode* parentNode;
