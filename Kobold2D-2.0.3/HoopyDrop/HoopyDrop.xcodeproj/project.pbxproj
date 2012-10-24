@@ -106,6 +106,8 @@
 		C2F5F76C160A7DB9002B8EE9 /* HDSettingsLayer.mm in Sources */ = {isa = PBXBuildFile; fileRef = C2F5F76B160A7DB9002B8EE9 /* HDSettingsLayer.mm */; };
 		C2F7079F1606736A000764E4 /* abandon-hd.png in Resources */ = {isa = PBXBuildFile; fileRef = C2F7079D1606736A000764E4 /* abandon-hd.png */; };
 		C2F707A01606736A000764E4 /* abandon.png in Resources */ = {isa = PBXBuildFile; fileRef = C2F7079E1606736A000764E4 /* abandon.png */; };
+		C2F950C41637842E00F0B2F9 /* GB2ShapeCache.mm in Sources */ = {isa = PBXBuildFile; fileRef = C2F950C31637842E00F0B2F9 /* GB2ShapeCache.mm */; };
+		C2F950CA1637896600F0B2F9 /* goodies.plist in Resources */ = {isa = PBXBuildFile; fileRef = C2F950C91637896600F0B2F9 /* goodies.plist */; };
 		DC193EB813B692D100500B56 /* GLES-Render.mm in Sources */ = {isa = PBXBuildFile; fileRef = DC193EB313B6872600500B56 /* GLES-Render.mm */; };
 		DC193EBC13B6956F00500B56 /* ContactListener.mm in Sources */ = {isa = PBXBuildFile; fileRef = DC193EBB13B6956F00500B56 /* ContactListener.mm */; };
 		DC26D6BE14B9E4D500B6002E /* fps_images-hd.png in Resources */ = {isa = PBXBuildFile; fileRef = DC26D6BD14B9E4D500B6002E /* fps_images-hd.png */; };
@@ -243,6 +245,9 @@
 		C2F5F76B160A7DB9002B8EE9 /* HDSettingsLayer.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = HDSettingsLayer.mm; path = Projectfiles/HDSettingsLayer.mm; sourceTree = "<group>"; };
 		C2F7079D1606736A000764E4 /* abandon-hd.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "abandon-hd.png"; sourceTree = "<group>"; };
 		C2F7079E1606736A000764E4 /* abandon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = abandon.png; sourceTree = "<group>"; };
+		C2F950C21637842E00F0B2F9 /* GB2ShapeCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GB2ShapeCache.h; path = Projectfiles/GB2ShapeCache.h; sourceTree = "<group>"; };
+		C2F950C31637842E00F0B2F9 /* GB2ShapeCache.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = GB2ShapeCache.mm; path = Projectfiles/GB2ShapeCache.mm; sourceTree = "<group>"; };
+		C2F950C91637896600F0B2F9 /* goodies.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = goodies.plist; sourceTree = "<group>"; };
 		DC193EB213B6872600500B56 /* GLES-Render.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "GLES-Render.h"; sourceTree = "<group>"; };
 		DC193EB313B6872600500B56 /* GLES-Render.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = "GLES-Render.mm"; sourceTree = "<group>"; };
 		DC193EBA13B6956F00500B56 /* ContactListener.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ContactListener.h; sourceTree = "<group>"; };
@@ -358,9 +363,19 @@
 			name = Keychain;
 			sourceTree = "<group>";
 		};
+		C2F950C0163783DA00F0B2F9 /* PhysicsShapeUtils */ = {
+			isa = PBXGroup;
+			children = (
+				C2F950C21637842E00F0B2F9 /* GB2ShapeCache.h */,
+				C2F950C31637842E00F0B2F9 /* GB2ShapeCache.mm */,
+			);
+			name = PhysicsShapeUtils;
+			sourceTree = "<group>";
+		};
 		DCC1A0D613A94EC0005BD75D = {
 			isa = PBXGroup;
 			children = (
+				C2F950C0163783DA00F0B2F9 /* PhysicsShapeUtils */,
 				C24A84581607E3A400F769D4 /* Keychain */,
 				C206D98516001CFF00CAA726 /* DisplayLayers */,
 				DCC1A38C13A94F1A005BD75D /* Projectfiles */,
@@ -495,6 +510,7 @@
 		DCC1A39413A94F1A005BD75D /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				C2F950C91637896600F0B2F9 /* goodies.plist */,
 				C20F11CD163639F000FDF6A0 /* tnt_button-hd.png */,
 				C20F11CE163639F000FDF6A0 /* tnt_button.png */,
 				C20F11CF163639F000FDF6A0 /* tnt_icon-hd.png */,
@@ -716,6 +732,7 @@
 				C20F11D2163639F000FDF6A0 /* tnt_button.png in Resources */,
 				C20F11D3163639F000FDF6A0 /* tnt_icon-hd.png in Resources */,
 				C20F11D4163639F000FDF6A0 /* tnt_icon.png in Resources */,
+				C2F950CA1637896600F0B2F9 /* goodies.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -754,6 +771,7 @@
 				C28511AB1620C1F000C59AF9 /* TouchUtil.mm in Sources */,
 				C204587316251B13007E6D0C /* HDPersistantData.mm in Sources */,
 				C2E338F41633218700B39223 /* RemovableSprite.mm in Sources */,
+				C2F950C41637842E00F0B2F9 /* GB2ShapeCache.mm in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

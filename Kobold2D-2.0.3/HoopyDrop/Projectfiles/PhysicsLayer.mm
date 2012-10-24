@@ -9,6 +9,7 @@
 #import "HoopyDrop.h"
 #import "Box2DDebugLayer.h"
 #import "CollisionHandler.h"
+#import "GB2ShapeCache.h"
 
 //Pixel to metres ratio. Box2D uses metres as the unit for measurement.
 //This ratio defines how many pixels correspond to 1 Box2D "metre"
@@ -95,8 +96,10 @@ const float PTM_RATIO = 32.0f;
 		screenBorderBody->CreateFixture(&screenBorderShape, 0);
 		screenBorderShape.Set(upperLeftCorner, lowerLeftCorner);
 		screenBorderBody->CreateFixture(&screenBorderShape, 0);
+        
+        // Shapes
+        [[GB2ShapeCache sharedShapeCache] addShapesWithFile:@"goodies.plist"];
 		
-
         // Hoopy Himself
         [[CCSpriteFrameCache sharedSpriteFrameCache] addSpriteFramesWithFile:@"hoopy.plist"];
         CCSpriteBatchNode* hoopy = [CCSpriteBatchNode batchNodeWithFile:@"hoopy.png"];
@@ -513,12 +516,10 @@ const float PTM_RATIO = 32.0f;
     _bombTargetPoint = [self createRandomPoint];
     CCSpriteBatchNode* batchNode = (CCSpriteBatchNode*)[self getChildByTag:kBombTargetBatchNode];
     CCSprite* bomb = [CCSprite spriteWithTexture:[batchNode texture]];
-    
-    bomb.anchorPoint = ccp(.5, .5);
+
     bomb.position = _bombTargetPoint;
-    [batchNode addChild:bomb z:OBJECTS_Z];
     
-    	b2BodyDef bodyDef;
+    b2BodyDef bodyDef;
     bodyDef.type = b2_dynamicBody;
     bodyDef.gravityScale = 0;
 	bodyDef.fixedRotation = false;
@@ -536,19 +537,13 @@ const float PTM_RATIO = 32.0f;
     [_bombIconHandler setCreateTime:createTime];
     [_bombIconHandler setType:kGoodieBodyType];
     
-	b2PolygonShape dynamicBox;
-	dynamicBox.SetAsBox(.4, .4);
+    GB2ShapeCache* shapeCache = [GB2ShapeCache sharedShapeCache];
+    [shapeCache addFixturesToBody:body forShapeName: @"tnt_icon"];
     
-    b2FixtureDef fixtureDef;
-    fixtureDef.shape = &dynamicBox;
-    fixtureDef.density = 1.0f;
-    fixtureDef.friction = 0.3f;
-    fixtureDef.restitution = 0.7f;
-    fixtureDef.isSensor = true;
+    bomb.anchorPoint = [shapeCache anchorPointForShape:@"tnt_icon"];
     
-    body->CreateFixture(&fixtureDef);
-    
-    body->ApplyAngularImpulse(.15);
+    [batchNode addChild:bomb z:OBJECTS_Z];
+    body->ApplyAngularImpulse(1.7);
 
 }
 
