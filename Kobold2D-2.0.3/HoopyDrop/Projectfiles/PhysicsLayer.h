@@ -22,6 +22,7 @@ enum
     kBombButtonSprite,
     kGoodiesSpriteSheet,
     kExtraSecondsSprite,
+    kCherrySprite,
 };
 
 @interface PhysicsLayer : CCScene
@@ -33,14 +34,21 @@ enum
 
 @property (nonatomic, retain) NSMutableArray* deletableBodies;
 
+-(void) addCherryWithTime: (uint) createTime;
+-(void) removeCherrySprite;
+-(void) explodeCherryTarget;
+-(void) removeCherryTarget;
+
 -(void) addExtraSecondsTargetWithTime: (uint) createTime;
 -(void) removeExtraSecondsTargetSprite;
 -(void) explodeExtraTimeTarget;
+-(void) removeExtraSecondsTarget;
 
 -(void) explodeBombTarget;
 -(void) removeBombTarget;
 -(void) removeTargetSprite: (CCSprite*) sprite;
 -(void) addBombTargetWithTime: (uint) createTime;
+
 -(CCNode*) bombButtonNode;
 -(void) addBombButton;
 -(void) removeBombButton;

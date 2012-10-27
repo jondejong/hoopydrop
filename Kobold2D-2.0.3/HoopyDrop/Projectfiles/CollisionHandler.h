@@ -34,5 +34,6 @@
 
 @interface BombIconHandler : CollisionHandler @end
 @interface ExtraSecondsIconHandler : CollisionHandler @end
+@interface CherryIconHandler : CollisionHandler @end
 
 

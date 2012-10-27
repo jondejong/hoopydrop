@@ -129,6 +129,21 @@
 
 @end
 
+@implementation CherryIconHandler
+-(void) doHandleCollisionWith: (CollisionHandler*) otherHandler
+{
+    [self removeThisTarget];
+    [[GameManager sharedInstance] handledCherryTargetHit];
+}
+
+-(void) removeThisTarget
+{
+    if(![self isRemoved]) {
+        [self markRemoved];
+        [[GameManager sharedInstance] markBodyForDeletion:[self body]];
+    }
+}
+@end
 
 @implementation ExtraSecondsIconHandler
 
@@ -143,7 +158,6 @@
     if(![self isRemoved]) {
         [self markRemoved];
         [[GameManager sharedInstance] markBodyForDeletion:[self body]];
-//        [[GameManager sharedInstance] removeBombTargetSprite:[self sprite]];
     }
 }
 

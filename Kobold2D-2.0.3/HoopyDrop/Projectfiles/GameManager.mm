@@ -22,6 +22,7 @@
     uint _purpleTargetPoints;
     bool _exploded;
     bool _extraTimeAdded;
+    bool _cherryHitHandled;
     
 }
 GameManager* _sharedGameManager;
@@ -42,6 +43,7 @@ GameManager* _sharedGameManager;
         _score = 0;
         _exploded = NO;
         _extraTimeAdded = NO;
+        _cherryHitHandled = NO;
         
         NSString* dataString = [[PDKeychainBindings sharedKeychainBindings] objectForKey:PERSISTANT_DATA_KEYCHAIN_KEY];
         
@@ -52,6 +54,27 @@ GameManager* _sharedGameManager;
         [[SimpleAudioEngine sharedEngine] preloadEffect:@"game_over.aif"];
     }
     return self;
+}
+
+
+-(void) addCherryTargetWithTime: (uint)createTime
+{
+    [physicsLayer addCherryWithTime:createTime];
+}
+
+-(void) handledCherryTargetHit
+{
+    if(!_cherryHitHandled){
+        _cherryHitHandled = YES;
+        [physicsLayer removeCherrySprite];
+        [physicsLayer explodeCherryTarget];
+        [self collectAllExistingOrbs];
+    }
+    
+}
+-(void) removeCherryTarget
+{
+    [physicsLayer removeCherryTarget];
 }
 
 -(void)removeBombTarget
@@ -100,7 +123,7 @@ GameManager* _sharedGameManager;
 }
 
 -(void) removeExtraTimeTarget {
-    [physicsLayer removeExtraSecondsTargetSprite];
+    [physicsLayer removeExtraSecondsTarget];
 }
 
 -(void) explodeBomb
@@ -109,15 +132,7 @@ GameManager* _sharedGameManager;
     {
         _exploded = YES;
         [physicsLayer removeBombButton];
-        for(CollisionHandler* handler in[orbTimer existingOrbs])
-        {
-            if(![handler isRemoved])
-            {
-                CollisionHandler* fakeHoopyHandler = [[CollisionHandler alloc] init];
-                [fakeHoopyHandler setType:kHoopyBodyType];
-                [handler handleCollisionWith:fakeHoopyHandler];
-            }
-        }
+        [self collectAllExistingOrbs];
     }
 }
 
@@ -246,6 +261,7 @@ GameManager* _sharedGameManager;
     _score = 0;
     _exploded = NO;
     _extraTimeAdded = NO;
+    _cherryHitHandled = NO;
     
     self.gamePlayRootScene = [HDGamePlayRootScene node];
     
@@ -390,6 +406,19 @@ GameManager* _sharedGameManager;
         count++;
     }
     return -1;
+}
+
+-(void) collectAllExistingOrbs
+{
+    for(CollisionHandler* handler in[orbTimer existingOrbs])
+    {
+        if(![handler isRemoved])
+        {
+            CollisionHandler* fakeHoopyHandler = [[CollisionHandler alloc] init];
+            [fakeHoopyHandler setType:kHoopyBodyType];
+            [handler handleCollisionWith:fakeHoopyHandler];
+        }
+    }
 }
 
 @end

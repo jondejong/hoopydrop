@@ -19,6 +19,9 @@
 #define PERSISTANT_DATA_KEYCHAIN_KEY @"HoopyDropPersistantData"
 
 #define DRAW_DEBUG_OUTLINE 0
+#define DRAW_CHERRY 1
+#define DRAW_TNT 1
+#define DRAW_EXTRA_TIME 1
 
 #define SECONDS_PER_GAME 60
 
@@ -31,9 +34,13 @@
 // Goodie Targets
 #define GOODIE_BEGIN_TIME 50
 #define GOODIE_END_TIME 12
-#define GOODIE_EXPIRE_SECONDS 22
+#define GOODIE_EXPIRE_SECONDS 20
 
 #define TIME_ADDED_IN_SECONDS 5
+
+#define CHERRY_BEGIN_TIME 15
+#define CHERRY_END_TIME 5
+
 
 // End of game animation controls
 #define OVERLAY_ALPHA_CHANNEL_INCREMENTS 5
@@ -198,6 +205,10 @@ enum {
 +(GameManager*) sharedInstance;
 +(bool) isRetina;
 +(bool) is16x9;
+
+-(void) addCherryTargetWithTime: (uint)createTime;
+-(void) handledCherryTargetHit;
+-(void) removeCherryTarget;
 
 -(void) addExtraTimeTargetWithTime: (uint)createTime;
 -(void) handleExtraTimeTargetHit;

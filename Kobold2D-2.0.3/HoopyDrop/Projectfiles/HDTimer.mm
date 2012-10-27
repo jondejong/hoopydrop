@@ -20,11 +20,17 @@
     bool _extraSecondsTargetAdded;
     bool _extraSecondsTargetRemoved;
     
+    bool _cherryTargetAdded;
+    bool _cherryTargetRemoved;
+    
     int _bombAddTime;
     int _bombExpireTime;
     
     int _extraSecondsAddTime;
     int _extraSecondsExpireTime;
+    
+    int _cherryAddTime;
+    int _cherryExpireTime;
 }
 
 - (id)init
@@ -38,6 +44,8 @@
         _bombTargetRemoved = NO;
         _extraSecondsTargetAdded = NO;
         _extraSecondsTargetRemoved = NO;
+        _cherryTargetAdded = NO;
+        _cherryTargetRemoved = NO;
         
         _bombAddTime = (arc4random() % (GOODIE_BEGIN_TIME - GOODIE_END_TIME)) + GOODIE_END_TIME;
         _bombExpireTime = _bombAddTime - GOODIE_EXPIRE_SECONDS;
@@ -45,6 +53,9 @@
         
         _extraSecondsAddTime = (arc4random() % (GOODIE_BEGIN_TIME - GOODIE_END_TIME)) + GOODIE_END_TIME;
         _extraSecondsExpireTime = _extraSecondsAddTime - GOODIE_EXPIRE_SECONDS;
+        
+        _cherryAddTime = (arc4random() % (CHERRY_BEGIN_TIME - CHERRY_END_TIME)) + CHERRY_END_TIME;
+        _cherryExpireTime = _cherryAddTime - GOODIE_EXPIRE_SECONDS;
 
     }
     return self;
@@ -79,6 +90,7 @@
 		[[GameManager sharedInstance] updateTimer:_countTime];
 	}
     
+#ifdef DRAW_TNT
     if(_countTime <= _bombAddTime && !_bombTargetAdded) {
         _bombTargetAdded = YES;
         [[GameManager sharedInstance] addBombTargetWithTime:_countTime];
@@ -86,7 +98,8 @@
         _bombTargetRemoved = YES;
         [[GameManager sharedInstance] removeBombTarget];
     }
-    
+#endif
+#ifdef DRAW_EXTRA_TIME
     if(_countTime <= _extraSecondsAddTime && !_extraSecondsTargetAdded) {
         _extraSecondsTargetAdded = YES;
         [[GameManager sharedInstance] addExtraTimeTargetWithTime:_countTime];
@@ -94,6 +107,16 @@
         _extraSecondsTargetRemoved = YES;
         [[GameManager sharedInstance] removeExtraTimeTarget];
     }
+#endif
+#ifdef DRAW_CHERRY
+    if(_countTime <= _cherryAddTime && !_cherryTargetAdded) {
+        _cherryTargetAdded = YES;
+        [[GameManager sharedInstance] addCherryTargetWithTime:_countTime];
+    } else if(_countTime <= _cherryExpireTime &&!_cherryTargetRemoved) {
+        _cherryTargetRemoved = YES;
+        [[GameManager sharedInstance] removeCherryTarget];
+    }
+#endif
     
     if(_countTime > 0 && _countTime <= 10) {
         [[GameManager sharedInstance] fireSound:kHDSoundAlarm];

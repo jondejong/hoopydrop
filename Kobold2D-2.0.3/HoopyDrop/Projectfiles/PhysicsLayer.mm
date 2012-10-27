@@ -35,9 +35,11 @@ const float PTM_RATIO = 32.0f;
     CollisionHandler* _hoopyHandler;
     CollisionHandler* _bombIconHandler;
     CollisionHandler* _extraTimeIconHandler;
-
+    CollisionHandler* _cherryIconHandler;
+    
     bool _bombButtonAdded;
     CGPoint _bombTargetPoint;
+    CGPoint _cherryPoint;
     
     CGPoint _extraSecondsTargetPoint;
 }
@@ -501,6 +503,72 @@ const float PTM_RATIO = 32.0f;
 -(void) removeExtraSecondsTargetSprite
 {
      [[self getChildByTag:kGoodiesSpriteSheet] removeChildByTag:kExtraSecondsSprite cleanup:YES];
+}
+
+-(void) removeExtraSecondsTarget {
+    [_extraTimeIconHandler removeThisTarget];
+    [self removeExtraSecondsTargetSprite];
+}
+
+-(void) addCherryWithTime: (uint) createTime
+{
+    _cherryPoint = [self createRandomPoint: YES];
+    
+    CCSprite *sprite = [CCSprite spriteWithSpriteFrameName:@"bomb_icon.png"];
+    
+    sprite.position = _cherryPoint;
+    
+    b2BodyDef bodyDef;
+    bodyDef.type = b2_dynamicBody;
+    bodyDef.gravityScale = 0;
+	bodyDef.fixedRotation = false;
+    
+	// position must be converted to meters
+	bodyDef.position = [self toMeters:_cherryPoint];
+    
+    _cherryIconHandler = [[CherryIconHandler alloc] init];
+    
+	bodyDef.userData = (__bridge void*)_cherryIconHandler;
+    b2Body* body = world->CreateBody(&bodyDef);
+    
+    [_cherryIconHandler setSprite:sprite];
+    [_cherryIconHandler setBody:body];
+    [_cherryIconHandler setCreateTime:createTime];
+    [_cherryIconHandler setType:kGoodieBodyType];
+    
+    b2CircleShape ballShape;
+    ballShape.m_radius = .55f;
+	
+    // Define the dynamic body fixture.
+    b2FixtureDef fixtureDef;
+    fixtureDef.shape = &ballShape;
+    fixtureDef.density = 1.0f;
+    fixtureDef.friction = 0.3f;
+    fixtureDef.restitution = 0.7f;
+    fixtureDef.isSensor = true;
+    
+    body->CreateFixture(&fixtureDef);
+    
+    sprite.anchorPoint = ccp(.5, .35);
+    
+    [[self getChildByTag:kGoodiesSpriteSheet] addChild:sprite z:OBJECTS_Z tag:kCherrySprite];
+    body->ApplyAngularImpulse(.5);
+}
+
+-(void) removeCherrySprite
+{
+    [[self getChildByTag:kGoodiesSpriteSheet] removeChildByTag:kCherrySprite cleanup:YES];
+}
+
+-(void) explodeCherryTarget
+{
+    [self explodeGoodieTargetAtLocation:_cherryPoint];
+}
+
+-(void) removeCherryTarget
+{
+    [self removeCherrySprite];
+    [_cherryIconHandler removeThisTarget];
 }
 
 -(void) addBombButton
