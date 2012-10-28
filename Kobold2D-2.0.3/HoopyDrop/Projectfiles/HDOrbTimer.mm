@@ -14,6 +14,9 @@
     float _lastLoopTime;
     uint _targetCount;
     
+    int _freezeTime;
+    bool _frozen;
+    
     // Current game time in 10ths of seconds
     int _now;
     
@@ -32,7 +35,6 @@
     int _expireTime;
     
     double _pauseTime;
-    
     
     // All scores will be uints when added
     // But store them as floating points since
@@ -53,6 +55,8 @@
     if (self) {
         
         self.existingOrbs = [NSMutableArray arrayWithCapacity:100];
+        
+        _frozen = NO;
         
         _lastLoopTime = 0.0;
         _targetCount = 0;
@@ -129,7 +133,11 @@
     if(currentTime - _lastLoopTime  >= UPDATE_TIMER_LOOP_SECONDS) {
         // Adjust the counter
         if(_lastLoopTime > 0) {
-            _now += (10 * (currentTime - _lastLoopTime))/1;
+            if(_frozen ) {
+                _freezeTime += (10 * (currentTime - _lastLoopTime))/1;
+            } else {
+                _now += (10 * (currentTime - _lastLoopTime))/1;
+            }
         } else {
             _now = 1;
         }
@@ -164,6 +172,10 @@
     
         // Update all values (if needed)
         [self updateValues];
+        if(_frozen && _freezeTime >= FREEZE_TIME_AMOUNT) {
+            [[GameManager sharedInstance] handleUnfreeze];
+            _frozen = NO;
+        }
     }
 }
 
@@ -241,6 +253,11 @@
     }
 }
 
+-(void) freeze
+{
+    _frozen = YES;
+    _freezeTime = 0;
+}
 
 -(void) start {
     [self schedule: @selector(tick:)];

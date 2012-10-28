@@ -110,6 +110,24 @@
 
 @end
 
+@implementation BoltIconHandler
+
+-(void) doHandleCollisionWith: (CollisionHandler*) otherHandler
+{
+    [self removeThisTarget];
+    [[GameManager sharedInstance] handledBoltTargetHit];
+}
+
+-(void) removeThisTarget
+{
+    if(![self isRemoved]) {
+        [[GameManager sharedInstance] markBodyForDeletion:[self body]];
+        [self markRemoved];
+    }
+}
+
+@end
+
 @implementation BombIconHandler
 
 -(void) doHandleCollisionWith: (CollisionHandler*) otherHandler

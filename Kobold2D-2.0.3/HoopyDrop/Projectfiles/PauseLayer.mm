@@ -17,6 +17,7 @@
     CCSprite* _faderOverlay;
     CCLabelTTF* _pausedText;
     bool _bombButtonAdded;
+    bool _boltButtonAdded;
 }
 
 - (id)init
@@ -33,6 +34,7 @@
         _pausedText.position = ccp(size.width/2.0, size.height/1.2);
         
         _bombButtonAdded = NO;
+        _boltButtonAdded = NO;
         
         [self setIsTouchEnabled:YES];
         
@@ -78,9 +80,14 @@
     [self setIsTouchEnabled: NO];
 }
 
--(void) addBombButton;
+-(void) addBombButton
 {
     _bombButtonAdded = YES;
+}
+
+-(void) addBoltButton
+{
+    _boltButtonAdded = YES;
 }
 
 -(void) removeBombButton
@@ -93,6 +100,7 @@
     if([self isTouchEnabled]) {
         
         bool bombButtonPressed = NO;
+        bool boltButtonPressed = NO;
         if(!_paused){
             if(_bombButtonAdded) {
                 // Check to see if the button was pressed
@@ -105,7 +113,19 @@
             }
         }
         
-        if(!bombButtonPressed && [TouchUtil wasIntentiallyTouched]) {
+        if(!_paused){
+            if(_boltButtonAdded) {
+                // Check to see if the button was pressed
+                KKInput* input = [KKInput sharedInput];
+                if ([input isAnyTouchOnNode:[[GameManager sharedInstance]boltButtonNode] touchPhase:KKTouchPhaseEnded])
+                {
+                    [[GameManager sharedInstance] handleBoltButtonPress];
+                    bombButtonPressed = YES;
+                }
+            }
+        }
+        
+        if(!bombButtonPressed && !boltButtonPressed && [TouchUtil wasIntentiallyTouched]) {
             if(_paused) {
                 [self handleUnpase];
                 

@@ -23,6 +23,8 @@ enum
     kGoodiesSpriteSheet,
     kExtraSecondsSprite,
     kCherrySprite,
+    kBoltTargetSprite,
+    kBoltButtonSprite,
 };
 
 @interface PhysicsLayer : CCScene
@@ -31,8 +33,16 @@ enum
 	ContactListener* contactListener;
 	GLESDebugDraw* debugDraw;
 }
-
 @property (nonatomic, retain) NSMutableArray* deletableBodies;
+
+-(void) addBoltWithTime: (uint) createTime;
+-(void) removeBoltSprite;
+-(void) explodeBoltTarget;
+-(void) removeBoltTarget;
+-(void) addBoltButton;
+-(void) removeBoltButton;
+-(CCNode*) boltButtonNode;
+-(void) handleBoltButtonPressed;
 
 -(void) addCherryWithTime: (uint) createTime;
 -(void) removeCherrySprite;

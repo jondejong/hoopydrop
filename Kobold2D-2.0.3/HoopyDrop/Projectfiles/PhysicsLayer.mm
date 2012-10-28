@@ -36,12 +36,15 @@ const float PTM_RATIO = 32.0f;
     CollisionHandler* _bombIconHandler;
     CollisionHandler* _extraTimeIconHandler;
     CollisionHandler* _cherryIconHandler;
+    CollisionHandler* _boltIconHandler;
     
     bool _bombButtonAdded;
+    bool _boltButtonAdded;
     CGPoint _bombTargetPoint;
     CGPoint _cherryPoint;
     
     CGPoint _extraSecondsTargetPoint;
+    CGPoint _boltTargetPoint;
 }
 
 @synthesize deletableBodies;
@@ -62,7 +65,13 @@ const float PTM_RATIO = 32.0f;
         
         _bombTargetPoint = ccp(0,0);
         _bombButtonAdded = NO;
-
+        
+        _extraSecondsTargetPoint = ccp(0,0);
+        _cherryPoint = ccp(0,0);
+        _boltTargetPoint = ccp(0,0);
+        
+        _boltButtonAdded = NO;
+        
 		glClearColor(0.1f, 0.0f, 0.2f, 1.0f);
 		
 		// Construct a world object, which will hold and simulate the rigid bodies.
@@ -268,6 +277,9 @@ const float PTM_RATIO = 32.0f;
 	{
 		CollisionHandler* handler = (__bridge CollisionHandler*)body->GetUserData();
         if(handler != NULL) {
+            if([handler bodyType] == kGoodieBodyType) {
+                CCLOG(@"Spinning a goodie.");
+            }
             CCSprite* sprite = [handler sprite];
             if (sprite != NULL)
             {
@@ -462,6 +474,87 @@ const float PTM_RATIO = 32.0f;
     _lastExpressionChangeGameTime = [[GameManager sharedInstance] currentGameTime];
 }
 
+-(void) addBoltWithTime: (uint) createTime
+{
+    _boltTargetPoint = [self createRandomPoint: YES];
+    
+    CCSprite *sprite = [CCSprite spriteWithSpriteFrameName:@"bolt_icon.png"];
+    
+    sprite.position = _boltTargetPoint;
+    
+    b2BodyDef bodyDef;
+    bodyDef.type = b2_dynamicBody;
+    bodyDef.gravityScale = 0;
+	bodyDef.fixedRotation = false;
+    
+	// position must be converted to meters
+	bodyDef.position = [self toMeters:_boltTargetPoint];
+    
+    _boltIconHandler = [[BoltIconHandler alloc] init];
+    
+	bodyDef.userData = (__bridge void*)_boltIconHandler;
+    b2Body* body = world->CreateBody(&bodyDef);
+    
+    [_boltIconHandler setSprite:sprite];
+    [_boltIconHandler setBody:body];
+    [_boltIconHandler setCreateTime:createTime];
+    [_boltIconHandler setType:kGoodieBodyType];
+    
+    GB2ShapeCache* shapeCache = [GB2ShapeCache sharedShapeCache];
+    
+    //    NSString* shapeName =  [NSString stringWithFormat:@"plus_five%@", ([GameManager isRetina] ? @"-hd" : @"") ];
+    NSString* shapeName = @"bolt_icon";
+    [shapeCache addFixturesToBody:body forShapeName: shapeName];
+    sprite.anchorPoint = [shapeCache anchorPointForShape:shapeName];
+    
+    [[self getChildByTag:kGoodiesSpriteSheet] addChild:sprite z:OBJECTS_Z tag:kBoltTargetSprite];
+    body->ApplyAngularImpulse(.15);
+}
+
+-(void) removeBoltSprite
+{
+    [[self getChildByTag:kGoodiesSpriteSheet] removeChildByTag:kBoltTargetSprite cleanup:YES];
+}
+
+-(void) explodeBoltTarget
+{
+    [self explodeGoodieTargetAtLocation:_boltTargetPoint];
+}
+
+-(void) removeBoltTarget
+{
+    [_boltIconHandler removeThisTarget];
+    [self removeBoltSprite];
+}
+
+-(void) addBoltButton
+{
+    if(!_boltButtonAdded) {
+        _boltButtonAdded = YES;
+        CCSprite *button = [CCSprite spriteWithSpriteFrameName:@"bolt_button.png"];
+        button.anchorPoint = ccp(.5, .35);
+        button.position = ccp(50, 50);
+        
+        [[self getChildByTag:kGoodiesSpriteSheet] addChild:button z:OBJECTS_Z tag:kBoltButtonSprite];
+    } else {
+        CCLOG(@"Attempted to add the bolt button twice.");
+    }
+}
+
+-(void) removeBoltButton
+{
+    [[self getChildByTag:kGoodiesSpriteSheet] removeChildByTag:kBoltButtonSprite cleanup:YES];
+}
+
+-(CCNode*) boltButtonNode
+{
+    return [[self getChildByTag:kGoodiesSpriteSheet] getChildByTag:kBoltButtonSprite];
+}
+
+-(void) handleBoltButtonPressed
+{
+    [self removeBoltButton];
+}
 
 -(void) addExtraSecondsTargetWithTime: (uint) createTime
 {

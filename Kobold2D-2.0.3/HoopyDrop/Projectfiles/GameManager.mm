@@ -23,6 +23,8 @@
     bool _exploded;
     bool _extraTimeAdded;
     bool _cherryHitHandled;
+    bool _boltTargetHit;
+    bool _boltButtonPressed;
     
 }
 GameManager* _sharedGameManager;
@@ -44,6 +46,7 @@ GameManager* _sharedGameManager;
         _exploded = NO;
         _extraTimeAdded = NO;
         _cherryHitHandled = NO;
+        _boltButtonPressed = NO;
         
         NSString* dataString = [[PDKeychainBindings sharedKeychainBindings] objectForKey:PERSISTANT_DATA_KEYCHAIN_KEY];
         
@@ -56,6 +59,51 @@ GameManager* _sharedGameManager;
     return self;
 }
 
+-(void) handleUnfreeze
+{
+    [timerLayer unpause];
+}
+
+-(void) addBoltTargetWithTime: (uint) createTime
+{
+    [physicsLayer addBoltWithTime:createTime];
+}
+
+-(void) handledBoltTargetHit
+{
+    if(!_boltTargetHit){
+        _boltTargetHit = YES;
+        [physicsLayer removeBoltSprite];
+        [physicsLayer explodeBoltTarget];
+        [self addBoltButton];
+    }
+}
+
+-(void) removeBoltTarget
+{
+    [physicsLayer removeBoltTarget];
+}
+
+-(void) addBoltButton
+{
+    [pauseLayer addBoltButton];
+    [physicsLayer addBoltButton];
+}
+
+-(CCNode*) boltButtonNode
+{
+    return [physicsLayer boltButtonNode];
+}
+
+-(void) handleBoltButtonPress
+{
+    if(!_boltButtonPressed) {
+        _boltButtonPressed = YES;
+        [physicsLayer handleBoltButtonPressed];
+        [timerLayer pause];
+        [orbTimer freeze];
+    }
+}
 
 -(void) addCherryTargetWithTime: (uint)createTime
 {
@@ -262,6 +310,8 @@ GameManager* _sharedGameManager;
     _exploded = NO;
     _extraTimeAdded = NO;
     _cherryHitHandled = NO;
+    _boltTargetHit = NO;
+    _boltButtonPressed = NO;
     
     self.gamePlayRootScene = [HDGamePlayRootScene node];
     

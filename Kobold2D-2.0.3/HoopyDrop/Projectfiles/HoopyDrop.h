@@ -22,6 +22,7 @@
 #define DRAW_CHERRY 1
 #define DRAW_TNT 1
 #define DRAW_EXTRA_TIME 1
+#define DRAW_BOLT 1
 
 #define SECONDS_PER_GAME 60
 
@@ -34,13 +35,14 @@
 // Goodie Targets
 #define GOODIE_BEGIN_TIME 50
 #define GOODIE_END_TIME 12
-#define GOODIE_EXPIRE_SECONDS 20
+#define GOODIE_EXPIRE_SECONDS 2
 
 #define TIME_ADDED_IN_SECONDS 5
 
 #define CHERRY_BEGIN_TIME 15
 #define CHERRY_END_TIME 5
 
+#define FREEZE_TIME_AMOUNT 30 // 10ths of seconds
 
 // End of game animation controls
 #define OVERLAY_ALPHA_CHANNEL_INCREMENTS 5
@@ -156,7 +158,7 @@ enum {
 
 @interface HDOrbTimer : CCScene
 @property (nonatomic, retain) NSMutableArray* existingOrbs;
-
+-(void) freeze;
 -(void) start;
 -(void) handlePause;
 -(void) handleUnpause;
@@ -171,6 +173,7 @@ enum {
 @interface PauseLayer : CCLayer
 -(void) removeTouchResponse;
 -(void) addBombButton;
+-(void) addBoltButton;
 -(void) removeBombButton;
 @end
 
@@ -205,6 +208,15 @@ enum {
 +(GameManager*) sharedInstance;
 +(bool) isRetina;
 +(bool) is16x9;
+
+-(void) handleUnfreeze;
+
+-(void) addBoltTargetWithTime: (uint) createTime;
+-(void) handledBoltTargetHit;
+-(void) removeBoltTarget;
+-(void) addBoltButton;
+-(CCNode*) boltButtonNode;
+-(void) handleBoltButtonPress;
 
 -(void) addCherryTargetWithTime: (uint)createTime;
 -(void) handledCherryTargetHit;
