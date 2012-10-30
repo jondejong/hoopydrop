@@ -114,6 +114,7 @@
 #define OBJECTS_Z 5
 #define OVERLAY_Z 20
 #define OVERLAY_TEXT_Z 25
+#define BUTTON_Z 10
 
 
 // Sounds

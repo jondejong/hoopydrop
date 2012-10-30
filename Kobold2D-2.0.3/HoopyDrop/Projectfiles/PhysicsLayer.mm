@@ -119,18 +119,18 @@ const float PTM_RATIO = 32.0f;
         // Goodies
         [[CCSpriteFrameCache sharedSpriteFrameCache] addSpriteFramesWithFile:@"goodies.plist"];
         CCSpriteBatchNode *goodiesSpriteSheet = [CCSpriteBatchNode batchNodeWithFile:@"goodies.png"];
-        [self addChild:goodiesSpriteSheet z:0 tag:kGoodiesSpriteSheet];
+        [self addChild:goodiesSpriteSheet z:BUTTON_Z tag:kGoodiesSpriteSheet];
         
         // Hoopy Himself
         [[CCSpriteFrameCache sharedSpriteFrameCache] addSpriteFramesWithFile:@"hoopy.plist"];
         CCSpriteBatchNode* hoopy = [CCSpriteBatchNode batchNodeWithFile:@"hoopy.png"];
         
-        [self addChild:hoopy z:0 tag:kTagBatchNode];
+        [self addChild:hoopy z:OBJECTS_Z tag:kTagBatchNode];
 
 		// Orbs
         [[CCSpriteFrameCache sharedSpriteFrameCache] addSpriteFramesWithFile:@"orbs.plist"];
         CCSpriteBatchNode *orbSpriteSheet = [CCSpriteBatchNode batchNodeWithFile:@"orbs.png"];
-        [self addChild:orbSpriteSheet z:0 tag:kOrbNode];
+        [self addChild:orbSpriteSheet z:OBJECTS_Z tag:kOrbNode];
         
         [self addNewSpriteAt:CGPointMake(screenSize.width / 2, screenSize.height / 2)];
 	
@@ -535,7 +535,7 @@ const float PTM_RATIO = 32.0f;
         button.anchorPoint = ccp(.5, .35);
         button.position = ccp(50, 50);
         
-        [[self getChildByTag:kGoodiesSpriteSheet] addChild:button z:OBJECTS_Z tag:kBoltButtonSprite];
+        [[self getChildByTag:kGoodiesSpriteSheet] addChild:button z:BUTTON_Z tag:kBoltButtonSprite];
     } else {
         CCLOG(@"Attempted to add the bolt button twice.");
     }
@@ -672,7 +672,7 @@ const float PTM_RATIO = 32.0f;
         button.anchorPoint = ccp(.5, .35);
         button.position = ccp(275, 50);
         
-        [[self getChildByTag:kGoodiesSpriteSheet] addChild:button z:OBJECTS_Z tag:kBombButtonSprite];
+        [[self getChildByTag:kGoodiesSpriteSheet] addChild:button z:BUTTON_Z tag:kBombButtonSprite];
     } else {
         CCLOG(@"Attempted to add the bomb button twice.");
     }
