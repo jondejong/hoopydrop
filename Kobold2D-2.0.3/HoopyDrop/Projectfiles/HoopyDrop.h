@@ -32,12 +32,13 @@
 
 #define SCREEN_BUFFER_PERCENTAGE .1
 
-// Help Screen constants
+// Non-game Screen constants
 #define HELP_SCREEN_MOVE_SECONDS .6
 #define HELP_SCREEN_Y_POINTS 100
 #define HELP_SCREEN_PAGE_COUNT 11
 #define HELP_SCREEN_MENU_OFFSET 35
 #define HELP_TOP_OFFSET 420
+#define NAV_MENU_BOTTOM_OFFSET 50
 
 // Goodie Targets
 #define GOODIE_BEGIN_TIME 50
@@ -123,12 +124,13 @@
 #define OVERLAY_TEXT_Z 25
 #define BUTTON_Z 10
 
-// Help Page Tags
+// Non-game page Page Tags
 enum {
     kHelpPage1Tag,
     kHelpPage2Tag,
     kHelpPage3Tag,
     kHelpMenuTag,
+    kSettingsBorderTag,
 };
 
 // Sounds
@@ -160,6 +162,7 @@ enum {
 @property (nonatomic, retain) CCMenuItemFont* soundsOnMenuItem;
 @property (nonatomic, retain) CCMenuItemFont* soundsOffMenuItem;
 @property (nonatomic, retain) CCMenu* resetMenu;
+@property (nonatomic, retain) CCMenu* goHomeMenu;
 @end
 @interface HelpLayer : CCLayer @end
 @interface LeaderBoardLayer : CCLayer @end

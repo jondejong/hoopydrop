@@ -56,13 +56,13 @@
    
     if(backward && forward) {
         resetMenu = [CCMenu menuWithItems:[self createBackButton], goBackMenuItem, [self createForwardButton], nil];
-        resetMenu.position = ccp(size.width/2, 50);
+        resetMenu.position = ccp(size.width/2, NAV_MENU_BOTTOM_OFFSET);
     } else if(backward) {
         resetMenu = [CCMenu menuWithItems:[self createBackButton], goBackMenuItem, nil];
-        resetMenu.position = ccp(size.width/2 - HELP_SCREEN_MENU_OFFSET, 50);
+        resetMenu.position = ccp(size.width/2 - HELP_SCREEN_MENU_OFFSET, NAV_MENU_BOTTOM_OFFSET);
     } else {
         resetMenu = [CCMenu menuWithItems:goBackMenuItem, [self createForwardButton], nil];
-        resetMenu.position = ccp(size.width/2 + HELP_SCREEN_MENU_OFFSET, 50);
+        resetMenu.position = ccp(size.width/2 + HELP_SCREEN_MENU_OFFSET, NAV_MENU_BOTTOM_OFFSET);
     }
     
     [resetMenu alignItemsHorizontallyWithPadding:20];

@@ -15,15 +15,29 @@
     CCMenuItemFont* _resetHighScoreMenuItem;
 }
 
-@synthesize soundsOffMenuItem, soundsOnMenuItem, resetMenu;
+@synthesize soundsOffMenuItem, soundsOnMenuItem, resetMenu, goHomeMenu;
 
 - (id)init
 {
     self = [super init];
     if (self) {
         
-        [self addChild:[BackgroundLayer node] z:BACKGROUND_Z];
+        CGSize size = [[CCDirector sharedDirector] winSize];
         
+        CCSprite* banner = [CCSprite spriteWithFile:@"settings_banner.png"];
+        //        banner.anchorPoint = ccp(banner.anchorPoint.x, 0
+        
+        banner.position = ccp(size.width/2, (size.height - HELP_TOP_OFFSET)/2 + HELP_TOP_OFFSET);
+        
+        [self addChild:banner z:OBJECTS_Z];
+        
+        CCSprite* settingsBorderSprite = [CCSprite spriteWithFile:@"border.png"];
+        settingsBorderSprite.anchorPoint = ccp(0, 0);
+        settingsBorderSprite.position = ccp(0, HELP_SCREEN_Y_POINTS);
+        
+        [self addChild:[BackgroundLayer node] z:BACKGROUND_Z];
+        [self addChild:settingsBorderSprite z:OBJECTS_Z tag:kSettingsBorderTag];
+                
         [self createMenu];
     }
     return self;
@@ -34,7 +48,6 @@
     CGSize size = [[CCDirector sharedDirector] winSize];
     
     _resetHighScoreMenuItem = [CCMenuItemFont itemWithString:@"Reset High Scores" target:self selector:@selector(handleHighScoreReset)];
-    _goBackMenuItem = [CCMenuItemFont itemWithString:@"Go Back" target:self selector:@selector(handleGoBack)];
     self.soundsOnMenuItem = [CCMenuItemFont itemWithString:@"Turn Sounds On" target: self selector:@selector(toggleSounds)];
     self.soundsOffMenuItem = [CCMenuItemFont itemWithString:@"Turn Sounds Off" target: self selector:@selector(toggleSounds)];
     
@@ -46,17 +59,24 @@
     
     [_resetHighScoreMenuItem setFontSize:20];
     [_resetHighScoreMenuItem setFontName:@"Marker Felt"];
-    
-    [_goBackMenuItem setFontSize:20];
-    [_goBackMenuItem setFontName:@"Marker Felt"];
-    
+
     CCMenuItem* soundItem = [[GameManager sharedInstance] isSoundOn] ? soundsOffMenuItem : soundsOnMenuItem;
-    self.resetMenu = [CCMenu menuWithItems:soundItem, _resetHighScoreMenuItem, _goBackMenuItem, nil];
+    self.resetMenu = [CCMenu menuWithItems:soundItem, _resetHighScoreMenuItem, nil];
     
     resetMenu.position = ccp(size.width/2, size.height/2);
     
     [resetMenu alignItemsVerticallyWithPadding:15];
     [self addChild:resetMenu z:OBJECTS_Z];
+    
+    _goBackMenuItem = [CCMenuItemFont itemWithString:@"Go Home" target:self selector:@selector(handleGoBack)];
+    
+    [_goBackMenuItem setFontSize:20];
+    [_goBackMenuItem setFontName:@"Marker Felt"];
+    
+    self.goHomeMenu = [CCMenu menuWithItems:_goBackMenuItem, nil];
+    goHomeMenu.position = ccp(size.width/2, NAV_MENU_BOTTOM_OFFSET);
+    [self addChild:goHomeMenu z:OBJECTS_Z];
+    
 }
 
 -(void) toggleSounds
