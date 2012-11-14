@@ -138,7 +138,7 @@ const float PTM_RATIO = 32.0f;
 		
 		[KKInput sharedInput].accelerometerActive = YES;
         
-        [[UIApplication sharedApplication] setIdleTimerDisabled:YES];
+//        [[UIApplication sharedApplication] setIdleTimerDisabled:YES];
     }
     
 	return self;

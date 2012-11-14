@@ -240,6 +240,7 @@ GameManager* _sharedGameManager;
     }
     [[HDStartLayer sharedInstance] refreshDisplayWith:YES];
     [[CCDirector sharedDirector] popScene];
+    [[UIApplication sharedApplication] setIdleTimerDisabled:NO];
 }
 
 -(void)updateTimer: (int) time {
@@ -334,6 +335,7 @@ GameManager* _sharedGameManager;
     [[CCDirector sharedDirector] pushScene: gamePlayRootScene];
     [orbTimer start];
     [timerLayer start];
+    [[UIApplication sharedApplication] setIdleTimerDisabled:YES];
 
 }
 
@@ -341,12 +343,14 @@ GameManager* _sharedGameManager;
     [physicsLayer handlePause];
     [orbTimer handlePause];
     [timerLayer pause];
+    [[UIApplication sharedApplication] setIdleTimerDisabled:NO];
 }
 
 -(void) handleUnpause {
     [orbTimer handleUnpause];
     [physicsLayer handleUnpause];
     [timerLayer unpause];
+    [[UIApplication sharedApplication] setIdleTimerDisabled:YES];
 }
 
 -(void) addToScore: (int) points {
