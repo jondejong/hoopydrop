@@ -63,7 +63,7 @@
     CCMenuItem* soundItem = [[GameManager sharedInstance] isSoundOn] ? soundsOffMenuItem : soundsOnMenuItem;
     self.resetMenu = [CCMenu menuWithItems:soundItem, _resetHighScoreMenuItem, nil];
     
-    resetMenu.position = ccp(size.width/2, size.height/2);
+    resetMenu.position = ccp(size.width/2, HELP_SCREEN_Y_POINTS + 160);
     
     [resetMenu alignItemsVerticallyWithPadding:15];
     [self addChild:resetMenu z:OBJECTS_Z];
