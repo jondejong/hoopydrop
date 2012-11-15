@@ -277,9 +277,6 @@ const float PTM_RATIO = 32.0f;
 	{
 		CollisionHandler* handler = (__bridge CollisionHandler*)body->GetUserData();
         if(handler != NULL) {
-            if([handler bodyType] == kGoodieBodyType) {
-                CCLOG(@"Spinning a goodie.");
-            }
             CCSprite* sprite = [handler sprite];
             if (sprite != NULL)
             {

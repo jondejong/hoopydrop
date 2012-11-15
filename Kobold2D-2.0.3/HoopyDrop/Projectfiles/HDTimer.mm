@@ -13,6 +13,7 @@
     @private
     int _countTime;
     float _lastUpdateTime;
+    float _pauseTime;
     
     bool _bombTargetAdded;
     bool _bombTargetRemoved;
@@ -76,11 +77,12 @@
 }
 
 -(void)pause {
+    _pauseTime = CACurrentMediaTime();
     [self pauseSchedulerAndActions];
 }
 
 -(void)unpause {
-    _lastUpdateTime = CACurrentMediaTime();
+    _lastUpdateTime += CACurrentMediaTime() - _pauseTime;
     [self resumeSchedulerAndActions];
 }
 

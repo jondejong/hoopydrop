@@ -14,8 +14,8 @@
     float _lastLoopTime;
     uint _targetCount;
     
-    int _freezeTime;
-    bool _frozen;
+//    int _freezeTime;
+//    bool _frozen;
     
     // Current game time in 10ths of seconds
     int _now;
@@ -56,7 +56,7 @@
         
         self.existingOrbs = [NSMutableArray arrayWithCapacity:100];
         
-        _frozen = NO;
+//        _frozen = NO;
         
         _lastLoopTime = 0.0;
         _targetCount = 0;
@@ -133,11 +133,11 @@
     if(currentTime - _lastLoopTime  >= UPDATE_TIMER_LOOP_SECONDS) {
         // Adjust the counter
         if(_lastLoopTime > 0) {
-            if(_frozen ) {
-                _freezeTime += (10 * (currentTime - _lastLoopTime))/1;
-            } else {
+//            if(_frozen ) {
+//                _freezeTime += (10 * (currentTime - _lastLoopTime))/1;
+//            } else {
                 _now += (10 * (currentTime - _lastLoopTime))/1;
-            }
+//            }
         } else {
             _now = 1;
         }
@@ -172,10 +172,10 @@
     
         // Update all values (if needed)
         [self updateValues];
-        if(_frozen && _freezeTime >= FREEZE_TIME_AMOUNT) {
-            [[GameManager sharedInstance] handleUnfreeze];
-            _frozen = NO;
-        }
+//        if(_frozen && _freezeTime >= FREEZE_TIME_AMOUNT) {
+//            [[GameManager sharedInstance] handleUnfreeze];
+//            _frozen = NO;
+//        }
     }
 }
 
@@ -253,18 +253,11 @@
     }
 }
 
--(void) freeze
-{
-    _frozen = YES;
-    _freezeTime = 0;
-}
-
 -(void) start {
     [self schedule: @selector(tick:)];
 }
 
 -(void) pauseAction: (CollisionHandler*) handler {
-    _pauseTime = CACurrentMediaTime();
     [[handler sprite] pauseSchedulerAndActions];
 }
 
@@ -273,6 +266,7 @@
 }
 
 -(void) handlePause {
+    _pauseTime = CACurrentMediaTime();
     [self pauseSchedulerAndActions];
     for(CollisionHandler* handler in existingOrbs) {
         [self pauseAction: handler];

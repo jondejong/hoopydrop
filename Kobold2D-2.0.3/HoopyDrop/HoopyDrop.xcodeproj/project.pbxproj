@@ -28,6 +28,15 @@
 		C206BB4A1617A24D0046C4DE /* hoopy.png in Resources */ = {isa = PBXBuildFile; fileRef = C206BB481617A24D0046C4DE /* hoopy.png */; };
 		C206D98816001D3400CAA726 /* TextOverlayLayer.mm in Sources */ = {isa = PBXBuildFile; fileRef = C206D98716001D3400CAA726 /* TextOverlayLayer.mm */; };
 		C206D98E16001D7200CAA726 /* GameManager.mm in Sources */ = {isa = PBXBuildFile; fileRef = C206D98D16001D7200CAA726 /* GameManager.mm */; };
+		C2146A631654A29300B9B036 /* frozen_1-hd.png in Resources */ = {isa = PBXBuildFile; fileRef = C2146A5D1654A29300B9B036 /* frozen_1-hd.png */; };
+		C2146A641654A29300B9B036 /* frozen_1.png in Resources */ = {isa = PBXBuildFile; fileRef = C2146A5E1654A29300B9B036 /* frozen_1.png */; };
+		C2146A651654A29300B9B036 /* frozen_2-hd.png in Resources */ = {isa = PBXBuildFile; fileRef = C2146A5F1654A29300B9B036 /* frozen_2-hd.png */; };
+		C2146A661654A29300B9B036 /* frozen_2.png in Resources */ = {isa = PBXBuildFile; fileRef = C2146A601654A29300B9B036 /* frozen_2.png */; };
+		C2146A671654A29300B9B036 /* frozen_3-hd.png in Resources */ = {isa = PBXBuildFile; fileRef = C2146A611654A29300B9B036 /* frozen_3-hd.png */; };
+		C2146A681654A29300B9B036 /* frozen_3.png in Resources */ = {isa = PBXBuildFile; fileRef = C2146A621654A29300B9B036 /* frozen_3.png */; };
+		C2146A6F1654AF1600B9B036 /* HDFreezeTimer.mm in Sources */ = {isa = PBXBuildFile; fileRef = C2146A6E1654AF1600B9B036 /* HDFreezeTimer.mm */; };
+		C2146A711654BEFB00B9B036 /* frozen_0-hd.png in Resources */ = {isa = PBXBuildFile; fileRef = C2146A701654BEFB00B9B036 /* frozen_0-hd.png */; };
+		C2146A731654C0C800B9B036 /* frozen_0.png in Resources */ = {isa = PBXBuildFile; fileRef = C2146A721654C0C800B9B036 /* frozen_0.png */; };
 		C2172CF2162BA48C006D6EE4 /* home_button_sel-hd.png in Resources */ = {isa = PBXBuildFile; fileRef = C2172CEE162BA48C006D6EE4 /* home_button_sel-hd.png */; };
 		C2172CF3162BA48C006D6EE4 /* home_button_sel.png in Resources */ = {isa = PBXBuildFile; fileRef = C2172CEF162BA48C006D6EE4 /* home_button_sel.png */; };
 		C2172CF4162BA48C006D6EE4 /* home_button-hd.png in Resources */ = {isa = PBXBuildFile; fileRef = C2172CF0162BA48C006D6EE4 /* home_button-hd.png */; };
@@ -197,6 +206,15 @@
 		C206D98716001D3400CAA726 /* TextOverlayLayer.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = TextOverlayLayer.mm; path = Projectfiles/TextOverlayLayer.mm; sourceTree = "<group>"; };
 		C206D98C16001D7200CAA726 /* HoopyDrop.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HoopyDrop.h; sourceTree = "<group>"; };
 		C206D98D16001D7200CAA726 /* GameManager.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = GameManager.mm; sourceTree = "<group>"; };
+		C2146A5D1654A29300B9B036 /* frozen_1-hd.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "frozen_1-hd.png"; sourceTree = "<group>"; };
+		C2146A5E1654A29300B9B036 /* frozen_1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = frozen_1.png; sourceTree = "<group>"; };
+		C2146A5F1654A29300B9B036 /* frozen_2-hd.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "frozen_2-hd.png"; sourceTree = "<group>"; };
+		C2146A601654A29300B9B036 /* frozen_2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = frozen_2.png; sourceTree = "<group>"; };
+		C2146A611654A29300B9B036 /* frozen_3-hd.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "frozen_3-hd.png"; sourceTree = "<group>"; };
+		C2146A621654A29300B9B036 /* frozen_3.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = frozen_3.png; sourceTree = "<group>"; };
+		C2146A6E1654AF1600B9B036 /* HDFreezeTimer.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = HDFreezeTimer.mm; sourceTree = "<group>"; };
+		C2146A701654BEFB00B9B036 /* frozen_0-hd.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "frozen_0-hd.png"; sourceTree = "<group>"; };
+		C2146A721654C0C800B9B036 /* frozen_0.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = frozen_0.png; sourceTree = "<group>"; };
 		C2172CEE162BA48C006D6EE4 /* home_button_sel-hd.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "home_button_sel-hd.png"; sourceTree = "<group>"; };
 		C2172CEF162BA48C006D6EE4 /* home_button_sel.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = home_button_sel.png; sourceTree = "<group>"; };
 		C2172CF0162BA48C006D6EE4 /* home_button-hd.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "home_button-hd.png"; sourceTree = "<group>"; };
@@ -609,6 +627,7 @@
 				C233C5181605312F00622E77 /* HDTimer.mm */,
 				C24A846A16093DB200F769D4 /* HDOrbTimer.mm */,
 				C2E338F31633218700B39223 /* RemovableSprite.mm */,
+				C2146A6E1654AF1600B9B036 /* HDFreezeTimer.mm */,
 			);
 			path = Projectfiles;
 			sourceTree = "<group>";
@@ -616,6 +635,14 @@
 		DCC1A39413A94F1A005BD75D /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				C2146A701654BEFB00B9B036 /* frozen_0-hd.png */,
+				C2146A721654C0C800B9B036 /* frozen_0.png */,
+				C2146A5D1654A29300B9B036 /* frozen_1-hd.png */,
+				C2146A5E1654A29300B9B036 /* frozen_1.png */,
+				C2146A5F1654A29300B9B036 /* frozen_2-hd.png */,
+				C2146A601654A29300B9B036 /* frozen_2.png */,
+				C2146A611654A29300B9B036 /* frozen_3-hd.png */,
+				C2146A621654A29300B9B036 /* frozen_3.png */,
 				C2F950DB1638525C00F0B2F9 /* goodie_shapes.plist */,
 				C2F950D316384DA400F0B2F9 /* goodies-hd.plist */,
 				C2F950D416384DA400F0B2F9 /* goodies-hd.png */,
@@ -869,6 +896,14 @@
 				C21D4A6316544A57008E8A7F /* settings_banner.png in Resources */,
 				C21D4A6616544A79008E8A7F /* border-hd.png in Resources */,
 				C21D4A6716544A79008E8A7F /* border.png in Resources */,
+				C2146A631654A29300B9B036 /* frozen_1-hd.png in Resources */,
+				C2146A641654A29300B9B036 /* frozen_1.png in Resources */,
+				C2146A651654A29300B9B036 /* frozen_2-hd.png in Resources */,
+				C2146A661654A29300B9B036 /* frozen_2.png in Resources */,
+				C2146A671654A29300B9B036 /* frozen_3-hd.png in Resources */,
+				C2146A681654A29300B9B036 /* frozen_3.png in Resources */,
+				C2146A711654BEFB00B9B036 /* frozen_0-hd.png in Resources */,
+				C2146A731654C0C800B9B036 /* frozen_0.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -908,6 +943,7 @@
 				C204587316251B13007E6D0C /* HDPersistantData.mm in Sources */,
 				C2E338F41633218700B39223 /* RemovableSprite.mm in Sources */,
 				C2F950C41637842E00F0B2F9 /* GB2ShapeCache.mm in Sources */,
+				C2146A6F1654AF1600B9B036 /* HDFreezeTimer.mm in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -25,6 +25,7 @@
     bool _cherryHitHandled;
     bool _boltTargetHit;
     bool _boltButtonPressed;
+    bool _freezeCountdownOn;
     
 }
 GameManager* _sharedGameManager;
@@ -36,6 +37,7 @@ GameManager* _sharedGameManager;
 @synthesize gamePlayRootScene;
 @synthesize orbTimer;
 @synthesize persistantData;
+@synthesize freezeTimer;
 
 - (id)init
 {
@@ -47,6 +49,7 @@ GameManager* _sharedGameManager;
         _extraTimeAdded = NO;
         _cherryHitHandled = NO;
         _boltButtonPressed = NO;
+        _freezeCountdownOn = NO;
         
         NSString* dataString = [[PDKeychainBindings sharedKeychainBindings] objectForKey:PERSISTANT_DATA_KEYCHAIN_KEY];
         
@@ -61,7 +64,32 @@ GameManager* _sharedGameManager;
 
 -(void) handleUnfreeze
 {
+    [self updateFreezeImage:0];
     [timerLayer unpause];
+    [orbTimer handleUnpause];
+    
+    CCFadeTo *fadeOut = [CCFadeTo actionWithDuration:1.6 opacity:0];
+    
+    CCCallFunc* doneHandler = [CCCallFunc actionWithTarget:self selector:@selector(cleanupFreezeImage)];
+    
+    [[gamePlayRootScene getChildByTag:kFreezeImageNode] runAction:[CCSequence actions:fadeOut, doneHandler, nil]];
+    _freezeCountdownOn = NO;
+}
+
+-(void) cleanupFreezeImage
+{
+    [gamePlayRootScene removeChildByTag:kFreezeImageNode cleanup:YES];
+}
+
+-(void) updateFreezeImage:(int) count
+{
+    if(_freezeCountdownOn) {
+        [gamePlayRootScene removeChildByTag:kFreezeImageNode cleanup:YES];
+    }
+    CCSprite* sprite = [CCSprite spriteWithFile:[NSString stringWithFormat:@"frozen_%i.png", count]];
+    sprite.position = ccp(60, 60);
+    [gamePlayRootScene addChild:sprite z:OBJECTS_Z tag:kFreezeImageNode];
+    _freezeCountdownOn = YES;
 }
 
 -(void) addBoltTargetWithTime: (uint) createTime
@@ -101,7 +129,9 @@ GameManager* _sharedGameManager;
         _boltButtonPressed = YES;
         [physicsLayer handleBoltButtonPressed];
         [timerLayer pause];
-        [orbTimer freeze];
+        [orbTimer handlePause];
+        self.freezeTimer = [HDFreezeTimer node];
+        [gamePlayRootScene addChild:freezeTimer];
     }
 }
 
@@ -243,11 +273,13 @@ GameManager* _sharedGameManager;
     [[UIApplication sharedApplication] setIdleTimerDisabled:NO];
 }
 
--(void)updateTimer: (int) time {
+-(void) updateTimer: (int) time
+{
     [textOverlayLayer updateTimer:time];
 }
 
--(int)getRemainingTime {
+-(int) getRemainingTime
+{
     return [timerLayer remainingTime];
 }
 
@@ -341,15 +373,24 @@ GameManager* _sharedGameManager;
 
 -(void) handlePause {
     [physicsLayer handlePause];
-    [orbTimer handlePause];
-    [timerLayer pause];
+    
+    if(_freezeCountdownOn) {
+        [self.freezeTimer pause];
+    } else {
+        [orbTimer handlePause];
+        [timerLayer pause];
+    }
     [[UIApplication sharedApplication] setIdleTimerDisabled:NO];
 }
 
 -(void) handleUnpause {
-    [orbTimer handleUnpause];
+    if(_freezeCountdownOn) {
+        [self.freezeTimer unpause];
+    } else {
+        [orbTimer handleUnpause];
+        [timerLayer unpause];
+    }
     [physicsLayer handleUnpause];
-    [timerLayer unpause];
     [[UIApplication sharedApplication] setIdleTimerDisabled:YES];
 }
 

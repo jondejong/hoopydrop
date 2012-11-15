@@ -41,9 +41,9 @@
 #define NAV_MENU_BOTTOM_OFFSET 50
 
 // Goodie Targets
-#define GOODIE_BEGIN_TIME 50
-#define GOODIE_END_TIME 12
-#define GOODIE_EXPIRE_SECONDS 2
+#define GOODIE_BEGIN_TIME 59 //50
+#define GOODIE_END_TIME 58 //12
+#define GOODIE_EXPIRE_SECONDS 20
 
 #define TIME_ADDED_IN_SECONDS 5
 
@@ -149,8 +149,14 @@ enum {
 // Layers and nodes
 enum {
     kPauseMenuNode,
+    kFreezeImageNode,
 };
 
+
+@interface HDFreezeTimer : CCNode
+-(void) pause;
+-(void) unpause;
+@end
 @interface RemovableSprite : CCNode
 @property (nonatomic, retain) CCSprite* sprite;
 @property (nonatomic, retain) CCNode* parentNode;
@@ -176,7 +182,6 @@ enum {
 
 @interface HDOrbTimer : CCScene
 @property (nonatomic, retain) NSMutableArray* existingOrbs;
--(void) freeze;
 -(void) start;
 -(void) handlePause;
 -(void) handleUnpause;
@@ -222,12 +227,15 @@ enum {
 @property (nonatomic, retain) HDGamePlayRootScene* gamePlayRootScene;
 @property (nonatomic, retain) HDOrbTimer* orbTimer;
 @property (nonatomic, retain) HDPersistantData* persistantData;
+@property (nonatomic, retain) HDFreezeTimer* freezeTimer;
 
 +(GameManager*) sharedInstance;
+
 +(bool) isRetina;
 +(bool) is16x9;
 
 -(void) handleUnfreeze;
+-(void) updateFreezeImage:(int) count;
 
 -(void) addBoltTargetWithTime: (uint) createTime;
 -(void) handledBoltTargetHit;
