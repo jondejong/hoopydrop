@@ -150,6 +150,7 @@ enum {
 enum {
     kPauseMenuNode,
     kFreezeImageNode,
+    kPlusFiveAnimNode,
 };
 
 

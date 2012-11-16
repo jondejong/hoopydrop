@@ -193,7 +193,26 @@ GameManager* _sharedGameManager;
         [physicsLayer removeExtraSecondsTargetSprite];
         [physicsLayer explodeExtraTimeTarget];
         [timerLayer addTime:TIME_ADDED_IN_SECONDS];
+        
+        //ZEBUG
+        CCFadeTo *fadeIn = [CCFadeTo actionWithDuration:.5 opacity:170];
+        CCFadeTo *fadeOut = [CCFadeTo actionWithDuration:.5 opacity:0];
+        
+        CCCallFunc* doneHandler = [CCCallFunc actionWithTarget:self selector:@selector(cleanupFreezeImage)];
+        
+        CCSequence* sequence = [CCSequence actions:fadeIn, fadeOut, doneHandler, nil];
+        
+        CCSprite* sprite = [CCSprite spriteWithFile:@"plus_five.png"];
+        CGSize size = [CCDirector sharedDirector].winSize;
+        sprite.position = ccp(size.width/2, 100);
+        sprite.opacity = 0;
+        [gamePlayRootScene addChild:sprite z:OBJECTS_Z tag:kPlusFiveAnimNode];
+        [sprite runAction:sequence];
     }
+}
+
+-(void) removePlusFiveAnimation {
+    [gamePlayRootScene removeChildByTag:kPlusFiveAnimNode cleanup:YES];
 }
 
 -(void) addExtraTimeTargetWithTime: (uint)createTime {
