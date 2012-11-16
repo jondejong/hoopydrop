@@ -324,4 +324,10 @@
     return _frequency;
 }
 
+-(void) resetFrequency
+{
+    _frequency = 0;
+}
+
+
 @end

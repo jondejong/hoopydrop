@@ -444,17 +444,28 @@ const float PTM_RATIO = 32.0f;
 -(void) swapSprite
 {
     int freq = [[GameManager sharedInstance] orbCollectionFrequency];
-        
-    if([[GameManager sharedInstance] currentGameTime] - _lastExpressionChangeGameTime >= MIN_EXPRESSION_TIME) {
+    int expressionTime = [[GameManager sharedInstance] currentGameTime] - _lastExpressionChangeGameTime;
     
-        if((freq >= NORMAL_RANGE_LOW && freq < NORMAL_RANGE_HIGH) && kHoopyNormalSprite != _hoopyExpression) {
-            [self changeHoopyTo:@"hoopy-normal.png" denotedBy:kHoopyNormalSprite];
-        } else if (freq < NORMAL_RANGE_LOW && kHoopyFrustratedSprite != _hoopyExpression) {
+    if(expressionTime >= MAX_NON_NORMAL_EXPRESSION_TIME && (_hoopyExpression != kHoopyNormalSprite)) {
+        // Expression has expired, let's reset it.
+        [self changeHoopyTo:@"hoopy-normal.png" denotedBy:kHoopyNormalSprite];
+        [[GameManager sharedInstance] resetOrbCollectionFrequency];
+    } else if(expressionTime >= MIN_EXPRESSION_TIME) {
+        if (freq < NORMAL_RANGE_LOW && kHoopyFrustratedSprite != _hoopyExpression) {
             [self changeHoopyTo:@"hoopy-frustrated.png" denotedBy: kHoopyFrustratedSprite];
         } else if(freq >= NORMAL_RANGE_HIGH && kHoopyExcitedSprite != _hoopyExpression){
             [self changeHoopyTo:@"hoopy-excited.png" denotedBy: kHoopyExcitedSprite];
         }
     }
+    
+    //        if((freq >= NORMAL_RANGE_LOW && freq < NORMAL_RANGE_HIGH) && kHoopyNormalSprite != _hoopyExpression) {
+    //            [self changeHoopyTo:@"hoopy-normal.png" denotedBy:kHoopyNormalSprite];
+    //        } else if (freq < NORMAL_RANGE_LOW && kHoopyFrustratedSprite != _hoopyExpression) {
+    //            [self changeHoopyTo:@"hoopy-frustrated.png" denotedBy: kHoopyFrustratedSprite];
+    //        } else if(freq >= NORMAL_RANGE_HIGH && kHoopyExcitedSprite != _hoopyExpression){
+    //            [self changeHoopyTo:@"hoopy-excited.png" denotedBy: kHoopyExcitedSprite];
+    //        }
+    //    }
     
 }
 

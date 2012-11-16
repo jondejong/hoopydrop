@@ -460,7 +460,8 @@ GameManager* _sharedGameManager;
     return _score;
 }
 
--(void) flushPersistantData  {
+-(void) flushPersistantData
+{
     NSMutableString* dataString = [[NSMutableString alloc] init];
     [dataString appendFormat:@"%s:", [persistantData isSoundEffectsOn] ? "YES" : "NO" ];
     
@@ -472,15 +473,23 @@ GameManager* _sharedGameManager;
     [[HDStartLayer sharedInstance] refreshDisplayWith:NO];
 }
 
--(int) currentGameTime {
+-(int) currentGameTime
+{
     return [orbTimer currentGameTime];
 }
 
--(int) orbCollectionFrequency {
+-(int) orbCollectionFrequency
+{
     return [orbTimer frequency];
 }
 
--(void) fireSound:(int)soundTag {
+-(void) resetOrbCollectionFrequency
+{
+    [orbTimer resetFrequency];
+}
+
+-(void) fireSound:(int)soundTag
+{
     if([persistantData isSoundEffectsOn]) {
         switch (soundTag) {
             case kHDSoundAlarm:

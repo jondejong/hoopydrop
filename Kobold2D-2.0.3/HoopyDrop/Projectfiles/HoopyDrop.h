@@ -64,6 +64,7 @@
 #define NORMAL_RANGE_HIGH 2
 #define FREQUENCY_DECREMENT 10 // 10ths of seconds
 #define MIN_EXPRESSION_TIME 20 // 10ths of seconds
+#define MAX_NON_NORMAL_EXPRESSION_TIME 30 // 10ths of seconds
 
 // Algorthm can be exponential or linear
 #define PLACE_LINEAR_ALGORITHM 1
@@ -191,6 +192,7 @@ enum {
 -(int) currentGameTime;
 -(void) handleOrbCollected;
 -(int) frequency;
+-(void) resetFrequency;
 @end
 
 @interface BackgroundLayer : CCLayer @end
@@ -298,6 +300,7 @@ enum {
 -(int) getRemainingTime;
 
 -(int) orbCollectionFrequency;
+-(void) resetOrbCollectionFrequency;
 
 -(void) addTarget:(CollisionHandler*) handler andBaseSprite: (NSString*)baseSpriteName andTrackedBy: (NSMutableArray*) trackingArray at: (uint)createTime;
 
