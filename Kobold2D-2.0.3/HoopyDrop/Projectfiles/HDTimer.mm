@@ -59,15 +59,36 @@
         _bombAddTime = (arc4random() % (GOODIE_BEGIN_TIME - GOODIE_END_TIME)) + GOODIE_END_TIME;
         _bombExpireTime = _bombAddTime - GOODIE_EXPIRE_SECONDS;
         
-        _extraSecondsAddTime = (arc4random() % (GOODIE_BEGIN_TIME - GOODIE_END_TIME)) + GOODIE_END_TIME;
+        _extraSecondsAddTime = _bombAddTime;
+        _boltAddTime = _bombAddTime;
+        _cherryAddTime = _bombAddTime;
+        
+        _extraSecondsExpireTime = _bombExpireTime;
+        _boltExpireTime = _bombExpireTime;
+        _cherryExpireTime = _bombExpireTime;
+        
+        while( (_extraSecondsAddTime <= _bombAddTime && _extraSecondsAddTime >=_bombExpireTime) ||
+              (_extraSecondsAddTime <= _cherryAddTime && _extraSecondsAddTime >= _cherryExpireTime) ||
+              (_extraSecondsAddTime <= _boltAddTime && _extraSecondsAddTime >= _boltExpireTime)){
+            _extraSecondsAddTime = (arc4random() % (GOODIE_BEGIN_TIME - GOODIE_END_TIME)) + GOODIE_END_TIME;
+        }
         _extraSecondsExpireTime = _extraSecondsAddTime - GOODIE_EXPIRE_SECONDS;
         
-        _cherryAddTime = (arc4random() % (CHERRY_BEGIN_TIME - CHERRY_END_TIME)) + CHERRY_END_TIME;
+        while((_boltAddTime <= _bombAddTime && _boltAddTime >= _bombExpireTime) ||
+              (_boltAddTime <= _extraSecondsAddTime && _boltAddTime >= _extraSecondsExpireTime) ||
+              (_boltAddTime <= _cherryAddTime && _boltAddTime >= _cherryExpireTime)){
+            _boltAddTime = (arc4random() % (GOODIE_BEGIN_TIME - GOODIE_END_TIME)) + GOODIE_END_TIME;
+        }
+        _boltExpireTime = _boltAddTime - GOODIE_EXPIRE_SECONDS;
+        
+        
+        while((_cherryAddTime <= _bombAddTime && _cherryAddTime >= _bombExpireTime) ||
+              (_cherryAddTime <= _extraSecondsAddTime && _cherryAddTime >= _extraSecondsExpireTime) ||
+              (_cherryAddTime <= _boltAddTime && _cherryAddTime >= _boltExpireTime)){
+            _cherryAddTime = (arc4random() % (CHERRY_BEGIN_TIME - CHERRY_END_TIME)) + CHERRY_END_TIME;
+        }
         _cherryExpireTime = _cherryAddTime - GOODIE_EXPIRE_SECONDS;
         
-        _boltAddTime = (arc4random() % (GOODIE_BEGIN_TIME - GOODIE_END_TIME)) + GOODIE_END_TIME;
-        _boltExpireTime = _boltAddTime - GOODIE_EXPIRE_SECONDS;
-
     }
     return self;
 }

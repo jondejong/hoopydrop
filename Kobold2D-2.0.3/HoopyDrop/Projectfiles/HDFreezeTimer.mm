@@ -30,7 +30,6 @@
 
 -(void) tick {
     float currentTime = CACurrentMediaTime();
-    CCLOG(@"ticking away thre freeze with an update delta: %f", currentTime-_lastUpdateTime);
     if(currentTime-_lastUpdateTime >= 1) {
         _count--;
         if(_count <=0) {
