@@ -25,10 +25,7 @@
         CGSize size = [[CCDirector sharedDirector] winSize];
         
         CCSprite* banner = [CCSprite spriteWithFile:@"settings_banner.png"];
-        //        banner.anchorPoint = ccp(banner.anchorPoint.x, 0
-        
         banner.position = ccp(size.width/2, (size.height - HELP_TOP_OFFSET)/2 + HELP_TOP_OFFSET);
-        
         [self addChild:banner z:OBJECTS_Z];
         
         CCSprite* settingsBorderSprite = [CCSprite spriteWithFile:@"border.png"];

@@ -49,8 +49,7 @@
 
 -(void) continueAnimation {
     float now = CACurrentMediaTime();
-    if(now - _lastLoopTime >= .1)
-    {
+    if(now - _lastLoopTime >= .1){
         if(_loopCount == 0) {
             CCSpriteBatchNode* batch = (CCSpriteBatchNode*) [self getChildByTag:kTagBatchNode];
             CCSprite * sprite = [CCSprite spriteWithTexture: [batch texture]];
@@ -60,19 +59,17 @@
             self.overlayTransitionSprite = sprite;
             [batch addChild:sprite z:OVERLAY_Z];
             
-        } else if(_loopCount < OVERLAY_INTERVALS)
-        {
+        } else if(_loopCount < OVERLAY_INTERVALS) {
             _opacity += OVERLAY_ALPHA_CHANNEL_INCREMENTS;
             [[self overlayTransitionSprite] setOpacity:_opacity];
             
-        } else if(!_scorePlaced)
-        {
+        } else if(!_scorePlaced) {
             _scorePlaced = true;
             int score = [[GameManager sharedInstance] getScore];
             NSString* scoreString = [NSString stringWithFormat:@"%i", score];
             
-            self.scoreLabelText = [CCLabelBMFont labelWithString:@"Score:" fntFile:@"hdfont-full.fnt" ];
-            self.scoreText = [CCLabelBMFont labelWithString:scoreString fntFile:@"hdfont-full.fnt" ];
+            self.scoreLabelText = [CCLabelBMFont labelWithString:@"Score:" fntFile:@"hdfont-full-light.fnt" ];
+            self.scoreText = [CCLabelBMFont labelWithString:scoreString fntFile:@"hdfont-full-light.fnt" ];
             
             CGSize screenSize = [CCDirector sharedDirector].winSize;
             scoreLabelText.position = ccp(screenSize.width/2, screenSize.height + 60);
@@ -94,8 +91,7 @@
             [self addScorePosition];
             
         }
-        if(_loopCount >= TOTAL_LOOPCOUNT )
-        {
+        if(_loopCount >= TOTAL_LOOPCOUNT ) {
             [self pauseSchedulerAndActions];
             [[GameManager sharedInstance] returnToMenu];
         }
@@ -110,7 +106,7 @@
     int scorePos = [[GameManager sharedInstance] scorePosition];
     if(scorePos > 0) {
         NSString* pos = [NSString stringWithFormat:@"#%i", scorePos];
-        CCLabelBMFont* scorePositionText = [CCLabelBMFont labelWithString:pos fntFile:@"hdfont-full.fnt" ];
+        CCLabelBMFont* scorePositionText = [CCLabelBMFont labelWithString:pos fntFile:@"hdfont-full-light.fnt" ];
         scorePositionText.position = CGPointMake(screenSize.width/2, screenSize.height/2 - 2* SCORE_LINESPACING);
         
         CCLabelBMFont* scorePositionDescriptionText = [CCLabelBMFont labelWithString:@"All Time" fntFile:@"hdfont-full-small.fnt"];
@@ -168,8 +164,8 @@
     int score = [[GameManager sharedInstance] getScore];
     NSString* scoreString = [NSString stringWithFormat:@"%i", score];
     
-    self.scoreLabelText = [CCLabelBMFont labelWithString:@"Score:" fntFile:@"hdfont-full.fnt" ];
-    self.scoreText = [CCLabelBMFont labelWithString:scoreString fntFile:@"hdfont-full.fnt" ];
+    self.scoreLabelText = [CCLabelBMFont labelWithString:@"Score:" fntFile:@"hdfont-full-light.fnt" ];
+    self.scoreText = [CCLabelBMFont labelWithString:scoreString fntFile:@"hdfont-full-light.fnt" ];
     
     CGSize screenSize = [CCDirector sharedDirector].winSize;
     

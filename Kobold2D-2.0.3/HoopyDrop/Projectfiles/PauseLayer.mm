@@ -15,7 +15,7 @@
 @private
     bool _paused;
     CCSprite* _faderOverlay;
-    CCLabelTTF* _pausedText;
+    CCLabelBMFont* _pausedText;
     bool _bombButtonAdded;
     bool _boltButtonAdded;
 }
@@ -29,7 +29,8 @@
         _faderOverlay.position = ccp(0,0);
         _faderOverlay.anchorPoint = ccp(0,0);
         
-        _pausedText = [CCLabelTTF labelWithString:@"Paused" fontName:@"Marker Felt" fontSize:48];
+//        _pausedText = [CCLabelTTF labelWithString:@"Paused" fontName:@"Marker Felt" fontSize:48];
+        _pausedText = [CCLabelBMFont labelWithString:@"Paused" fntFile:@"hdfont-full-light.fnt" ];
         CGSize size = [[CCDirector sharedDirector] winSize];
         _pausedText.position = ccp(size.width/2.0, size.height/1.2);
         

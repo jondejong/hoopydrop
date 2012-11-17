@@ -34,11 +34,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "HoopyDrop/Projectfiles/HDGameOverLayer.mm"
-         timestampString = "371967279.622394"
+         timestampString = "374863284.657921"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "128"
-         endingLineNumber = "128"
+         startingLineNumber = "124"
+         endingLineNumber = "124"
          landmarkName = "-handleScoresDoneMoving"
          landmarkType = "5">
       </FileBreakpoint>
@@ -47,25 +47,12 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "HoopyDrop/Projectfiles/HDGameOverLayer.mm"
-         timestampString = "371967279.622394"
+         timestampString = "374863284.657921"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "135"
-         endingLineNumber = "135"
+         startingLineNumber = "131"
+         endingLineNumber = "131"
          landmarkName = "-handleTouch"
-         landmarkType = "5">
-      </FileBreakpoint>
-      <FileBreakpoint
-         shouldBeEnabled = "Yes"
-         ignoreCount = "0"
-         continueAfterRunningActions = "No"
-         filePath = "HoopyDrop/Projectfiles/CollisionHandler.mm"
-         timestampString = "373039030.828718"
-         startingColumnNumber = "9223372036854775807"
-         endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "196"
-         endingLineNumber = "196"
-         landmarkName = "-doHandleCollisionWith:"
          landmarkType = "5">
       </FileBreakpoint>
       <FileBreakpoint
@@ -97,7 +84,7 @@
    </FileBreakpoints>
    <ExceptionBreakpoints>
       <ExceptionBreakpoint
-         shouldBeEnabled = "Yes"
+         shouldBeEnabled = "No"
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          scope = "0"

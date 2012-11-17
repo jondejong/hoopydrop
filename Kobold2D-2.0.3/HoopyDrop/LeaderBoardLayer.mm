@@ -16,19 +16,18 @@
     if (self) {
         CGSize size = [[CCDirector sharedDirector] winSize];
         
-//        CCSprite* buttonBack = [CCSprite spriteWithFile:@"button-back.png"];
-//        buttonBack.position = ccp(size.width/2, size.height - 35);
-//        [self addChild: buttonBack z:BACKGROUND_Z+1];
+        CCSprite* banner = [CCSprite spriteWithFile:@"high_scores_banner.png"];
+        banner.position = ccp(size.width/2, (size.height - HELP_TOP_OFFSET)/2 + HELP_TOP_OFFSET);
+        [self addChild:banner z:OBJECTS_Z];
         
-        CCLabelTTF *screenLabel = [CCLabelTTF labelWithString:@"High Scores" fontName:@"Marker Felt" fontSize:24];
+        CCMenuItemFont* goBackMenuItem = [CCMenuItemFont itemWithString:@"Go Home" target:self selector:@selector(handleGoBack)];
         
-        CCSprite * homeButtonSprite = [CCSprite spriteWithFile:@"home_button.png"];
-        CCSprite * homeButtonSelectedSprite = [CCSprite spriteWithFile:@"home_button_sel.png"];
+        [goBackMenuItem setFontSize:20];
+        [goBackMenuItem setFontName:@"Marker Felt"];
         
-        CCMenuItemSprite* goBackMenuItem = [CCMenuItemSprite itemWithNormalSprite:homeButtonSprite selectedSprite:homeButtonSelectedSprite target:self selector:@selector(handleGoBack)];
-        
-        goBackMenuItem.position = CGPointMake(30, 0);
         CCMenu* resetMenu = [CCMenu menuWithItems:goBackMenuItem, nil];
+        resetMenu.position = ccp(size.width/2, NAV_MENU_BOTTOM_OFFSET);
+        [self addChild:resetMenu z:OBJECTS_Z];
 
         CCSpriteBatchNode* sepBar = [CCSpriteBatchNode batchNodeWithFile:@"score_sep.png" capacity:11];
         [self addChild:sepBar z:OBJECTS_Z];
@@ -36,7 +35,7 @@
         CCSpriteBatchNode* backBar = [CCSpriteBatchNode batchNodeWithFile:@"score-back.png" capacity:10];
         [self addChild:backBar z:OBJECTS_Z];
         
-        float nextY = size.height/2 + 145;
+        float nextY = size.height/2 + 180;
         
         // Add side walls
         CCSpriteBatchNode* wallBatch = [CCSpriteBatchNode batchNodeWithFile:@"score_wall.png" capacity:2];
@@ -76,15 +75,12 @@
             nextY -= 30;
         }
         
-        resetMenu.position = ccp(12, size.height - 35);
-        screenLabel.position = ccp(size.width/2, size.height - 35);
         
         [self addChild:[BackgroundLayer node] z:BACKGROUND_Z];
-        [self addChild:resetMenu z:OBJECTS_Z];
-        [self addChild:screenLabel z:OBJECTS_Z];
+
         
         int count = 1;
-        nextY = size.height/2 + 120;
+        nextY = size.height/2 + 155;
         for(NSNumber* score in [[GameManager sharedInstance] highScores]) {
             NSString* scoreString = [NSString stringWithFormat:@"%i", [score integerValue]];
             CCLabelBMFont *scoreLabel = [CCLabelBMFont labelWithString:scoreString fntFile:@"hdfont-full-small.fnt"];

@@ -11,6 +11,10 @@
 		C200D34C162CF43500B46110 /* score_wall.png in Resources */ = {isa = PBXBuildFile; fileRef = C200D34A162CF43500B46110 /* score_wall.png */; };
 		C20220A91655E37C00FA8C29 /* plus_five-hd.png in Resources */ = {isa = PBXBuildFile; fileRef = C20220A71655E37C00FA8C29 /* plus_five-hd.png */; };
 		C20220AA1655E37C00FA8C29 /* plus_five.png in Resources */ = {isa = PBXBuildFile; fileRef = C20220A81655E37C00FA8C29 /* plus_five.png */; };
+		C20220B01657FC1300FA8C29 /* hdfont-full-light-hd.fnt in Resources */ = {isa = PBXBuildFile; fileRef = C20220AC1657FC1300FA8C29 /* hdfont-full-light-hd.fnt */; };
+		C20220B11657FC1300FA8C29 /* hdfont-full-light-hd.png in Resources */ = {isa = PBXBuildFile; fileRef = C20220AD1657FC1300FA8C29 /* hdfont-full-light-hd.png */; };
+		C20220B21657FC1300FA8C29 /* hdfont-full-light.fnt in Resources */ = {isa = PBXBuildFile; fileRef = C20220AE1657FC1300FA8C29 /* hdfont-full-light.fnt */; };
+		C20220B31657FC1300FA8C29 /* hdfont-full-light.png in Resources */ = {isa = PBXBuildFile; fileRef = C20220AF1657FC1300FA8C29 /* hdfont-full-light.png */; };
 		C204587316251B13007E6D0C /* HDPersistantData.mm in Sources */ = {isa = PBXBuildFile; fileRef = C204587216251B13007E6D0C /* HDPersistantData.mm */; };
 		C205A12C160E4F7200A4209C /* button-back-hd.png in Resources */ = {isa = PBXBuildFile; fileRef = C205A12A160E4F7200A4209C /* button-back-hd.png */; };
 		C205A12D160E4F7200A4209C /* button-back.png in Resources */ = {isa = PBXBuildFile; fileRef = C205A12B160E4F7200A4209C /* button-back.png */; };
@@ -188,6 +192,10 @@
 		C200D34A162CF43500B46110 /* score_wall.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = score_wall.png; path = Resources/score_wall.png; sourceTree = "<group>"; };
 		C20220A71655E37C00FA8C29 /* plus_five-hd.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "plus_five-hd.png"; sourceTree = "<group>"; };
 		C20220A81655E37C00FA8C29 /* plus_five.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = plus_five.png; sourceTree = "<group>"; };
+		C20220AC1657FC1300FA8C29 /* hdfont-full-light-hd.fnt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "hdfont-full-light-hd.fnt"; sourceTree = "<group>"; };
+		C20220AD1657FC1300FA8C29 /* hdfont-full-light-hd.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "hdfont-full-light-hd.png"; sourceTree = "<group>"; };
+		C20220AE1657FC1300FA8C29 /* hdfont-full-light.fnt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "hdfont-full-light.fnt"; sourceTree = "<group>"; };
+		C20220AF1657FC1300FA8C29 /* hdfont-full-light.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "hdfont-full-light.png"; sourceTree = "<group>"; };
 		C204587116251B13007E6D0C /* HDPersistantData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HDPersistantData.h; path = Projectfiles/HDPersistantData.h; sourceTree = "<group>"; };
 		C204587216251B13007E6D0C /* HDPersistantData.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = HDPersistantData.mm; path = Projectfiles/HDPersistantData.mm; sourceTree = "<group>"; };
 		C205A12A160E4F7200A4209C /* button-back-hd.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "button-back-hd.png"; sourceTree = "<group>"; };
@@ -639,6 +647,10 @@
 		DCC1A39413A94F1A005BD75D /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				C20220AC1657FC1300FA8C29 /* hdfont-full-light-hd.fnt */,
+				C20220AD1657FC1300FA8C29 /* hdfont-full-light-hd.png */,
+				C20220AE1657FC1300FA8C29 /* hdfont-full-light.fnt */,
+				C20220AF1657FC1300FA8C29 /* hdfont-full-light.png */,
 				C20220A71655E37C00FA8C29 /* plus_five-hd.png */,
 				C20220A81655E37C00FA8C29 /* plus_five.png */,
 				C2146A701654BEFB00B9B036 /* frozen_0-hd.png */,
@@ -912,6 +924,10 @@
 				C2146A731654C0C800B9B036 /* frozen_0.png in Resources */,
 				C20220A91655E37C00FA8C29 /* plus_five-hd.png in Resources */,
 				C20220AA1655E37C00FA8C29 /* plus_five.png in Resources */,
+				C20220B01657FC1300FA8C29 /* hdfont-full-light-hd.fnt in Resources */,
+				C20220B11657FC1300FA8C29 /* hdfont-full-light-hd.png in Resources */,
+				C20220B21657FC1300FA8C29 /* hdfont-full-light.fnt in Resources */,
+				C20220B31657FC1300FA8C29 /* hdfont-full-light.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
