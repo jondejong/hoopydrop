@@ -5,7 +5,7 @@
 	<key>CFBundleDevelopmentRegion</key>
 	<string>English</string>
 	<key>CFBundleDisplayName</key>
-	<string>${PRODUCT_NAME}</string>
+	<string>Hoopy Drop</string>
 	<key>CFBundleExecutable</key>
 	<string>${EXECUTABLE_NAME}</string>
 	<key>CFBundleIconFile</key>
@@ -15,7 +15,9 @@
 		<string>Icon.png</string>
 		<string>Icon@2x.png</string>
 		<string>Icon-72.png</string>
+		<string>Icon-72@2x.png</string>
 		<string>Icon-Small-50.png</string>
+		<string>Icon-Small-50@2x.png</string>
 		<string>Icon-Small.png</string>
 		<string>Icon-Small@2x.png</string>
 	</array>
