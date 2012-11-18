@@ -11,7 +11,8 @@
 #import "SneakyButton.h"
 
 @implementation HDStartLayer {
-    
+    @private
+    bool _scoreOnScreen;
 }
 
 HDStartLayer* _sharedHDStartLayer;
@@ -20,11 +21,24 @@ HDStartLayer* _sharedHDStartLayer;
 {
     self = [super init];
     if (self) {
+        _scoreOnScreen = NO;
+        
+        CGSize size = [[CCDirector sharedDirector] winSize];
         
         CCSprite* startSprite = [CCSprite spriteWithFile:@"start.png"];
-        CCSprite* startSpriteSelected = [CCSprite spriteWithFile:@"start.png"];
+        CCSprite* startSpriteSelected = [CCSprite spriteWithFile:@"start-sel.png"];
         
         CCMenuItemSprite * startButton = [CCMenuItemSprite itemWithNormalSprite:startSprite selectedSprite:startSpriteSelected target:self selector:@selector(handleStart)];
+        
+        CCSprite* banner = [CCSprite spriteWithFile:@"start_banner.png"];
+        banner.position = ccp(size.width/2, (size.height - HELP_TOP_OFFSET)/2 + HELP_TOP_OFFSET);
+        [self addChild:banner z:OBJECTS_Z];
+        
+        CCSprite* settingsBorderSprite = [CCSprite spriteWithFile:@"border.png"];
+        settingsBorderSprite.anchorPoint = ccp(0, 0);
+        settingsBorderSprite.position = ccp(0, HELP_SCREEN_Y_POINTS);
+        
+        [self addChild:settingsBorderSprite z:OBJECTS_Z tag:kSettingsBorderTag];
         
 		CCMenu *menu = [CCMenu menuWithItems:startButton, nil];
         
@@ -32,14 +46,7 @@ HDStartLayer* _sharedHDStartLayer;
         
         _sharedHDStartLayer = self;
         
-        CCLabelTTF *scoreLabel = [CCLabelTTF labelWithString:@"" fontName:@"Marker Felt" fontSize:24];
-        CCLabelTTF *highScoreLabel = [CCLabelTTF labelWithString:[NSString stringWithFormat:@"All Time High Score: %i", [[GameManager sharedInstance] allTimeHighScore]] fontName:@"Marker Felt" fontSize:24];
-        
-		CGSize size = [[CCDirector sharedDirector] winSize];
-        
-        scoreLabel.position = ccp(size.width/2, size.height/1.20);
-        highScoreLabel.position = ccp(size.width/2, size.height/1.1);
-		menu.position =  ccp(size.width/2, size.height - 175);
+		menu.position =  ccp(size.width/2, HELP_SCREEN_Y_POINTS + 185);
         
         CCSprite * questionButtonSprite = [CCSprite spriteWithFile:@"question_button.png"];
         CCSprite * questionButtonSelectedSprite = [CCSprite spriteWithFile:@"question_button_sel.png"];
@@ -68,9 +75,7 @@ HDStartLayer* _sharedHDStartLayer;
         optionsMenu.position = ccp(40, 30);
         
         [self addChild:[BackgroundLayer node] z:BACKGROUND_Z];
-        [self addChild:scoreLabel z:OBJECTS_Z tag:1];
 		[self addChild: menu z:OBJECTS_Z];
-        [self addChild:highScoreLabel z:OBJECTS_Z tag:2];
         [self addChild:optionsMenu z:OBJECTS_Z tag:3];
         
         CCSprite* buttonBack = [CCSprite spriteWithFile:@"button-back.png"];
@@ -109,16 +114,28 @@ HDStartLayer* _sharedHDStartLayer;
 }
 
 -(void) refreshDisplayWith:(bool)finishedGameFlag {
-    CCLabelTTF *scoreLabel = (CCLabelTTF*)[self getChildByTag:1];
-    CCLabelTTF *highScoreLabel = (CCLabelTTF*)[self getChildByTag:2];
-    
-    if(finishedGameFlag) {
-        [scoreLabel setString:[NSString stringWithFormat:@"Last Game Score: %i", [[GameManager sharedInstance]getScore]]];
-    } else {
-        [scoreLabel setString:@""];
+
+    if(_scoreOnScreen) {
+        [self removeChildByTag:kLastScore1Tag cleanup:YES];
+        [self removeChildByTag:kLastScore2Tag cleanup:YES];
     }
-    [highScoreLabel setString:[NSString stringWithFormat:@"All Time High Score: %i", [[GameManager sharedInstance] allTimeHighScore]]];
-    
+    if(finishedGameFlag){
+
+        _scoreOnScreen = YES;
+        CCLabelBMFont *scoreLabel = [CCLabelBMFont labelWithString:@"Last Game:" fntFile:@"hdfont-full-small.fnt"];
+        [scoreLabel setString:[NSString stringWithFormat:@"Last Game:"]];
+        NSString* score = [NSString stringWithFormat:@"%i", [[GameManager sharedInstance] getScore]];
+        CCLabelBMFont* scoreText = [CCLabelBMFont labelWithString:score fntFile:@"hdfont-full-small.fnt"];
+        
+        CGSize size = [[CCDirector sharedDirector] winSize];
+        
+        scoreLabel.position = ccp(size.width/2, HELP_SCREEN_Y_POINTS + 280);
+        scoreText.position = ccp(size.width/2, HELP_SCREEN_Y_POINTS + 255);
+        
+        [self addChild:scoreLabel z:OBJECTS_Z tag:kLastScore1Tag];
+        [self addChild:scoreText z:OBJECTS_Z tag:kLastScore2Tag];
+    } 
+
 }
 
 

@@ -132,6 +132,8 @@ enum {
     kHelpPage3Tag,
     kHelpMenuTag,
     kSettingsBorderTag,
+    kLastScore1Tag,
+    kLastScore2Tag,
 };
 
 // Sounds

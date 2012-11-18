@@ -55,10 +55,15 @@
         _cherryTargetRemoved = NO;
         _boltTargetAdded = NO;
         _boltTargetRemoved = NO;
-        
+   
+#if DRAW_TNT
         _bombAddTime = (arc4random() % (GOODIE_BEGIN_TIME - GOODIE_END_TIME)) + GOODIE_END_TIME;
         _bombExpireTime = _bombAddTime - GOODIE_EXPIRE_SECONDS;
         
+#else
+        _bombAddTime = -1;
+        _bombExpireTime = -1;
+#endif
         _extraSecondsAddTime = _bombAddTime;
         _boltAddTime = _bombAddTime;
         _cherryAddTime = _bombAddTime;
@@ -67,6 +72,8 @@
         _boltExpireTime = _bombExpireTime;
         _cherryExpireTime = _bombExpireTime;
         
+
+#if DRAW_EXTRA_TIME
         while( (_extraSecondsAddTime <= _bombAddTime && _extraSecondsAddTime >=_bombExpireTime) ||
               (_extraSecondsAddTime <= _cherryAddTime && _extraSecondsAddTime >= _cherryExpireTime) ||
               (_extraSecondsAddTime <= _boltAddTime && _extraSecondsAddTime >= _boltExpireTime)){
@@ -74,21 +81,24 @@
         }
         _extraSecondsExpireTime = _extraSecondsAddTime - GOODIE_EXPIRE_SECONDS;
         
+#endif
+        
+#if DRAW_BOLT
         while((_boltAddTime <= _bombAddTime && _boltAddTime >= _bombExpireTime) ||
               (_boltAddTime <= _extraSecondsAddTime && _boltAddTime >= _extraSecondsExpireTime) ||
               (_boltAddTime <= _cherryAddTime && _boltAddTime >= _cherryExpireTime)){
             _boltAddTime = (arc4random() % (GOODIE_BEGIN_TIME - GOODIE_END_TIME)) + GOODIE_END_TIME;
         }
         _boltExpireTime = _boltAddTime - GOODIE_EXPIRE_SECONDS;
-        
-        
+#endif
+#if DRAW_CHERRY
         while((_cherryAddTime <= _bombAddTime && _cherryAddTime >= _bombExpireTime) ||
               (_cherryAddTime <= _extraSecondsAddTime && _cherryAddTime >= _extraSecondsExpireTime) ||
               (_cherryAddTime <= _boltAddTime && _cherryAddTime >= _boltExpireTime)){
             _cherryAddTime = (arc4random() % (CHERRY_BEGIN_TIME - CHERRY_END_TIME)) + CHERRY_END_TIME;
         }
         _cherryExpireTime = _cherryAddTime - GOODIE_EXPIRE_SECONDS;
-        
+#endif
     }
     return self;
 }

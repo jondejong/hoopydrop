@@ -29,7 +29,6 @@
         _faderOverlay.position = ccp(0,0);
         _faderOverlay.anchorPoint = ccp(0,0);
         
-//        _pausedText = [CCLabelTTF labelWithString:@"Paused" fontName:@"Marker Felt" fontSize:48];
         _pausedText = [CCLabelBMFont labelWithString:@"Paused" fntFile:@"hdfont-full-light.fnt" ];
         CGSize size = [[CCDirector sharedDirector] winSize];
         _pausedText.position = ccp(size.width/2.0, size.height/1.2);
@@ -58,7 +57,7 @@
 
 -(void) createMenu {
     CCSprite* abandonSprite = [CCSprite spriteWithFile:@"abandon.png"];
-    CCSprite* abandonSpriteSelected = [CCSprite spriteWithFile:@"abandon.png"];
+    CCSprite* abandonSpriteSelected = [CCSprite spriteWithFile:@"abandon-sel.png"];
     
     CCMenuItemSprite * endButton = [CCMenuItemSprite itemWithNormalSprite:abandonSprite selectedSprite:abandonSpriteSelected target:self selector:@selector(handleEnd)];
     
