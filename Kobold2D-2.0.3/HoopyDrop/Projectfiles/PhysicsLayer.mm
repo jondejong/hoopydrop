@@ -305,7 +305,7 @@ const float PTM_RATIO = 32.0f;
 -(CGPoint) createRandomPoint:(bool) large {
     CGSize screenSize = [CCDirector sharedDirector].winSize;
     
-    int buffer = large ? 2 : 1;
+    int buffer = large ? 3 : 1;
     
     int x = (arc4random() % ((int)screenSize.width - (buffer *(int)PTM_RATIO))) + (int)(buffer *(.5 * PTM_RATIO));
     int y = (arc4random() % ((int)screenSize.height - (buffer *(int)PTM_RATIO))) + (int)(buffer *(.5 * PTM_RATIO));
@@ -457,15 +457,6 @@ const float PTM_RATIO = 32.0f;
             [self changeHoopyTo:@"hoopy-excited.png" denotedBy: kHoopyExcitedSprite];
         }
     }
-    
-    //        if((freq >= NORMAL_RANGE_LOW && freq < NORMAL_RANGE_HIGH) && kHoopyNormalSprite != _hoopyExpression) {
-    //            [self changeHoopyTo:@"hoopy-normal.png" denotedBy:kHoopyNormalSprite];
-    //        } else if (freq < NORMAL_RANGE_LOW && kHoopyFrustratedSprite != _hoopyExpression) {
-    //            [self changeHoopyTo:@"hoopy-frustrated.png" denotedBy: kHoopyFrustratedSprite];
-    //        } else if(freq >= NORMAL_RANGE_HIGH && kHoopyExcitedSprite != _hoopyExpression){
-    //            [self changeHoopyTo:@"hoopy-excited.png" denotedBy: kHoopyExcitedSprite];
-    //        }
-    //    }
     
 }
 

@@ -188,6 +188,7 @@
 {
     if(![self isRemoved]) {
         [[GameManager sharedInstance] addToScore:[[GameManager sharedInstance] yellowTargetPoints]];
+        [[GameManager sharedInstance] fireSound:kHDSoundPopLow];
         [self removeMe];
     }
 #if DEBUG
@@ -210,6 +211,7 @@
 {
     if(![self isRemoved]) {
         [[GameManager sharedInstance] addToScore:[[GameManager sharedInstance] greenTargetPoints]];
+        [[GameManager sharedInstance] fireSound:kHDSoundPopMed];
         [self removeMe];
     }
 #if DEBUG
@@ -232,6 +234,7 @@
 {
     if(![self isRemoved]) {
         [[GameManager sharedInstance] addToScore:[[GameManager sharedInstance] purpleTargetPoints]];
+        [[GameManager sharedInstance] fireSound:kHDSoundPopHi];
         [self removeMe];
     }
 #if DEBUG

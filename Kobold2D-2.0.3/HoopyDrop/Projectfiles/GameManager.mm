@@ -58,6 +58,9 @@ GameManager* _sharedGameManager;
         // Set Up Audio
         [[SimpleAudioEngine sharedEngine] preloadEffect:@"alarm.aif"];
         [[SimpleAudioEngine sharedEngine] preloadEffect:@"game_over.aif"];
+        [[SimpleAudioEngine sharedEngine] preloadEffect:@"pop-low.aif"];
+        [[SimpleAudioEngine sharedEngine] preloadEffect:@"pop-med.aif"];
+        [[SimpleAudioEngine sharedEngine] preloadEffect:@"pop-hi.aif"];
     }
     return self;
 }
@@ -498,6 +501,18 @@ GameManager* _sharedGameManager;
                 
             case kHDSoundGameOver:
                 [[SimpleAudioEngine sharedEngine] playEffect:@"game_over.aif"];
+                break;
+                
+            case kHDSoundPopLow:
+                [[SimpleAudioEngine sharedEngine] playEffect:@"pop-low.aif"];
+                break;
+                
+            case kHDSoundPopMed:
+                [[SimpleAudioEngine sharedEngine] playEffect:@"pop-med.aif"];
+                break;
+                
+            case kHDSoundPopHi:
+                [[SimpleAudioEngine sharedEngine] playEffect:@"pop-hi.aif"];
                 break;
         }
     }

@@ -142,6 +142,9 @@ enum {
 enum {
     kHDSoundAlarm,
     kHDSoundGameOver,
+    kHDSoundPopLow,
+    kHDSoundPopMed,
+    kHDSoundPopHi,
 };
 
 // Body Types
