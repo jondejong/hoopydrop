@@ -35,7 +35,7 @@
         CCSpriteBatchNode* backBar = [CCSpriteBatchNode batchNodeWithFile:@"score-back.png" capacity:10];
         [self addChild:backBar z:OBJECTS_Z];
         
-        float nextY = size.height/2 + 180;
+        float nextY = size.height/2 + HIGH_SCORES_BASE_OFFSET;
         
         // Add side walls
         CCSpriteBatchNode* wallBatch = [CCSpriteBatchNode batchNodeWithFile:@"score_wall.png" capacity:2];
@@ -80,7 +80,7 @@
 
         
         int count = 1;
-        nextY = size.height/2 + 155;
+        nextY = size.height/2 + HIGH_SCORES_BASE_OFFSET - 25;
         for(NSNumber* score in [[GameManager sharedInstance] highScores]) {
             NSString* scoreString = [NSString stringWithFormat:@"%i", [score integerValue]];
             CCLabelBMFont *scoreLabel = [CCLabelBMFont labelWithString:scoreString fntFile:@"hdfont-full-small.fnt"];

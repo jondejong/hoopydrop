@@ -16,22 +16,25 @@
     if (self) {
         CGSize size = [[CCDirector sharedDirector] winSize];
         
-        CCLabelTTF *screenLabel = [CCLabelTTF labelWithString:@"About" fontName:@"Marker Felt" fontSize:24];
-        screenLabel.position = ccp(size.width/2, size.height - 50);
+        CCSprite* banner = [CCSprite spriteWithFile:@"about_banner.png"];
+        banner.position = ccp(size.width/2, (size.height - HELP_TOP_OFFSET)/2 + HELP_TOP_OFFSET);
+        [self addChild:banner z:OBJECTS_Z];
         
-        CCMenuItemFont* goBackMenuItem = [CCMenuItemFont itemWithString:@"Go Back" target:self selector:@selector(handleGoBack)];
+        CCSprite* info = [CCSprite spriteWithFile:@"about_page.png"];
+        info.anchorPoint = ccp(0,0);
+        info.position = ccp(0, HELP_SCREEN_Y_POINTS);
+        [self addChild:info z:OBJECTS_Z];
+        
+        CCMenuItemFont* goBackMenuItem = [CCMenuItemFont itemWithString:@"Go Home" target:self selector:@selector(handleGoBack)];
         
         [goBackMenuItem setFontSize:20];
         [goBackMenuItem setFontName:@"Marker Felt"];
         
         CCMenu* resetMenu = [CCMenu menuWithItems:goBackMenuItem, nil];
-        resetMenu.position = ccp(size.width/2, 50);
-        
-        [resetMenu alignItemsVerticallyWithPadding:15];
+        resetMenu.position = ccp(size.width/2, NAV_MENU_BOTTOM_OFFSET);
+        [self addChild:resetMenu z:OBJECTS_Z];
         
         [self addChild:[BackgroundLayer node] z:BACKGROUND_Z];
-        [self addChild:resetMenu z:OBJECTS_Z];
-        [self addChild:screenLabel z:OBJECTS_Z];
         
     }
     return self;

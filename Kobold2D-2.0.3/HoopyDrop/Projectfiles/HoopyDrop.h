@@ -40,6 +40,8 @@
 #define HELP_TOP_OFFSET 420
 #define NAV_MENU_BOTTOM_OFFSET 50
 
+#define HIGH_SCORES_BASE_OFFSET 175
+
 // Goodie Targets
 #define GOODIE_BEGIN_TIME 50
 #define GOODIE_END_TIME 12
