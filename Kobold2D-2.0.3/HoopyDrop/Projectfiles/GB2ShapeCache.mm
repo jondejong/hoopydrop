@@ -160,7 +160,9 @@ public:
 	NSDictionary *dictionary = [NSDictionary dictionaryWithContentsOfFile:path];
 
     NSDictionary *metadataDict = [dictionary objectForKey:@"metadata"];
+#if DEBUG
     int format = [[metadataDict objectForKey:@"format"] intValue];
+#endif
     ptmRatio_ =  [[metadataDict objectForKey:@"ptm_ratio"] floatValue];
 
     NSAssert(format == 1, @"Format not supported");
