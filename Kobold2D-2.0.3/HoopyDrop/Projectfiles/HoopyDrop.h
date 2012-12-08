@@ -3,7 +3,7 @@
 //  HoopyDrop
 //
 //  Created by Jon DeJong on 9/11/12.
-//
+//  Version 1.0 is done
 //
 
 #import <Foundation/Foundation.h>
