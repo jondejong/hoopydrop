@@ -141,6 +141,7 @@
 		C28511AB1620C1F000C59AF9 /* TouchUtil.mm in Sources */ = {isa = PBXBuildFile; fileRef = C28511AA1620C1F000C59AF9 /* TouchUtil.mm */; };
 		C288C9B0161E84DB00DF85CC /* hoopy-hd.plist in Resources */ = {isa = PBXBuildFile; fileRef = C288C9AE161E84DB00DF85CC /* hoopy-hd.plist */; };
 		C288C9B1161E84DB00DF85CC /* hoopy-hd.png in Resources */ = {isa = PBXBuildFile; fileRef = C288C9AF161E84DB00DF85CC /* hoopy-hd.png */; };
+		C2BA0E151673C88300FBBC98 /* iAd.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C2BA0E141673C88300FBBC98 /* iAd.framework */; };
 		C2BF3ACC164DF9A400FE54B4 /* howto.png in Resources */ = {isa = PBXBuildFile; fileRef = C2BF3ACB164DF9A400FE54B4 /* howto.png */; };
 		C2BF3AD2164E048B00FE54B4 /* backward-hd.png in Resources */ = {isa = PBXBuildFile; fileRef = C2BF3ACE164E048B00FE54B4 /* backward-hd.png */; };
 		C2BF3AD3164E048B00FE54B4 /* backward.png in Resources */ = {isa = PBXBuildFile; fileRef = C2BF3ACF164E048B00FE54B4 /* backward.png */; };
@@ -343,6 +344,7 @@
 		C28511AA1620C1F000C59AF9 /* TouchUtil.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = TouchUtil.mm; path = Projectfiles/TouchUtil.mm; sourceTree = "<group>"; };
 		C288C9AE161E84DB00DF85CC /* hoopy-hd.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "hoopy-hd.plist"; sourceTree = "<group>"; };
 		C288C9AF161E84DB00DF85CC /* hoopy-hd.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "hoopy-hd.png"; sourceTree = "<group>"; };
+		C2BA0E141673C88300FBBC98 /* iAd.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = iAd.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS6.0.sdk/System/Library/Frameworks/iAd.framework; sourceTree = DEVELOPER_DIR; };
 		C2BF3ACB164DF9A400FE54B4 /* howto.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = howto.png; path = Resources/howto.png; sourceTree = "<group>"; };
 		C2BF3ACE164E048B00FE54B4 /* backward-hd.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "backward-hd.png"; path = "Resources/backward-hd.png"; sourceTree = "<group>"; };
 		C2BF3ACF164E048B00FE54B4 /* backward.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = backward.png; path = Resources/backward.png; sourceTree = "<group>"; };
@@ -429,6 +431,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C2BA0E151673C88300FBBC98 /* iAd.framework in Frameworks */,
 				C24A84671607E51B00F769D4 /* Security.framework in Frameworks */,
 				DC65615C13A969B600A7AC53 /* libbox2d-ios.a in Frameworks */,
 				DC65615D13A969B600A7AC53 /* libchipmunk-ios.a in Frameworks */,
@@ -479,7 +482,6 @@
 			isa = PBXGroup;
 			children = (
 				C24A84601607E42700F769D4 /* PDKeychainBindings.h */,
-				C2204249161151AF00876EDD /* Util */,
 				C24A84611607E42700F769D4 /* PDKeychainBindings.m */,
 				C24A84631607E46200F769D4 /* PDKeychainBindingsController.h */,
 				C24A84641607E46200F769D4 /* PDKeychainBindingsController.m */,
@@ -501,6 +503,8 @@
 		DCC1A0D613A94EC0005BD75D = {
 			isa = PBXGroup;
 			children = (
+				C2BA0E141673C88300FBBC98 /* iAd.framework */,
+				C2204249161151AF00876EDD /* Util */,
 				C2F950C0163783DA00F0B2F9 /* PhysicsShapeUtils */,
 				C24A84581607E3A400F769D4 /* Keychain */,
 				C206D98516001CFF00CAA726 /* DisplayLayers */,

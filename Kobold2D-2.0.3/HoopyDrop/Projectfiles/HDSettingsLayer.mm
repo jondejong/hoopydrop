@@ -36,6 +36,7 @@
         [self addChild:settingsBorderSprite z:OBJECTS_Z tag:kSettingsBorderTag];
                 
         [self createMenu];
+
     }
     return self;
 }

@@ -134,7 +134,7 @@ HDStartLayer* _sharedHDStartLayer;
         
         [self addChild:scoreLabel z:OBJECTS_Z tag:kLastScore1Tag];
         [self addChild:scoreText z:OBJECTS_Z tag:kLastScore2Tag];
-    } 
+    }
 
 }
 

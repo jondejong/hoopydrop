@@ -42,11 +42,11 @@ local config =
 		-- (same as Info.plist key UISupportedInterfaceOrientations aka "Supported interface orientations")
 	
 		-- iAd setup
-		EnableAdBanner = NO,
-		PlaceBannerOnBottom = YES,
-		LoadOnlyPortraitBanners = NO,
+		EnableAdBanner = YES,
+		PlaceBannerOnBottom = NO,
+		LoadOnlyPortraitBanners = YES,
 		LoadOnlyLandscapeBanners = NO,
-		AdProviders = "iAd, AdMob",	-- comma seperated list -> "iAd, AdMob" means: use iAd if available, otherwise AdMob
+		AdProviders = "iAd",	-- comma seperated list -> "iAd, AdMob" means: use iAd if available, otherwise AdMob
 		AdMobRefreshRate = 15,
 		AdMobFirstAdDelay = 5,
 		AdMobPublisherID = "YOUR_ADMOB_PUBLISHER_ID", -- how to get an AdMob Publisher ID: http://developer.admob.com/wiki/PublisherSetup

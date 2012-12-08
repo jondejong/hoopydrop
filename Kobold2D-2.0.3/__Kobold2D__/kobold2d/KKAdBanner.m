@@ -58,16 +58,15 @@ static NSString* kiAdClassName = @"ADBannerView";
 	return ADBannerContentSizeIdentifierPortrait;
 }
 
-
 -(void) loadBanner
 {
-	KKAppDelegate* appDelegate = (KKAppDelegate*)[UIApplication sharedApplication].delegate;
+    KKAppDelegate* appDelegate = (KKAppDelegate*)[UIApplication sharedApplication].delegate;
 	KKStartupConfig* config = appDelegate.config;
 	NSArray* providers = [config.adProviders componentsSeparatedByString:@","];
     
-	if (!isAdMobEnabled && !isIAdEnabled) 
+	if (!isAdMobEnabled && !isIAdEnabled)
 	{
-        for (NSString* provider in providers) 
+        for (NSString* provider in providers)
         {
             provider = [provider stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
             provider = [provider uppercaseString];
@@ -91,7 +90,7 @@ static NSString* kiAdClassName = @"ADBannerView";
         BOOL isIADAvailable = NO;
         BOOL isADMOBAvailable = NO;
 		
-        for (NSString* provider in providers) 
+        for (NSString* provider in providers)
         {
             provider = [provider stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
             provider = [provider uppercaseString];
@@ -115,6 +114,10 @@ static NSString* kiAdClassName = @"ADBannerView";
         {
             isIAdEnabled = NO;
             isAdMobEnabled = YES;
+        } else if(isIADAvailable && isIAdEnabled)
+        {
+            isIAdEnabled = YES;
+            isAdMobEnabled = NO;
         }
 		else
 		{
@@ -133,7 +136,7 @@ static NSString* kiAdClassName = @"ADBannerView";
 
 	KKAppDelegate* appDelegate = (KKAppDelegate*)[UIApplication sharedApplication].delegate;
 	KKStartupConfig* config = appDelegate.config;
-	bannerOnBottom = config.placeBannerOnBottom;
+//	bannerOnBottom = config.placeBannerOnBottom;
 	
 	// check if iAD is even supported
 	if (config.enableAdBanner)
@@ -142,6 +145,7 @@ static NSString* kiAdClassName = @"ADBannerView";
 		
 		if (isIAdEnabled)
 		{
+            
 			iAdBannerView = [[ADBannerView alloc] initWithFrame:CGRectZero];
 			iAdBannerView.hidden = YES;
 			
@@ -460,6 +464,22 @@ static KKAdBanner *instanceOfAdBanner;
 	return nil;
 }
 
+-(void) updateBannerPosition: (int) position
+{
+    switch (position) {
+        case KKAdBannerOnBottom:
+            bannerOnBottom = YES;
+            break;
+            
+        case KKAdBannerOnTop:
+            bannerOnBottom = NO;
+            break;
+            
+        default:
+            break;
+    }
+}
+
 -(id) init
 {
 	if ((self = [super init]))
@@ -467,6 +487,10 @@ static KKAdBanner *instanceOfAdBanner;
 		isVeryFirstAd = YES;
         isIAdEnabled = NO;
         isAdMobEnabled = NO;
+        
+        KKAppDelegate* appDelegate = (KKAppDelegate*)[UIApplication sharedApplication].delegate;
+        KKStartupConfig* config = appDelegate.config;
+        bannerOnBottom = config.placeBannerOnBottom;
 	}
 	return self;
 }

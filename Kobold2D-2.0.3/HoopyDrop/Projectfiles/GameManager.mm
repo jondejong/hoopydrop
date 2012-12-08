@@ -61,6 +61,7 @@ GameManager* _sharedGameManager;
         [[SimpleAudioEngine sharedEngine] preloadEffect:@"pop-low.aif"];
         [[SimpleAudioEngine sharedEngine] preloadEffect:@"pop-med.aif"];
         [[SimpleAudioEngine sharedEngine] preloadEffect:@"pop-hi.aif"];
+        [self addBanner];
     }
     return self;
 }
@@ -293,6 +294,9 @@ GameManager* _sharedGameManager;
     [[HDStartLayer sharedInstance] refreshDisplayWith:YES];
     [[CCDirector sharedDirector] popScene];
     [[UIApplication sharedApplication] setIdleTimerDisabled:NO];
+    
+    [self addBanner];
+
 }
 
 -(void) updateTimer: (int) time
@@ -360,6 +364,10 @@ GameManager* _sharedGameManager;
 }
 
 -(void) startGame {
+    
+#if !HD_PAID_VERSION
+    [[KKAdBanner sharedAdBanner] unloadBanner];
+#endif
     
     _score = 0;
     _exploded = NO;
@@ -557,6 +565,21 @@ GameManager* _sharedGameManager;
             [handler handleCollisionWith:fakeHoopyHandler];
         }
     }
+}
+
+-(void) addBanner
+{
+#if !HD_PAID_VERSION
+    [[KKAdBanner sharedAdBanner] updateBannerPosition:KKAdBannerOnTop];
+    [[KKAdBanner sharedAdBanner] loadBanner];
+#endif
+}
+
+-(void) removeBanner
+{
+#if !HD_PAID_VERSION
+    [[KKAdBanner sharedAdBanner] unloadBanner];
+#endif
 }
 
 @end

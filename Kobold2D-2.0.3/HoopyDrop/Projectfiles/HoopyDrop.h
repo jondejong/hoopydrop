@@ -16,6 +16,8 @@
 #ifndef HOOPY_DROP_H
 #define HOOPY_DROP_H
 
+#define HD_PAID_VERSION 0
+
 #define PERSISTANT_DATA_KEYCHAIN_KEY @"HoopyDropPersistantData"
 
 #define DRAW_DEBUG_OUTLINE 0
@@ -59,7 +61,7 @@
 #define OVERLAY_INTERVALS 40
 #define SCORE_DROP_SECONDS 2
 #define SCORE_LINESPACING 45
-#define TOTAL_LOOPCOUNT 120
+#define TOTAL_LOOPCOUNT (HD_PAID_VERSION ? 120 : 200)
 
 // Frequency constants to change Hoopy's expression
 #define NORMAL_RANGE_LOW -2

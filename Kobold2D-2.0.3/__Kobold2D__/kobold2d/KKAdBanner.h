@@ -17,6 +17,11 @@
 #import <UIKit/UIKit.h>
 #import "GADBannerView.h"
 
+enum {
+    KKAdBannerOnBottom,
+    KKAdBannerOnTop,
+};
+
 /** Singleton wrapper for ADBannerView class */
 @interface KKAdBanner : NSObject 
 #if KK_ADMOB_SUPPORT_ENABLED
@@ -65,6 +70,8 @@
 
 /** Removes the banner and frees memory */
 -(void) unloadBanner;
+
+-(void) updateBannerPosition: (int) position;
 
 @end
 

@@ -15,6 +15,7 @@
     float _lastLoopTime;
     bool _scorePlaced;
     bool _scoresInPlace;
+    bool _freeTextPlaced;
     GLubyte _opacity;
 }
 
@@ -27,9 +28,19 @@
         _loopCount = 0;
         _scorePlaced = false;
         _scoresInPlace = false;
+        
+        _freeTextPlaced = YES;
+        
+#if !HD_PAID_VERSION
+        [[KKAdBanner sharedAdBanner] updateBannerPosition:KKAdBannerOnBottom];
+        [[KKAdBanner sharedAdBanner] loadBanner];
+        _freeTextPlaced = NO;
+#endif
+        
         CCSpriteBatchNode* image = [CCSpriteBatchNode batchNodeWithFile:[ScreenImage convertImageName:@"game_over"] capacity:1];
         _opacity = OVERLAY_ALPHA_CHANNEL_INCREMENTS;
         [self addChild:image z:0 tag:kTagBatchNode];
+
     }
     return self;
 }
@@ -90,6 +101,16 @@
             
             [self addScorePosition];
             
+        } else if(!_freeTextPlaced) {
+            _freeTextPlaced = YES;
+            CCLabelTTF * buyMe1 = [CCLabelTTF labelWithString:@"Tap through this screen on the full version..." fontName:@"Optima" fontSize:14];
+            CCLabelTTF * buyMe2 = [CCLabelTTF labelWithString:@"Buy Hoopy Drop on the App Store!." fontName:@"Optima" fontSize:14];
+             CGSize screenSize = [CCDirector sharedDirector].winSize;
+            buyMe1.position = ccp(screenSize.width/2, screenSize.height - 25);
+            buyMe2.position = ccp(screenSize.width/2, screenSize.height - 40);
+            
+            [self addChild:buyMe1 z:OVERLAY_TEXT_Z];
+            [self addChild:buyMe2 z:OVERLAY_TEXT_Z];
         }
         if(_loopCount >= TOTAL_LOOPCOUNT ) {
             [self pauseSchedulerAndActions];
@@ -125,6 +146,7 @@
 }
 
 -(void) handleTouch {
+#if HD_PAID_VERSION
     if([TouchUtil wasIntentiallyTouched]) {
         if(_scoresInPlace) {
             CCLOG(@"Telling the game over screen to end");
@@ -157,6 +179,7 @@
             _loopCount = OVERLAY_INTERVALS;
         }
     }
+#endif
 }
 
 -(void) placeScoresAtFinish{
