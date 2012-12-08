@@ -1053,7 +1053,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_IDENTITY = "iPhone Distribution: Jonathan DeJong";
-				CURRENT_PROJECT_VERSION = .9;
+				CURRENT_PROJECT_VERSION = 1.0;
 				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				PROVISIONING_PROFILE = "CB3330F3-94E1-41C5-8A2F-AD1129BA22F1";
 			};
@@ -1063,7 +1063,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_IDENTITY = "iPhone Distribution: Jonathan DeJong";
-				CURRENT_PROJECT_VERSION = .9;
+				CURRENT_PROJECT_VERSION = 1.0;
 				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				PROVISIONING_PROFILE = "CB3330F3-94E1-41C5-8A2F-AD1129BA22F1";
 			};
