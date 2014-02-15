@@ -16,7 +16,7 @@
 #ifndef HOOPY_DROP_H
 #define HOOPY_DROP_H
 
-#define HD_PAID_VERSION 0
+#define HD_PAID_VERSION 1
 
 #define PERSISTANT_DATA_KEYCHAIN_KEY @"HoopyDropPersistantData"
 
